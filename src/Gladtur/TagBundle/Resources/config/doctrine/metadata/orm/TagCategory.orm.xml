@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="TagCategory" table="tag_category">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="catid" type="integer" column="catid"/>
+    <field name="published" type="integer" column="published"/>
+    <field name="isGeneral" type="boolean" column="is_general"/>
+    <field name="readableName" type="string" column="readable_name" length="255"/>
+    <field name="weight" type="integer" column="weight"/>
+    <field name="iconFilepath" type="string" column="icon_filepath" length="255"/>
+  </entity>
+</doctrine-mapping>

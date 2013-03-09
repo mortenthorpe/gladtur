@@ -1,0 +1,254 @@
+{% extends "GladturTestoneBundle::layout.html.twig" %}
+{% block content %}
+<!-- Home -->
+<div data-role="page" id="page1" style="background: url('http://assets.codiqa.com/ps/41461/0fe8fc83774c193cGlad-tur-logo.png') no-repeat">
+    <div data-role="content">
+        <div>
+            <p>
+                <b>
+                    <br>
+                </b>
+            </p>
+        </div>
+        <div data-role="fieldcontain">
+            <fieldset data-role="controlgroup" data-mini="true">
+                <label for="searchinput1">
+                </label>
+                <input name="" id="searchinput1" placeholder="" value="f.eks. café, toilet, Hovedbanegården"
+                type="search">
+            </fieldset>
+        </div>
+        <div>
+            <p>
+                <b>
+                    Velkommen til Glad Tur
+                </b>
+            </p>
+        </div>
+        <div data-role="navbar" data-iconpos="top">
+            <ul>
+                <li>
+                    <a href="/test/#page3" data-theme="a" data-icon="search">
+                        I nærheden
+                    </a>
+                </li>
+                <li>
+                    <a href="/test/#page8" data-theme="a" data-icon="gear">
+                        Min profil
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div data-role="navbar" data-iconpos="top">
+            <ul>
+                <li>
+                    <a href="/test#page1" data-theme="a" data-icon="info">
+                        Vejledning
+                    </a>
+                </li>
+                <li>
+                    <a href="/test#page1" data-theme="a" data-icon="star">
+                        Forum
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- naerliste -->
+<div data-role="page" id="page3">
+    <div data-theme="a" data-role="header">
+        <a data-role="button" data-direction="reverse" data-rel="back" data-theme="a"
+        href="/test#page3" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+            Tilbage
+        </a>
+        <h3>
+            Nær
+        </h3>
+    </div>
+    <div data-role="content">
+        <ul data-role="listview" data-divider-theme="c" data-inset="false">
+            <li data-theme="c">
+                <a href="/test#page4" data-transition="slide">
+                    Toilet
+                </a>
+            </li>
+            <li data-theme="c">
+                <a href="/test#page1" data-transition="slide">
+                    Parkering
+                </a>
+            </li>
+            <li data-theme="c">
+                <a href="/test#page1" data-transition="slide">
+                    Mad og drikke
+                </a>
+            </li>
+            <li data-theme="c">
+                <a href="/test#page1" data-transition="slide">
+                    Scene og musik
+                </a>
+            </li>
+            <li data-theme="c">
+                <a href="/test#page1" data-transition="slide">
+                    Kultur
+                </a>
+            </li>
+            <li data-theme="c">
+                <a href="/test#page1" data-transition="slide">
+                    Sport
+                </a>
+            </li>
+            <li data-theme="c">
+                <a href="/test#page1" data-transition="slide">
+                    Forlystelser
+                </a>
+            </li>
+        </ul>
+    </div>
+</div><!-- ./page3 //-->
+<!-- Toilet -->
+<div data-role="page" id="page4">
+    <div data-theme="a" data-role="header">
+        <h3>
+            Søg
+        </h3>
+        <a data-role="button" data-inline="true" data-direction="reverse" data-rel="back"
+        href="/test#page3" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+            Tilbage
+        </a>
+        <div data-role="fieldcontain">
+            <fieldset data-role="controlgroup" data-mini="true">
+                <label for="searchinput2">
+                </label>
+                <input name="" id="searchinput2" placeholder="toilet" value="" type="search">
+            </fieldset>
+        </div>
+    </div>
+    <div data-role="content">
+        <ul data-role="listview" data-divider-theme="b" data-inset="false">
+            <li data-theme="c">
+                <a href="{{ path('sted', { 'id': 2 }) }}" data-transition="slide">
+                    Meyers Deli
+                </a>
+            </li>
+            <li data-theme="c">
+                <a href="{{ path('sted', { 'id': 4 }) }}" data-transition="slide">
+                    Café Glad BIBLIOTEKET
+                </a>
+            </li>
+            <li data-theme="c">
+                <a href="{{ path('sted', { 'id': 6 }) }}" data-transition="slide">
+                    Distriktspsykiatrisk Center
+                </a>
+            </li>
+            <li data-theme="c">
+                <a href="{{ path('sted', { 'id': 7 }) }}" data-transition="slide">
+                    Vesterbro Bibliotek
+                </a>
+            </li>
+            <li data-theme="c">
+                <a href="{{ path('sted', { 'id': 8 }) }}" data-transition="slide">
+                    Cafe Kaffe
+                </a>
+            </li>
+            <li data-theme="c">
+                <a href="{{ path('sted', { 'id': 9 }) }}" data-transition="slide">
+                    Det Ny Teater
+                </a>
+            </li>
+			
+        </ul>
+    </div>
+</div><!-- ./page4 //-->
+<div data-role="page" id="page8">
+    <div data-role="content">
+       <ul class="ui-listview ui-listview-inset ui-corner-all ui-shadow" data-inset="true" data-role="listview">
+       <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-li-has-icon ui-corner-top">
+       <img class="ui-li-icon ui-li-thumb" alt="France" src="/bundles/gladturtest/images/ks.png">
+                      <div class="tilg">
+						Kørestol
+                       </div>
+                      <label for="toggleswitch1">
+       </label>
+       <select name="toggleswitch1" id="toggleswitch1" data-theme="" data-role="slider"
+       data-mini="true">
+       <option value="off">
+       0
+       </option>
+       <option value="on">
+       I
+       </option>
+       </select>
+       </li>
+       <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-li-has-icon ui-corner-top">
+       <img class="ui-li-icon ui-li-thumb" alt="France" src="/bundles/gladturtest/images/26px_gangbesvaer_piktogram.png">
+       <div class="tilg">
+       	Gangbesvær
+        </div>
+                      <label for="toggleswitch1">
+       </label>
+       <select name="toggleswitch1" id="toggleswitch1" data-theme="" data-role="slider"
+       data-mini="true">
+       <option value="off">
+       0
+       </option>
+       <option value="on">
+       I
+       </option>
+       </select>
+       </li>
+       <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-li-has-icon ui-corner-top">
+       <img class="ui-li-icon ui-li-thumb" alt="France" src="/bundles/gladturtest/images/ks.png">
+       <div class="tilg">
+       	Syn
+        </div>
+                      <label for="toggleswitch1">
+       </label>
+       <select name="toggleswitch1" id="toggleswitch1" data-theme="" data-role="slider"
+       data-mini="true">
+       <option value="off">
+       0
+       </option>
+       <option value="on">
+       I
+       </option>
+       </select>
+       </li>
+       <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-li-has-icon ui-corner-top">
+       <img class="ui-li-icon ui-li-thumb" alt="France" src="/bundles/gladturtest/images/26px_ore_piktogram.png">
+       <div class="tilg">
+       	Hørelse
+        </div>
+                      <label for="toggleswitch1">
+       </label>
+       <select name="toggleswitch1" id="toggleswitch1" data-theme="" data-role="slider"
+       data-mini="true">
+       <option value="off">
+       0
+       </option>
+       <option value="on">
+       I
+       </option>
+       </select>
+       </li>
+       <li class="ui-li ui-li-static ui-btn-up-c ui-li-has-count ui-li-has-icon ui-corner-bottom ui-li-last">
+       <img class="ui-li-icon ui-li-thumb" alt="France" src="/bundles/gladturtest/images/ks.png">
+       <div class="tilg">
+       	Allergi
+        </div>
+                      <label for="toggleswitch1">
+       </label>
+       <select name="toggleswitch1" id="toggleswitch1" data-theme="" data-role="slider"
+       data-mini="true">
+       <option value="off">
+       0
+       </option>
+       <option value="on">
+       I
+       </option>
+       </select>
+       </li>
+       </ul>
+        </div>
+</div>
+{% endblock %}

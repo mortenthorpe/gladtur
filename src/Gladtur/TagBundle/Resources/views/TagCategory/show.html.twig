@@ -1,0 +1,53 @@
+<h1>TagCategory</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Catid</th>
+            <td>{{ entity.catid }}</td>
+        </tr>
+        <tr>
+            <th>Published</th>
+            <td>{{ entity.published }}</td>
+        </tr>
+        <tr>
+            <th>Isgeneral</th>
+            <td>{{ entity.isGeneral }}</td>
+        </tr>
+        <tr>
+            <th>Readablename</th>
+            <td>{{ entity.readableName }}</td>
+        </tr>
+        <tr>
+            <th>Weight</th>
+            <td>{{ entity.weight }}</td>
+        </tr>
+        <tr>
+            <th>Iconfilepath</th>
+            <td>{{ entity.iconFilepath }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('tagcategory') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('tagcategory_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('tagcategory_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>

@@ -1,0 +1,16 @@
+<h1>Opret &quot;Sted egenskab kategori&quot;</h1>
+
+<form action="{{ path('tagcategory_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Opret</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('tagcategory') }}">
+            &quot;Sted egenskab kategori&quot; Oversigt
+        </a>
+    </li>
+</ul>

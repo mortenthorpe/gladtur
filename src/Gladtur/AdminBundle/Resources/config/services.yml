@@ -1,0 +1,7 @@
+parameters:
+#    gladtur_admin.example.class: Gladtur\AdminBundle\Example
+
+services:
+#    gladtur_admin.example:
+#        class: %gladtur_admin.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

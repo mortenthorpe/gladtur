@@ -1,0 +1,7 @@
+{% if is_granted('ROLE_ADMIN') %}
+    <ul class="menu_horizontal">
+    <li><a href="#">View all users data for this location</a></li>
+    <li><a href="#">Edit</a></li>
+    <li><a href="#">Delete</a></li>
+    </ul>
+{% endif %}

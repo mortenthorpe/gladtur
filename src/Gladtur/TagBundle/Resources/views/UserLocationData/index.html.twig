@@ -1,0 +1,18 @@
+<div>
+<p>User Location Data!</p>
+{% for entity in entities %}
+    {{  entity.location }} ({{  entity.location.id }}) - af brugeren '{{ entity.user }}'
+    <ul>
+        <li>Opens at: {{ entity.hoursOpeningtime }}</li>
+        <li>Closes at: {{ entity.hoursClosingtime }}</li>
+    </ul>
+    <div>
+        <h3>Media and description of this place:</h3>
+        {{ entity.mediapath }}
+        {{ entity.txtDescription }}
+    </div>
+{% endfor %}
+</div>
+<div class="admin_actions">
+    {% include "GladturTagBundle:UserLocationData:role_admin.html.twig" %}
+</div>

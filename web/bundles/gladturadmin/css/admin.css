@@ -1,0 +1,10 @@
+#main{margin:30px auto 0 auto;text-align:center;padding:0 50px}
+#main *{text-align:left}
+table.records_list{width:100%}
+table.records_list th.actions{width:320px !important}
+table.records_list th.narrow{width:30px}
+table.records_list th.medium{width:100px}
+table.records_list th.wide{width:260px}
+
+ul#globalmenu, ul#globalmenu li, ul.adminmenu_local, ul.adminmenu_local li{list-style:none;}
+ul#globalmenu li, ul.adminmenu_local li{float:left;margin-right:2em;text-transform:uppercase}

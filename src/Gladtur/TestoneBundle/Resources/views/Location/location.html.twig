@@ -1,0 +1,324 @@
+{% extends "GladturTestoneBundle::layout.html.twig" %}
+{% block content %}
+<script>
+var activated_tags = new Array();
+$( '#page{{location.id}}' ).live( 'pagebeforecreate',function(event){
+	console.log('loaded!');
+{% for i in activetags %}
+activated_tags.push({{i}});
+{% endfor %}
+	for (var i = 0; i < activated_tags.length; i++) {
+	jQuery('input.locationtag_'+activated_tags[i]).each(function(){
+				jQuery(this).attr('checked','checked');
+				jQuery(this).next('label').find('span.ui-icon').each(function(){
+					jQuery(this).removeClass('ui-icon-checkbox-off');
+					jQuery(this).addClass('ui-icon-checkbox-on');
+				});
+				jQuery(this).next('label').find('span.ui-icon').each(function(){
+					jQuery(this).addClass('ui-icon-checkbox-disabled');
+				});
+	});
+	}
+
+});
+</script>
+<!-- sted -->
+<div data-role="page" id="page{{location.id}}">
+    <div data-theme="a" data-role="header">
+        <h3>
+            Glad Tur
+        </h3>
+        <a data-role="button" data-inline="true" data-direction="reverse" data-rel="back"
+        href="/test#page4" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left">
+            Søg
+        </a>
+    </div>
+    <div data-role="content">
+        <div>
+            <p>
+                <span style="font-size: large; " data-mce-style="font-size: large;">
+                    <strong>
+                        {{ location.readableName }}
+                    </strong>
+<!--                    <span style="background-color: rgb(255, 255, 0); " data-mce-style="background-color: #ffff00;">
+                        [Mad og drikke]
+                    </span> //-->
+                    [Afstand i km]
+                </span>
+                <br>
+                <span style="font-size: small; " data-mce-style="font-size: small;">
+                    [Beskrivende tekst for dette sted]
+                </span>
+                <br>
+                <span style="font-size: x-small; " data-mce-style="font-size: x-small;">
+                    <span style="font-size: small; " data-mce-style="font-size: small;">
+                        [Åbningstider i dag: 00.00 - 00.00]
+                    </span>
+                    <br>
+                    <span style="font-size: x-large; ">
+                        *****
+                    </span>
+                    <br>
+                </span>
+            </p>
+        </div>
+        <div>
+            <a href="{{ path('stedinfo', { 'id': location.id }) }}" data-transition="fade">
+                » Mere info
+            </a>
+        </div>
+        <img src="https://maps.googleapis.com/maps/api/staticmap?center=Gl. Kongevej 107, 1850 Frederiksberg&amp;zoom=14&amp;size=288x140&amp;markers=Gl. Kongevej 107, 1850 Frederiksberg&amp;sensor=false"
+        width="288" height="140">
+        <div>
+            <p>
+                <span style="font-size: x-small; " data-mce-style="font-size: x-small;">
+                    {{ location.addressStreet }}, {{ location.addressZip }} {{ location.addressCity }}
+                </span>
+            </p>
+        </div>
+        <div>
+            <p>
+                <b>
+                    Tilgængelighed
+                </b>
+            </p>
+        </div>
+        <div data-role="collapsible-set" data-theme="c" data-content-theme="c">
+            <div data-role="collapsible" data-collapsed="true">
+                <h3>
+                    Toilet<!-- Kategori-ID: 4 //-->
+                </h3>
+                <div id="checkboxes1" data-role="fieldcontain">
+					<div id="right_info_icon">
+					                       <a class="ui-btn ui-shadow ui-btn-corner-all ui-mini ui-btn-inline ui-btn-icon-notext ui-btn-up-c" data-inline="true" data-mini="true" data-iconpos="right" data-icon="info" data-role="button" href="{{ path('stedtaginfo', { 'ids': '3,4,5' }) }}" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" title="info">
+					                       <span class="ui-btn-inner ui-corner-top ui-corner-bottom">
+					                       <span class="ui-btn-text">Info</span>
+					                       <span class="ui-icon ui-icon-info ui-icon-shadow"> </span>
+					                       </span>
+					                       </a>
+					                       </div>
+                    <fieldset data-role="controlgroup" data-type="vertical" data-mini="true">
+                        <legend>
+                        </legend>
+                        <input id="locationtag_3" class="locationtag_3" class="locationtag_3" class="locationtag_3" name="Hygiejnespand" type="checkbox">
+                        <label for="locationtag_3" class="locationtag_3">
+                            Hygiejnespand
+                        </label>
+                        <input id="locationtag_4" class="locationtag_4" name="Puslebord" type="checkbox">
+                        <label for="locationtag_4" class="locationtag_4">
+                            Puslebord
+                        </label>
+                        <input id="locationtag_5" class="locationtag_5" name="Bruser" type="checkbox">
+                        <label for="locationtag_5" class="locationtag_5">
+                            Bruser
+                        </label>
+                    </fieldset>
+                </div>
+            </div>
+            <div data-role="collapsible" data-collapsed="true">
+                <h3>
+                    Parkering<!-- Kategori-ID: 10 //-->
+                </h3>
+                <div id="checkboxes2" data-role="fieldcontain">
+					<div id="right_info_icon">
+					                       <a class="ui-btn ui-shadow ui-btn-corner-all ui-mini ui-btn-inline ui-btn-icon-notext ui-btn-up-c" data-inline="true" data-mini="true" data-iconpos="right" data-icon="info" data-role="button" href="{{ path('stedtaginfo', { 'ids': '42,43,44' }) }}" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" title="info">
+					                       <span class="ui-btn-inner ui-corner-top ui-corner-bottom">
+					                       <span class="ui-btn-text">Info</span>
+					                       <span class="ui-icon ui-icon-info ui-icon-shadow"> </span>
+					                       </span>
+					                       </a>
+					                       </div>
+                    <fieldset data-role="controlgroup" data-type="vertical" data-mini="true">
+                        <legend>
+                        </legend>
+                        <input id="locationtag_42" class="locationtag_42" name="Parkeringsplads til invalidebil nær indgang "
+                        type="checkbox">
+                        <label for="locationtag_42" class="locationtag_42">
+                            Parkeringsplads til invalidebil nær indgang
+                        </label>
+                        <input id="locationtag_43" class="locationtag_43" name="Parkeringsplads til invalidebil længere væk"
+                        type="checkbox">
+                        <label for="locationtag_43">
+                            Parkeringsplads til invalidebil længere væk
+                        </label>
+                        <input id="locationtag_44" class="locationtag_44" name="Parkeringsplads til personbil" type="checkbox">
+                        <label for="locationtag_44">
+                            Parkeringsplads til personbil
+                        </label>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p>
+                <b>
+                    Baseret på din profil
+                </b>
+            </p>
+        </div>
+        <div data-role="collapsible-set" data-theme="c" data-content-theme="c">
+            <div data-role="collapsible" data-collapsed="true">
+                <h3>
+                    Handicaptoilet<!-- Gruppe-ID: 10 //-->
+                </h3>
+                <div id="checkboxes3" data-role="fieldcontain">
+					<div id="right_info_icon">
+					                       <a class="ui-btn ui-shadow ui-btn-corner-all ui-mini ui-btn-inline ui-btn-icon-notext ui-btn-up-c" data-inline="true" data-mini="true" data-iconpos="right" data-icon="info" data-role="button" href="{{ path('stedtaginfo', { 'ids': '6,7,10' }) }}" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" title="info">
+					                       <span class="ui-btn-inner ui-corner-top ui-corner-bottom">
+					                       <span class="ui-btn-text">Info</span>
+					                       <span class="ui-icon ui-icon-info ui-icon-shadow"> </span>
+					                       </span>
+					                       </a>
+					                       </div>
+                    <fieldset data-role="controlgroup" data-type="vertical" data-mini="true">
+                        <legend>
+                        </legend>
+                        <input id="locationtag_6" class="locationtag_6" name="Kørestolsegnet" type="checkbox">
+                        <label for="locationtag_6" class="locationtag_6">
+                            Kørestolsegnet
+                        </label>
+                        <input id="locationtag_7" class="locationtag_7" name="Kørestolsegnet for lille kørestol" type="checkbox">
+                        <label for="locationtag_7" class="locationtag_7">
+                            Kørestolsegnet for lille kørestol
+                        </label>
+                        <input id="locationtag_10" class="locationtag_10" name="Ikke tilgængeligt" type="checkbox">
+                        <label for="locationtag_10" class="locationtag_10">
+                            Ikke tilgængeligt
+                        </label>
+                    </fieldset>
+                </div>
+            </div>
+            <div data-role="collapsible" data-collapsed="true">
+                <h3>
+                    Adgang (Entry)<!-- Gruppe-ID: 6 //-->
+                </h3>
+                <div id="checkboxes4" data-role="fieldcontain">
+					<div id="right_info_icon">
+					                       <a class="ui-btn ui-shadow ui-btn-corner-all ui-mini ui-btn-inline ui-btn-icon-notext ui-btn-up-c" data-inline="true" data-mini="true" data-iconpos="right" data-icon="info" data-role="button" href="{{ path('stedtaginfo', { 'ids': '12,13,14' }) }}" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" title="info">
+					                       <span class="ui-btn-inner ui-corner-top ui-corner-bottom">
+					                       <span class="ui-btn-text">Info</span>
+					                       <span class="ui-icon ui-icon-info ui-icon-shadow"> </span>
+					                       </span>
+					                       </a>
+					                       </div>
+                    <fieldset data-role="controlgroup" data-type="vertical" data-mini="true">
+                        <legend>
+                        </legend>
+                        <input id="locationtag_12" class="locationtag_12" name="Niveaufrit" type="checkbox">
+                        <label for="locationtag_12" class="locationtag_12">
+                            Niveaufri adgang (inkl. elevator, rampe eller trappelift)
+                        </label>
+                        <input id="locationtag_13" class="locationtag_13" name="Lille trin eller løs rampe" type="checkbox">
+                        <label for="locationtag_13" class="locationtag_13">
+                            Adgang med lille trin eller løs rampe
+                        </label>
+                        <input id="locationtag_14" class="locationtag_14" name="Trappe eller smal dør " type="checkbox">
+                        <label for="locationtag_14" class="locationtag_14">
+                            Adgang via trappe eller smal dør
+                        </label>
+                    </fieldset>
+                </div>
+            </div>
+            <div data-role="collapsible" data-collapsed="true">
+                <h3>
+                    Indre niveauforskelle (Flat)<!-- Gruppe-ID: 12 //-->
+                </h3>
+                <div id="checkboxes5" data-role="fieldcontain">
+					<div id="right_info_icon">
+					                       <a class="ui-btn ui-shadow ui-btn-corner-all ui-mini ui-btn-inline ui-btn-icon-notext ui-btn-up-c" data-inline="true" data-mini="true" data-iconpos="right" data-icon="info" data-role="button" href="{{ path('stedtaginfo', { 'ids': '15,16,17' }) }}" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" title="info">
+					                       <span class="ui-btn-inner ui-corner-top ui-corner-bottom">
+					                       <span class="ui-btn-text">Info</span>
+					                       <span class="ui-icon ui-icon-info ui-icon-shadow"> </span>
+					                       </span>
+					                       </a>
+					                       </div>
+                    <fieldset data-role="controlgroup" data-type="vertical" data-mini="true">
+                        <legend>
+                        </legend>
+                        <input id="locationtag_15" class="locationtag_15" name="Niveaufrit" type="checkbox">
+                        <label for="locationtag_15" class="locationtag_15">
+                            Niveaufrit (inkl. elevator, rampe eller trappelift)
+                        </label>
+                        <input id="locationtag_16" class="locationtag_16" name="Lille trin eller løs rampe" type="checkbox">
+                        <label for="locationtag_16" class="locationtag_16">
+                            Lille trin eller løs rampe
+                        </label>
+                        <input id="locationtag_17" class="locationtag_17" name="Trappe eller smal dør " type="checkbox">
+                        <label for="locationtag_17" class="locationtag_17">
+                            Trappe eller smal dør
+                        </label>
+                    </fieldset>
+                   
+                </div>
+            </div>
+            <div data-role="collapsible" data-collapsed="true">
+                <h3>
+                    Indretning (Space)<!-- Gruppe-ID: 13 //-->
+                </h3>
+                <div id="checkboxes6" data-role="fieldcontain">
+					<div id="right_info_icon">
+					                       <a class="ui-btn ui-shadow ui-btn-corner-all ui-mini ui-btn-inline ui-btn-icon-notext ui-btn-up-c" data-inline="true" data-mini="true" data-iconpos="right" data-icon="info" data-role="button" href="{{ path('stedtaginfo', { 'ids': '18,19,20' }) }}" data-corners="true" data-shadow="true" data-iconshadow="true" data-wrapperels="span" data-theme="c" title="info">
+					                       <span class="ui-btn-inner ui-corner-top ui-corner-bottom">
+					                       <span class="ui-btn-text">Info</span>
+					                       <span class="ui-icon ui-icon-info ui-icon-shadow"> </span>
+					                       </span>
+					                       </a>
+					                       </div>
+                    <fieldset data-role="controlgroup" data-type="vertical" data-mini="true">
+                        <legend>
+                        </legend>
+                        <input id="locationtag_18" class="locationtag_18" name="God" type="checkbox">
+                        <label for="locationtag_18" class="locationtag_18">
+                            God
+                        </label>
+                        <input id="locationtag_19" class="locationtag_19" name="Presset" type="checkbox">
+                        <label for="locationtag_19" class="locationtag_19">
+                            Presset
+                        </label>
+                        <input id="locationtag_20" class="locationtag_20" name="Daerlig" type="checkbox">
+                        <label for="locationtag_20" class="locationtag_20">
+                            Dårlig
+                        </label>
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+        <a data-role="button" data-theme="a" href="/test#page10" data-icon="arrow-r"
+        data-iconpos="right">
+            Brugerbeskrivelse
+        </a>
+        <a data-role="button" data-theme="a" href="/test#page11" data-icon="arrow-r"
+        data-iconpos="right">
+            Kommentarer
+        </a>
+        <a data-role="button" data-theme="a" href="/test#page12" data-icon="arrow-r"
+        data-iconpos="right">
+            Billeder
+        </a>
+        <a data-role="button" data-theme="c" href="/test#page6" data-icon="gear" data-iconpos="right">
+            Ret data for dette sted
+        </a>
+        <div data-role="navbar" data-iconpos="top">
+            <ul>
+                <li>
+                    <a href="/test#page6" data-theme="a" data-icon="plus">
+                        Tilføj Kommentar
+                    </a>
+                </li>
+                <li>
+                    <a href="/test#page6" data-theme="a" data-icon="plus">
+                        Tilføj billede
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <p>
+                <b>
+                    <br>
+                </b>
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock %}

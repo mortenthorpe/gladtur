@@ -1,0 +1,14 @@
+<div>
+    {% if locationData %}
+    <h3>Beskrevet af brugerne</h3>
+    {% else %}
+    <h3 class="notice">&quot;{{ location.readableName }}&quot; er endnu ikke beskrevet af nogle brugere!</h3>
+    {% endif %}
+<ul>
+        {% for user_data in locationData %}
+            {%  if user_data.user and user_data.locationCategory %}
+            <li>&quot;{{ user_data.locationCategory}}&quot; af {{ user_data.user }}, bruger-id: {{ user_data.id }}</li>
+            {%  endif %}
+        {% endfor %}
+</ul>
+</div>

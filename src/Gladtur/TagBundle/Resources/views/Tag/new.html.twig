@@ -1,0 +1,19 @@
+{% extends "GladturTagBundle::layout.html.twig" %}
+{% block content %}
+<h1>Opret Sted egenskab</h1>
+
+<form action="{{ path('tag_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Opret</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('tag') }}">
+            &quot;Sted egenskab&quot; Oversigt
+        </a>
+    </li>
+</ul>
+{% endblock %}

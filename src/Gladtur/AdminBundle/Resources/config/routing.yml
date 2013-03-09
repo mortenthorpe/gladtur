@@ -1,0 +1,3 @@
+GladturAdminBundle_homepage:
+    pattern:  /
+    defaults: { _controller: GladturAdminBundle:Default:index }

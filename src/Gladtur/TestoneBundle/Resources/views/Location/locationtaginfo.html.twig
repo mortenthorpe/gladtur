@@ -1,0 +1,19 @@
+{% extends "GladturTestoneBundle::layout.html.twig" %}
+{% block content %}
+<div data-theme="a" data-role="header" class="ui-header ui-bar-a" role="banner">
+        <a data-role="button" data-direction="reverse" data-rel="back" data-theme="a" href="/test#page3" data-icon="arrow-l" data-iconpos="left" class="ui-btn-left ui-btn ui-shadow ui-btn-corner-all ui-btn-icon-left ui-btn-up-a" data-corners="true" data-shadow="true" data-iconshadow="true" data-iconsize="18" data-wrapperels="span"><span class="ui-btn-inner ui-btn-corner-all"><span class="ui-btn-text">
+            Tilbage
+        </span><span class="ui-icon ui-icon-arrow-l ui-icon-shadow ui-iconsize-18">&nbsp;</span></span></a>
+        <h3 class="ui-title" role="heading" aria-level="1">
+            Tilgængelighed
+        </h3>
+    </div>
+{% for tag in tags %}
+<div>
+<h2>{{ tag.readableName }} = </h2>
+<p>
+	{{ tag.textDescription }}
+</p>
+</div>
+{% endfor %}
+{% endblock %}

@@ -1,0 +1,6 @@
+Splash page for the Gladtur App!
+{% if app.user and is_granted("ROLE") %}
+    Hi {{ app.user.username }}
+{% else %}
+You are not logged in, and thus Anonymous!
+{% endif %}

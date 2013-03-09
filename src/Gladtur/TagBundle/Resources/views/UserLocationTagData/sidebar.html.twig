@@ -1,0 +1,17 @@
+<div>
+    {%  if locationTagData %}
+    <h3>Sted-egenskaber tildelt af brugerne</h3>
+    {% else %}
+    <h3 class="notice">&quot;{{ location.readableName }}&quot; har endnu ingen bruger-tildelte sted-egenskaber!</h3>
+    {% endif %}
+    <ul>
+        {% for user_tag_data in locationTagData %}
+            {%  if user_tag_data.user %}
+                <li>{{ user_tag_data.tag.tagCategory.readableName }}
+                    <ul>
+                        <li>{{ user_tag_data.tag.readableName }} ({{ user_tag_data.user }}) {% if user_tag_data.relevant %}+{% else %}-{% endif %}</li>
+                    </ul>
+            {%  endif %}
+        {% endfor %}
+    </ul>
+</div>

@@ -1,0 +1,35 @@
+GladturTagBundle_homepage:
+    pattern:  /tag
+    defaults: { _controller: GladturTagBundle:Tag:index }
+
+GladturTagBundle_new:
+    pattern:  /tag_new
+    defaults: { _controller: GladturTagBundle:Tag:new }
+
+GladturTagBundle_create:
+    pattern:  /tag_create
+    defaults: { _controller: GladturTagBundle:Tag:create }
+
+GladturTagBundle_category_homepage:
+    pattern: /tagcategory
+    defaults: { _controller: GladturTagBundle:TagCategory:index }
+
+GladturTagBundle_category_new:
+    pattern: /tagcategory_new
+    defaults: { _controller: GladturTagBundle:TagCategory:new }
+
+GladturTagBundle_category_create:
+    pattern: /tagcategory_create
+    defaults: { _controller: GladturTagBundle:TagCategory:create }
+
+GladturTagBundle_category_edit:
+    pattern: /tagcategory_edit
+    defaults: { _controller: GladturTagBundle:TagCategory:edit, id: 1 }
+
+GladturTagBundle_category_update:
+    pattern: /tagcategory_update
+    defaults: { _controller: GladturTagBundle:TagCategory:update, id: 1 }
+
+GladturTagBundle_category_delete:
+    pattern: /tagcategory_delete
+    defaults: { _controller: GladturTagBundle:TagCategory:delete, id: 1 }

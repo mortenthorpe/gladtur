@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="LocationTagComment" table="location_tag_comment">
+    <id name="id" type="integer" column="id">
+      <generator strategy="IDENTITY"/>
+    </id>
+    <field name="locationTagId" type="integer" column="location_tag_id"/>
+    <field name="commenttext" type="text" column="commenttext"/>
+    <field name="mediaFilepath" type="string" column="media_filepath" length="255"/>
+  </entity>
+</doctrine-mapping>

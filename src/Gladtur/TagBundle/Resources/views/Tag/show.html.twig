@@ -1,0 +1,44 @@
+{% extends "GladturTagBundle::layout.html.twig" %}
+{% block content %}
+<h1>&quot;Sted egenskab&quot;</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th class="narrow">Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th class="medium">Skal vises</th>
+            <td>{{ entity.published }}</td>
+        </tr>
+        <tr>
+            <th class="wide">Navn, som fremvist</th>
+            <td>{{ entity.readableName }}</td>
+        </tr>
+        <tr>
+            <th>Evt. Tekst beskrivelse</th>
+            <td>{{ entity.textDescription }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('tag') }}">
+            &quot;Sted egenskab&quot; Oversigt
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('tag_edit', { 'id': entity.id }) }}">
+            Rediger
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('tag_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Slet</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

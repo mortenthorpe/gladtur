@@ -1,0 +1,16 @@
+<h1>Opret Stedtag</h1>
+
+<form action="{{ path('locationtag_create') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <p>
+        <button type="submit">Opret</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('locationtag') }}">
+            Stedtag Oversigt
+        </a>
+    </li>
+</ul>

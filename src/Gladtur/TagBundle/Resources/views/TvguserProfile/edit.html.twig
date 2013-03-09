@@ -1,0 +1,26 @@
+{% extends "GladturTagBundle::layout.html.twig" %}
+{% block content %}
+<h1>Redigering af &quot;Bruger-profil&quot;</h1>
+
+
+<form action="{{ path('tvguserprofile_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+    {{ form_widget(edit_form) }}
+    <p>
+        <button type="submit">Gem</button>
+    </p>
+</form>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('tvguserprofile') }}">
+            &quot;Bruger-profiler&quot; Oversigt
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('tvguserprofile_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Slet</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}

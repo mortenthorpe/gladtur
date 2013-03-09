@@ -1,0 +1,80 @@
+{% extends "GladturTagBundle::layout.html.twig" %}
+{% block content %}
+<h1>Location</h1>
+
+<table class="record_properties">
+    <tbody>
+        <tr>
+            <th>Id</th>
+            <td>{{ entity.id }}</td>
+        </tr>
+        <tr>
+            <th>Readablename</th>
+            <td>{{ entity.readableName }}</td>
+        </tr>
+        <tr>
+            <th>Published</th>
+            <td>{{ entity.published }}</td>
+        </tr>
+        <tr>
+            <th>Addresszip</th>
+            <td>{{ entity.addressZip }}</td>
+        </tr>
+        <tr>
+            <th>Addresscountry</th>
+            <td>{{ entity.addressCountry }}</td>
+        </tr>
+        <tr>
+            <th>Addresscity</th>
+            <td>{{ entity.addressCity }}</td>
+        </tr>
+        <tr>
+            <th>Addressstreet</th>
+            <td>{{ entity.addressStreet }}</td>
+        </tr>
+        <tr>
+            <th>Addressextd</th>
+            <td>{{ entity.addressExtd }}</td>
+        </tr>
+        <tr>
+            <th>Phone</th>
+            <td>{{ entity.phone }}</td>
+        </tr>
+        <tr>
+            <th>Mail</th>
+            <td>{{ entity.mail }}</td>
+        </tr>
+        <tr>
+            <th>Homepage</th>
+            <td>{{ entity.homepage }}</td>
+        </tr>
+        <tr>
+            <th>Contactperson</th>
+            <td>{{ entity.contactPerson }}</td>
+        </tr>
+        <tr>
+            <th>Mediapath</th>
+            <td>{{ entity.mediapath }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<ul class="record_actions">
+    <li>
+        <a href="{{ path('location') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('location_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>
+        <form action="{{ path('location_delete', { 'id': entity.id }) }}" method="post">
+            {{ form_widget(delete_form) }}
+            <button type="submit">Delete</button>
+        </form>
+    </li>
+</ul>
+{% endblock %}
