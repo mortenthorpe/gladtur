@@ -1,7 +1,5 @@
 <?php
-
 namespace Gladtur\TagBundle\Entity;
-
 use Doctrine\ORM\Mapping as ORM;
 
 /**
