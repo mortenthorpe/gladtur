@@ -56,6 +56,11 @@ ul#globalmenu li, ul.adminmenu_local li, ul.list_plain, ul.list_plain li {
     text-transform: uppercase
 }
 
+a.view {
+    background: url('/media/view.png') no-repeat;
+    padding-left: 1.5em;
+}
+
 a.create {
     background: url('/media/create.png') no-repeat;
     padding-left: 1.5em;
