@@ -1,10 +1,88 @@
-#main{margin:30px auto 0 auto;text-align:center;padding:0 50px}
-#main *{text-align:left}
-table.records_list{width:100%}
-table.records_list th.actions{width:320px !important}
-table.records_list th.narrow{width:30px}
-table.records_list th.medium{width:100px}
-table.records_list th.wide{width:260px}
+/* Overrides for general stylesheets, such as Zurb/Foundation */
+h1 {
+    font-size: 24px
+}
 
-ul#globalmenu, ul#globalmenu li, ul.adminmenu_local, ul.adminmenu_local li{list-style:none;}
-ul#globalmenu li, ul.adminmenu_local li{float:left;margin-right:2em;text-transform:uppercase}
+h2 {
+    font-size: 20px
+}
+
+h3 {
+    font-size: 18px
+}
+
+/* ./ Overrides for general stylesheets, such as Zurb/Foundation */
+#logo {
+    padding: 0 2em 2em 0
+}
+
+#main {
+    margin: 30px auto 0 auto;
+    text-align: center;
+    padding: 0 50px
+}
+
+#main div {
+    text-align: left
+}
+
+table.records_list {
+    width: 100%
+}
+
+table.records_list th.actions {
+    width: 320px !important
+}
+
+table.records_list th.narrow {
+    width: 30px
+}
+
+table.records_list th.medium {
+    width: 100px
+}
+
+table.records_list th.wide {
+    width: 260px
+}
+
+ul#globalmenu, ul#globalmenu li, ul.adminmenu_local, ul.adminmenu_local li, ul.list_plain, ul.list_plain li {
+    list-style: none;
+}
+
+ul#globalmenu li, ul.adminmenu_local li, ul.list_plain, ul.list_plain li {
+    float: left;
+    margin-right: 2em;
+    text-transform: uppercase
+}
+
+a.view {
+    background: url('/media/view.png') no-repeat;
+    padding-left: 1.5em;
+}
+
+a.create {
+    background: url('/media/create.png') no-repeat;
+    padding-left: 1.5em;
+}
+
+a.delete {
+    background: url('/media/delete.png') no-repeat;
+    padding-left: 1.5em;
+}
+
+a.save {
+    background: url('/media/save.png') no-repeat;
+    padding-left: 1.5em;
+}
+
+.signin, .signinform {
+    width: 300px
+}
+
+.signin, .signin form, .signinform, signinform form {
+    margin: 0 auto;
+    text-align: center
+}
+
+#footer{display:block;clear:both;float:none}

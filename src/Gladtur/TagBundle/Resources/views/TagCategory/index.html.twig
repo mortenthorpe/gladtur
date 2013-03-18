@@ -1,54 +1,52 @@
 {% extends "GladturTagBundle::layout.html.twig" %}
 {% block content %}
-<h1>&quot;Sted egenskab kategori&quot; Oversigt</h1>
-
-<table class="records_list">
-    <thead>
+    <!-- TagCategory/index.html.twig //-->
+    <h1>&quot;Sted egenskab kategori&quot; Oversigt</h1>
+    <ul class="list_plain">
+        <li>
+            <a class="create" href="{{ path('tagcategory_new') }}">
+                Opret ny &quot;Sted egenskab kategori&quot;
+            </a>
+        </li>
+    </ul>
+    <table class="records_list">
+        <thead>
         <tr>
             <th>Id</th>
-    <!--        <th>Kategori nummer</th> //-->
-			<th>Rangering</th>
+            <!--        <th>Kategori nummer</th> //-->
+            <th>Rangering</th>
             <th>Skal vises?</th>
             <th>Skal ALTID vises?</th>
             <th>Kategori navn</th>
-            <th>Ikon filsti</th>
             <th>Udfør</th>
         </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('tagcategory_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-   <!--         <td>{{ entity.catid }}</td> //-->
-			<td>{{ entity.weight }}</td>
-            <td>{{ entity.mtGetPublishedTxt }}</td>
-            <td>{{ entity.mtGetIsGeneralTxt }}</td>
-            <td>{{ entity.readableName }}
-				{% if entity.textDescription %}<br/><span class="textDescription">{{ entity.textDescription }}</span>{% endif %}</td>
-            <td>{{ entity.iconFilepath }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('tagcategory_show', { 'id': entity.id }) }}">Vis</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('tagcategory_edit', { 'id': entity.id }) }}">Rediger</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('tagcategory_delete', { 'id': entity.id }) }}">Slet</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-<ul>
-    <li>
-        <a href="{{ path('tagcategory_new') }}">
-            Opret ny &quot;Sted egenskab kategori&quot;
-        </a>
-    </li>
-</ul>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('tagcategory_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <!--         <td>{{ entity.catid }}</td> //-->
+                <td>{{ entity.weight }}</td>
+                <td>{{ entity.mtGetPublishedTxt }}</td>
+                <td>{{ entity.mtGetIsGeneralTxt }}</td>
+                <td>{{ entity.readableName }}
+                    {% if entity.textDescription %}<br/><span
+                            class="textDescription">{{ entity.textDescription }}</span>{% endif %}</td>
+                <td>
+                    <ul class="adminmenu_local">
+                        <li>
+                            <a href="{{ path('tagcategory_show', { 'id': entity.id }) }}"class="view">Vis</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('tagcategory_edit', { 'id': entity.id }) }}">Rediger</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('tagcategory_delete', { 'id': entity.id }) }}" class="delete">Slet</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

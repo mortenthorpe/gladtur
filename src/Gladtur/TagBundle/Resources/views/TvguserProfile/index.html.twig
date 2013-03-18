@@ -1,43 +1,42 @@
 {% extends "GladturTagBundle::layout.html.twig" %}
 {% block content %}
-<h1>Oversigt over &quot;Bruger-Profiler&quot;</h1>
-
-<table class="records_list">
-    <thead>
+    <!-- TvguserProfile/index.html.twig //-->
+    <h1>Oversigt over &quot;Bruger-Profiler&quot;</h1>
+    <ul class="list_plain">
+        <li>
+            <a class="create" href="{{ path('tvguserprofile_new') }}">
+                Opret ny &quot;Bruger-Profil&quot;
+            </a>
+        </li>
+    </ul>
+    <table class="records_list">
+        <thead>
         <tr>
             <th>Id</th>
             <th>Profil-navn</th>
             <th>Udfør</th>
         </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('tvguserprofile_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-            <td>{{entity.readableName}}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('tvguserprofile_show', { 'id': entity.id }) }}">Vis</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('tvguserprofile_edit', { 'id': entity.id }) }}">Rediger</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('tvguserprofile_delete', { 'id': entity.id }) }}">Slet</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-<ul>
-    <li>
-        <a href="{{ path('tvguserprofile_new') }}">
-            Opret ny &quot;Bruger-Profil&quot;
-        </a>
-    </li>
-</ul>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('tvguserprofile_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.readableName }}</td>
+                <td>
+                    <ul class="adminmenu_local">
+                        <li>
+                            <a href="{{ path('tvguserprofile_show', { 'id': entity.id }) }}"class="view">Vis</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('tvguserprofile_edit', { 'id': entity.id }) }}">Rediger</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('tvguserprofile_delete', { 'id': entity.id }) }}" class="delete">Slet</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}

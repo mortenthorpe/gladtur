@@ -2,39 +2,44 @@
 <head>
     <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/bmatznerfoundation/js/foundation.min.js') }}"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerfoundation/css/foundation.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('bundles/gladturadmin/css/admin.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerfoundation/css/foundation.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/gladturadmin/css/admin.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/gladturadmin/css/zforms.css') }}"/>
 </head>
-	<body class="admin-{{ app.request.get('_route') | replace({'_' : '-'}) }}">
-        <div id="main">
-        <div id="header">
-            {% include "GladturTagBundle::header.html.twig" %}
-        </div>
-        <div id="admin_actions">
-		<dl class="sub-nav">
-			<dd{% if app.request.get('_route') == 'tagcategory' %} class="active"{% endif %}><a href="{{path('tagcategory')}}">Oversigt over sted-egenskabs-kategorier</a></dd>
-            <dd{% if app.request.get('_route') == 'tag' %} class="active"{% endif %}><a href="{{path('tag')}}">Oversigt over sted-egenskaber</a></dd>
-			<dd {% if app.request.get('_route') == 'location' %} class="active"{% endif %}><a href="{{path('location')}}">Oversigt over steder</a></dd>
+<body class="admin-{{ app.request.get('_route') | replace({'_' : '-'}) }}">
+<div id="main">
+    <div id="header">
+        {% include "GladturTagBundle::header.html.twig" %}
+    </div>
+    <div id="admin_actions">
+        <dl class="sub-nav">
+            <dd{% if app.request.get('_route') == 'tagcategory' %} class="active"{% endif %}><a
+                    href="{{ path('tagcategory') }}">Oversigt over sted-egenskabs-kategorier</a></dd>
+            <dd{% if app.request.get('_route') == 'tag' %} class="active"{% endif %}><a href="{{ path('tag') }}">Oversigt
+                over sted-egenskaber</a></dd>
+            <dd {% if app.request.get('_route') == 'location' %} class="active"{% endif %}><a
+                    href="{{ path('location') }}">Oversigt over steder</a></dd>
             <!-- <dd><a href="{{path('locationtag')}}">Oversigt over steder og deres egenskaber</a></dd> Merge with steder... //-->
-            <dd {% if app.request.get('_route') == 'tvguserprofile' %} class="active"{% endif %}><a href="{{path('tvguserprofile')}}">Oversigt over brugerprofiler</a></dd>
-		</dl>
-        </div>
-        <div id="user_actions">
-            <a href="/logout">Log af!</a>
-        </div>
-    <div id="main">
+            <dd {% if app.request.get('_route') == 'tvguserprofile' %} class="active"{% endif %}><a
+                    href="{{ path('tvguserprofile') }}">Oversigt over brugerprofiler</a></dd>
+        </dl>
+    </div>
+    <div id="user_actions">
+        <a href="/logout">Log af!</a>
+    </div>
+    <div id="content">
         <div id="main_left">
-		    {% block content %}
+            {% block content %}
             {% endblock %}
         </div>
         <div id="main_right">
-		    {% block guides %}
+            {% block guides %}
             {% endblock %}
         </div>
     </div>
-        <div id="footer">
-            {% include "GladturTagBundle::footer.html.twig" %}
-        </div>
+    <div id="footer">
+        {% include "GladturTagBundle::footer.html.twig" %}
     </div>
-	</body>
+</div>
+</body>
 </html>

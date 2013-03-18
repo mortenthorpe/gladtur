@@ -1,56 +1,55 @@
 {% extends "GladturTagBundle::layout.html.twig" %}
 {% block content %}
-<!--<ul id="adminmenu">
+    <!-- Location/index.html.twig //-->
+    <!--<ul id="adminmenu">
 	{% for itemName, itemURL in menuItems %}
 	<li class=""><a href="{{ itemURL }}">{{itemName}}</a></li>
 	{% endfor %}
 </ul>//-->
-<h1>Location list</h1>
-
-<table class="records_list">
-    <thead>
+    <h1>Oversigt over steder</h1>
+    <ul class="list_plain">
+        <li>
+            <a class="create" href="{{ path('location_new') }}">
+                Opret nyt sted
+            </a>
+        </li>
+    </ul>
+    <table class="records_list">
+        <thead>
         <tr>
-			<th>Id</th>
+            <th>Id</th>
             <th>Navn</th>
             <th>Bynavn</th>
             <th>Gade/vej og nr.</th>
-			<th>Post nr.</th>
-			<th>Skal vises?</th>
+            <th>Post nr.</th>
+            <th>Skal vises?</th>
             <th>Udfør</th>
         </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-			<td>{{entity.id}}</td>
-            <td><a href="{{ path('location_show', { 'id': entity.id }) }}">{{ entity.readableName }}</a></td>
-            <td>{{ entity.addressCity }}</td>
-            <td>{{ entity.addressStreet }}</td>
-			<td>{{ entity.mtGetAddressZip }}</td>
-			<td>{{ entity.mtGetPublishedTxt }}</td>
-            <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('location_show', { 'id': entity.id }) }}">Vis</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('location_edit', { 'id': entity.id }) }}">Rediger</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('location_delete', { 'id': entity.id }) }}">Slet</a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-
-<ul>
-    <li>
-        <a href="{{ path('location_new') }}">
-            Opret nyt sted
-        </a>
-    </li>
-</ul>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.id }}</td>
+                <td><a href="{{ path('location_show', { 'id': entity.id }) }}">{{ entity.readableName }}</a></td>
+                <td>{{ entity.addressCity }}</td>
+                <td>{{ entity.addressStreet }}</td>
+                <td>{{ entity.mtGetAddressZip }}</td>
+                <td>{{ entity.mtGetPublishedTxt }}</td>
+                <td>
+                    <ul class="adminmenu_local">
+                        <li>
+                            <a href="{{ path('location_show', { 'id': entity.id }) }}"class="view">Vis</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('location_edit', { 'id': entity.id }) }}">Rediger</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('location_delete', { 'id': entity.id }) }}" class="delete">Slet</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
