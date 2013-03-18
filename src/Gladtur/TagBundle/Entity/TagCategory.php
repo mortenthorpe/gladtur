@@ -13,12 +13,10 @@ use Symfony\Component\HttpFoundation\File\File as FILE;
  */
 class TagCategory
 {
-    
-    public $image;
     /**
      * @var integer $id
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column( name="id", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
@@ -69,7 +67,7 @@ class TagCategory
      *
      * @ORM\Column(name="icon_filepath", type="string", length=255, nullable=true)
      */
-    public $iconFilepath;
+    private $iconFilepath;
     /**
      * @var string $textDescription
      *
@@ -229,9 +227,13 @@ class TagCategory
      */
     public function getIconFilepath()
     {
-        return new \Symfony\Component\HttpFoundation\File\File($this->iconFilepath);
+        return $this->iconFilepath;
     }
 
+    public function getIconFile()
+    {
+        return new File($this->iconFilepath);
+    }
 	/**
 	* Set textDescription
 	*

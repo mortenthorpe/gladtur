@@ -4,12 +4,14 @@ namespace Gladtur\TagBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\File; // Upload with Doctrine Entity Backed data: http://symfony.com/doc/2.0/cookbook/doctrine/file_uploads.html
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File as SFFile;
 use Gladtur\TagBundle\Entity\TagCategory;
 use Gladtur\TagBundle\Form\TagCategoryType;
+
 
 /**
  * TagCategory controller.
@@ -54,7 +56,7 @@ class TagCategoryController extends Controller
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity' => $entity,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -68,11 +70,11 @@ class TagCategoryController extends Controller
     public function newAction()
     {
         $entity = new TagCategory();
-        $form   = $this->createForm(new TagCategoryType(), $entity);
+        $form = $this->createForm(new TagCategoryType(), $entity);
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -85,7 +87,7 @@ class TagCategoryController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity  = new TagCategory();
+        $entity = new TagCategory();
         $form = $this->createForm(new TagCategoryType(), $entity);
         $form->bind($request);
 
@@ -99,7 +101,7 @@ class TagCategoryController extends Controller
 
         return array(
             'entity' => $entity,
-            'form'   => $form->createView(),
+            'form' => $form->createView(),
         );
     }
 
@@ -118,12 +120,16 @@ class TagCategoryController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find TagCategory entity.');
         }
+
+        if($entity->getIconFilepath()){
+            $entity->setIconFilepath(new SFFile($entity->getIconFilepath()));
+        }
         $editForm = $this->createForm(new TagCategoryType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -137,12 +143,12 @@ class TagCategoryController extends Controller
      */
     public function updateAction(Request $request, $id)
     {
-/*        $document = new Document();
-        $editForm = $this->createFormBuilder($document)
-                ->add('iconFilepath')
-                ->add('file')
-                ->getForm();*/
-        
+        /*        $document = new Document();
+                $editForm = $this->createFormBuilder($document)
+                        ->add('iconFilepath')
+                        ->add('file')
+                        ->getForm();*/
+
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('GladturTagBundle:TagCategory')->find($id);
@@ -153,18 +159,19 @@ class TagCategoryController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new TagCategoryType(), $entity);
-        $eIconFile=new \Symfony\Component\HttpFoundation\File\File($entity->image);
-        $fName='aFile.png';
-        $eIconFile->move(__DIR__.'/../../../../web/uploads', $fName);
+        /*$eIconFile = new \Symfony\Component\HttpFoundation\File\File($entity->image);
+        $fName = 'aFile.png';
+        $eIconFile->move(__DIR__ . '/../../../../web/uploads', $fName);*/
 //        $entity->setIconFilepath($entity->iconFilepath->getClientOriginalName());
-        $entity->setIconFilepath('/Users/mortenthorpe/sites/symf21/web/uploads/'.$fName);
+        //$entity->setIconFilepath('/Users/mortenthorpe/sites/symf21/web/uploads/' . $fName);
         $editForm->bind($request);
-        
-        
+
 
         if ($editForm->isValid()) {
-            $entity->setIconFilepath('/Users/mortenthorpe/sites/symf21/web/uploads/'.$fName);
-            $entity->iconFilepath='/Users/mortenthorpe/sites/symf21/web/uploads/'.$fName);
+            $file=$editForm->getData()->getIconFilepath();
+            $fName = 'aNewFile2' . '.png';
+            $file->move('/Users/mortenthorpe/sites/gladtur/web/uploads', $fName);
+            $entity->setIconFilepath('/Users/mortenthorpe/sites/gladtur/web/uploads/' . $fName);
             $em->persist($entity);
             $em->flush();
 
@@ -172,8 +179,8 @@ class TagCategoryController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
+            'entity' => $entity,
+            'edit_form' => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -185,15 +192,15 @@ class TagCategoryController extends Controller
      */
     public function deleteAction($id)
     {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('GladturTagBundle:TagCategory')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $entity = $em->getRepository('GladturTagBundle:TagCategory')->find($id);
 
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find TagCategory entity.');
-            }
+        if (!$entity) {
+            throw $this->createNotFoundException('Unable to find TagCategory entity.');
+        }
 
-            $em->remove($entity);
-            $em->flush();
+        $em->remove($entity);
+        $em->flush();
 
         return $this->redirect($this->generateUrl('tagcategory'));
     }
@@ -202,7 +209,6 @@ class TagCategoryController extends Controller
     {
         return $this->createFormBuilder(array('id' => $id))
             ->add('id', 'hidden')
-            ->getForm()
-        ;
+            ->getForm();
     }
 }

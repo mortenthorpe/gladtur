@@ -11,3 +11,11 @@ web/uploads/*
 # Configuration files
 #app/config/parameters.ini
 #app/config/parameters.yml
+
+#Mac OS X special files
+.DS_Store
+*/.DS_Store
+
+#PHPStorm directories
+.idea
+.idea/*

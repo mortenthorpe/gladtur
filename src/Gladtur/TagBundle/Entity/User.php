@@ -20,11 +20,6 @@ class User extends BaseUser
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="LocationCategory", mappedBy="user")
-     **/
-    private $locationCategory;
-
-    /**
     * @ORM\OneToMany(targetEntity="UserLocationData", mappedBy="user")
     */
     protected $userLocationData;

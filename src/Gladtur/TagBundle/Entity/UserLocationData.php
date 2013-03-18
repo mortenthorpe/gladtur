@@ -50,15 +50,6 @@ class UserLocationData{
     }
 
     /**
-    * @ORM\OneToOne(targetEntity="LocationCategory", mappedBy="user_location_data")
-    */
-    /*protected $locationCategory;
-
-    public function getLocationCategory(){
-        return $this->locationCategory;
-    }*/
-    
-    /**
      * @var integer $hoursOpeningtime
      *
      * @ORM\Column(name="hours_openingtime", type="integer", nullable=true)
@@ -219,7 +210,7 @@ class UserLocationData{
     }
     
     public function __toString(){
-        return (string) $this->getUserId();
+        return (string) $this->getUser();
     }
 
     /**

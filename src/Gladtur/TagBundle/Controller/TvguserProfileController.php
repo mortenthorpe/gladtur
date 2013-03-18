@@ -131,7 +131,7 @@ class TvguserProfileController extends Controller
     }
 
     /**
-     * Edits an existing Tag entity.
+     * Edits an existing TvguserProfile entity.
      *
      * @Route("/{id}/update", name="tvguserprofile_update")
      * @Method("POST")
@@ -144,7 +144,7 @@ class TvguserProfileController extends Controller
         $entity = $em->getRepository('GladturTagBundle:TvguserProfile')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Tag entity.');
+            throw $this->createNotFoundException('Unable to find TvguserProfile entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);

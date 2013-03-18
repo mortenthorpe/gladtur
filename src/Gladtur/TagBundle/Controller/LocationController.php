@@ -128,6 +128,7 @@ class LocationController extends Controller
         }
 
         $editForm = $this->createForm(new LocationType(), $entity);
+        $locCategoryForm = $this->createForm(new LocationType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(

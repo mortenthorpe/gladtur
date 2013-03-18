@@ -19,9 +19,8 @@ class TagCategoryType extends AbstractType
             ->add('isGeneral', 'checkbox', array('label'=>'Kategorien skal ALTID vises?','required'=>false))
 				->add('readableName','text', array('label'=>'Kategori navn'))
 					->add('textDescription', 'textarea', array('label'=>'Beskrivelse', 'required'=>false))
-			->add('weight', 'choice', array('choices'=>$weightChoices, 'label'=>'Rangering'))
+			->add('weight', 'choice', array('choices'=>$weightChoices, 'label'=>'Rangering', 'attr'=>array('class'=>'small-1')))
 			//->add('iconFilepath', 'file', array('label'=>'Kategori ikon', 'required'=>false))
-            ->add('image', 'file', array('label'=>'Kategori ikon', 'required'=>false))
 				
         ;
     }

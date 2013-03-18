@@ -1,25 +1,25 @@
 {% extends "GladturTagBundle::layout.html.twig" %}
 {% block content %}
-<h1>Redigering af &quot;Sted egenskab kategori&quot; - {{entity.getReadableName}}</h1>
+    <h1>Redigering af &quot;Sted egenskab kategori&quot; - {{ entity.getReadableName }}</h1>
 
-<form action="{{ path('tagcategory_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
-    {{ form_widget(edit_form) }}
-    <p>
-        <button type="submit">Rediger</button>
-    </p>
-</form>
+    <form action="{{ path('tagcategory_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        {{ form_widget(edit_form) }}
+        <p>
+            <button type="submit">Rediger</button>
+        </p>
+    </form>
 
-<ul class="record_actions">
-    <li>
-        <a href="{{ path('tagcategory') }}">
-            &quot;Sted egenskab kategori&quot; Oversigt
-        </a>
-    </li>
-    <li>
-        <form action="{{ path('tagcategory_delete', { 'id': entity.id }) }}" method="post">
-            {{ form_widget(delete_form) }}
-            <button type="submit">Slet</button>
-        </form>
-    </li>
-</ul>
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('tagcategory') }}">
+                &quot;Sted egenskab kategori&quot; Oversigt
+            </a>
+        </li>
+        <li>
+            <form action="{{ path('tagcategory_delete', { 'id': entity.id }) }}" method="post">
+                {{ form_widget(delete_form) }}
+                <button type="submit" class="delete">Slet</button>
+            </form>
+        </li>
+    </ul>
 {% endblock %}

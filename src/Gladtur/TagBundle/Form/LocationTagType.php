@@ -12,7 +12,7 @@ class LocationTagType extends AbstractType
     {
         $builder
             ->add('locationTagProperties')
-            ->add('tag')
+            ->add('tag', 'text', array('label'=>'Sted egenskab'))
         ;
     }
 
