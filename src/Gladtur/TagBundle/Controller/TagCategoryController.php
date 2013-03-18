@@ -4,13 +4,14 @@ namespace Gladtur\TagBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use
-    Symfony\Component\HttpFoundation\File; // Upload with Doctrine Entity Backed data: http://symfony.com/doc/2.0/cookbook/doctrine/file_uploads.html
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpFoundation\File\File as SFFile;
 use Gladtur\TagBundle\Entity\TagCategory;
 use Gladtur\TagBundle\Form\TagCategoryType;
+
 
 /**
  * TagCategory controller.
@@ -119,6 +120,10 @@ class TagCategoryController extends Controller
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find TagCategory entity.');
         }
+
+        if($entity->getIconFilepath()){
+            $entity->setIconFilepath(new SFFile($entity->getIconFilepath()));
+        }
         $editForm = $this->createForm(new TagCategoryType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
@@ -154,17 +159,19 @@ class TagCategoryController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new TagCategoryType(), $entity);
-        $eIconFile = new \Symfony\Component\HttpFoundation\File\File($entity->image);
+        /*$eIconFile = new \Symfony\Component\HttpFoundation\File\File($entity->image);
         $fName = 'aFile.png';
-        $eIconFile->move(__DIR__ . '/../../../../web/uploads', $fName);
+        $eIconFile->move(__DIR__ . '/../../../../web/uploads', $fName);*/
 //        $entity->setIconFilepath($entity->iconFilepath->getClientOriginalName());
-        $entity->setIconFilepath('/Users/mortenthorpe/sites/symf21/web/uploads/' . $fName);
+        //$entity->setIconFilepath('/Users/mortenthorpe/sites/symf21/web/uploads/' . $fName);
         $editForm->bind($request);
 
 
         if ($editForm->isValid()) {
-            $entity->setIconFilepath('/Users/mortenthorpe/sites/symf21/web/uploads/' . $fName);
-            $entity->iconFilepath = '/Users/mortenthorpe/sites/symf21/web/uploads/' . $fName;
+            $file=$editForm->getData()->getIconFilepath();
+            $fName = 'aNewFile2' . '.png';
+            $file->move('/Users/mortenthorpe/sites/gladtur/web/uploads', $fName);
+            $entity->setIconFilepath('/Users/mortenthorpe/sites/gladtur/web/uploads/' . $fName);
             $em->persist($entity);
             $em->flush();
 

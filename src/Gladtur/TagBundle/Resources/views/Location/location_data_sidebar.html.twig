@@ -1,0 +1,25 @@
+<h3>Stedets aktuelle kategorier</h3>
+{%  if location.locationCategories %}
+    <ul>
+{% for locationCategory in location.locationCategories %}
+        {% if locationCategory.parentCategory == false %}
+    <li>{{ locationCategory.readableName }}
+        {%  endif %}
+   {% if locationCategory.getChildCategories %}
+        <ul>
+            {% for cCategory in locationCategory.getChildCategories %}
+                <li>{{ cCategory.readableName }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+        {% if locationCategory.parentCategory == false %} </li> {% endif %}
+{%  endfor %}
+    </ul>
+{% else %}
+    Der er ingen der har tildelt stedet nogle kategorier endnu!
+{% endif %}
+<div class="actions_addanother">Tilføj flere kategorier til '{{ location.readableName }}'</div>
+<form method="post" action="">
+
+</form>
+

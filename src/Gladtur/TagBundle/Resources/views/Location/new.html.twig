@@ -1,6 +1,6 @@
 {% extends "GladturTagBundle::layout.html.twig" %}
 {% block content %}
-<h1>Opret sted</h1>
+<h1>Opret nyt sted</h1>
 
 <form action="{{ path('location_create') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}

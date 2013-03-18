@@ -22,7 +22,7 @@ h3 {
     padding: 0 50px
 }
 
-#main * {
+#main div {
     text-align: left
 }
 
@@ -77,10 +77,12 @@ a.save {
 }
 
 .signin, .signinform {
-    width: 500px
+    width: 300px
 }
 
 .signin, .signin form, .signinform, signinform form {
     margin: 0 auto;
     text-align: center
 }
+
+#footer{display:block;clear:both;float:none}

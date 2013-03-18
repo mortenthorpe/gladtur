@@ -10,16 +10,20 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Location
 {
+
     /**
-     * @ORM\ManyToMany(targetEntity="LocationCategory", mappedBy="location")
+     * @ORM\ManyToMany(targetEntity="LocationCategory", inversedBy="location")
      **/
+
     private $locationCategory;
+
     /**
      * @ORM\OneToMany(targetEntity="UserLocationTagData", mappedBy="location")
      */
     protected $userLocationTagData;
 
     public function __construct(){
+        $this->locationCategory = new \Doctrine\Common\Collections\ArrayCollection();
         $this->userLocationData=new \Doctrine\Common\Collections\ArrayCollection();
     }
     /**
@@ -433,28 +437,71 @@ class Location
     {
         return $this->mediapath;
     }
-	
-    
+
+    /**
+     * @param $latitude
+     * @return $this
+     */
     public function setLatitude($latitude){
         $this->latitude=$latitude;
         return $this;
     }
-    
+
+    /**
+     * @return string
+     */
     public function getLatitude(){
         return $this->latitude;
     }
-    
+
+    /**
+     * @param $longitude
+     * @return $this
+     */
     public function setLongitude($longitude){
         $this->longitude=$longitude;
         return $this;
     }
-    
+
+    /**
+     * @return string
+     */
     public function getLongitude(){
         return $this->longitude;
     }
-    
-	public function __toString(){
+
+    /**
+     * @return string
+     */
+    public function __toString(){
 		return $this->getReadableName();
 	}
-    
+
+    /**
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getLocationCategory(){
+        return $this->locationCategory;
+    }
+
+    /**
+     * @param LocationCategory $locationCategories
+     * @return Location
+     */
+    public function addLocationcategory(\Gladtur\TagBundle\Entity\LocationCategory $locationCategories)
+    {
+        $this->locationCategory[] = $locationCategories;
+
+        return $this;
+    }
+
+
+    public function removeLocationcategory(\Gladtur\TagBundle\Entity\LocationCategory $locationCategories)
+    {
+        $this->locationCategory->removeElement($locationCategories);
+    }
+
+    public function getLocationCategories(){
+        return $this->locationCategory;
+    }
 }

@@ -20,26 +20,33 @@ class LocationCategory
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
+//http://docs.doctrine-project.org/projects/doctrine-orm/en/latest/reference/association-mapping.html //
+    /**
+     * @ORM\OneToMany(targetEntity="LocationCategory", mappedBy="parentCategory")
+     **/
+    private $childCategories;
+
+
+    public function getChildCategories(){
+        return $this->childCategories;
+    }
 
     /**
-    * @var integer $parentCategoryId
-    * @ORM\Column(name="parent_category_id", type="integer", length=11, nullable=true)
-    */
+     * @ORM\ManyToOne(targetEntity="LocationCategory", inversedBy="childCategories")
+     **/
     private $parentCategory;
-	
-    /**
-    * @ORM\ManyToOne(targetEntity="User", inversedBy="locationCategory")
-    **/
-    private $user;
+
+    public function getParentCategory(){
+        return ($this->parentCategory)?$this->parentCategory:null;
+    }
+
 
     /**
-     * @ORM\ManyToMany(targetEntity="Location", inversedBy="locationCategory")
+     * @ORM\ManyToMany(targetEntity="Location", mappedBy="locationCategory")
      **/
     private $location;
 
-        public function getUserLocationData(){
-            return $this->user_location_data;
-        }
+
     /**
      * @var string $readableName
      *
@@ -54,6 +61,10 @@ class LocationCategory
      */
     private $published;
 
+
+    public function __construct() {
+        $this->childCategories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -115,11 +126,15 @@ class LocationCategory
 		return ($this->published)?'Ja':'Nej';
 	}
         
-    
+
 	public function __toString(){
 		return $this->getReadableName();
 	}
 
+    public function getNestedReadableName(){
+        if($this->getParentCategory()) return ' - '.$this->getReadableName();
+        return $this->getReadableName();
+    }
     /**
      * Set parentCategory
      *
@@ -133,13 +148,8 @@ class LocationCategory
         return $this;
     }
 
-    /**
-     * Get parentCategory
-     *
-     * @return integer 
-     */
-    public function getParentCategory()
-    {
-        return $this->parentCategory;
+    public function getLocationCategoryUnassigned($categoryPublished=true){
+
     }
+
 }
