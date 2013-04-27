@@ -1,6 +1,8 @@
 {% extends "GladturTagBundle::layout.html.twig" %}
 {% form_theme edit_form 'GladturTagBundle:Form:form_row.html.twig' %}
 {% block content %}
+    {{ google_map_container(map)}}
+    {{ google_map_js(map) }}
 <form action="{{ path('location_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     <div class="main_right" style="float:right;width:336px">
         <div id="locationCategories">

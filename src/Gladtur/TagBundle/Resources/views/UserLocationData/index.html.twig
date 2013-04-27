@@ -4,8 +4,8 @@
     {% for entity in entities %}
         {{ entity.location }} ({{ entity.location.id }}) - af brugeren '{{ entity.user }}'
         <ul>
-            <li>Opens at: {{ entity.hoursOpeningtime }}</li>
-            <li>Closes at: {{ entity.hoursClosingtime }}</li>
+            <li>Opens at: {{ entity.hoursOpeningtime | json_encode  }}</li>
+            <li>Closes at: {{ entity.hoursClosingtime | json_encode }}</li>
         </ul>
         <div>
             <h3>Media and description of this place:</h3>

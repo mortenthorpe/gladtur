@@ -25,6 +25,9 @@ framework:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
+    form:
+      resources:
+        - 'GladturTagBundle:Form:fields.html.twig'
 
 # Assetic Configuration
 assetic:
@@ -72,3 +75,8 @@ services:
         class:        Twig_Extension_Debug
         tags:
              - { name: 'twig.extension' }
+
+    GladturTagBundle.image_type_extension:
+        class: Gladtur\TagBundle\Form\Type\ImageTypeExtension
+        tags:
+            - { name: form.type_extension, alias: file }

@@ -1,0 +1,30 @@
+{% extends 'form_div_layout.html.twig' %}
+{% block location_category_widget %}
+    {% spaceless %}
+        {% if expanded %}
+            <ul {{ block('widget_container_attributes') }}>
+                {% for child in form %}
+                    <li>
+                        {{ form_widget(child) }}
+                        {{ form_label(child) }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {# just let the choice widget render the select tag #}
+            {{ block('choice_widget') }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}
+
+{% block file_widget %}
+    {% spaceless %}
+        {% if image_url is not null %}
+            <div style="float:left">
+            <img src="{{ asset(image_url) }}" style="height:80px"/>
+             </div>
+        {% endif %}
+        <div style="float:left">{{ block('form_widget') }}<div class="field-description">{{ 'Choose a file to replace the existing image' | trans }}</div></div>
+        <div style="float:none;clear:both"></div>
+    {% endspaceless %}
+{% endblock %}
