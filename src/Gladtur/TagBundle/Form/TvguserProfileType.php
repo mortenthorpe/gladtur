@@ -10,7 +10,9 @@ class TvguserProfileType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('readableName', 'text', array('label'=>'Brugerprofil-navn', 'attr'=>array('class'=>'profileName')));
+        $builder->add('readableName', 'text', array('label'=>'Brugerprofil-navn', 'attr'=>array('class'=>'profileName')))
+            ->add('avatar', 'file', array('image_path' => 'webPath', 'required'=>'false', 'attr'=>array('class'=>'userprofile_image')));
+
         $builder->add('tagCategories', 'entity', array('class'=>'GladturTagBundle:TagCategory', 'label'=>'Sted-egenskabs-kategorier tilknyttet profilen', 'multiple'=>true, 'expanded'=>true));
     }
 

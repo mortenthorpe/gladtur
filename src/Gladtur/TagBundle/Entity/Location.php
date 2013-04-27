@@ -11,6 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
 class Location
 {
 
+    private $locDataInstance;
+
     /**
      * @ORM\ManyToMany(targetEntity="LocationCategory", inversedBy="location")
      **/
@@ -25,6 +27,7 @@ class Location
     public function __construct(){
         $this->locationCategory = new \Doctrine\Common\Collections\ArrayCollection();
         $this->userLocationData=new \Doctrine\Common\Collections\ArrayCollection();
+        $this->setPublished(true);
     }
     /**
      * @var integer $id
@@ -35,25 +38,6 @@ class Location
      */
     private $id;
 
-     /**
-      * @var string $latitude
-      *
-      * @ORM\Column(name="latitude", type="string", length=64, nullable=true)
-      */
-      private $latitude;
-      /**
-       * @var string $longitude
-       *
-       * @ORM\Column(name="longitude", type="string", length=64, nullable=true)
-       */
-       private $longitude;
-      /**
-       * @var string $readableName
-       *
-       * @ORM\Column(name="readable_name", type="string", length=255, nullable=true)
-       */     
-    private $readableName;
-
     /**
      * @var boolean $published
      *
@@ -62,74 +46,11 @@ class Location
     private $published;
 
     /**
-     * @var string $addressZip
-     *
-     * @ORM\Column(name="address_zip", type="string", length=20, nullable=true)
-     */
-    private $addressZip;
-
-    /**
-     * @var string $addressCountry
-     *
-     * @ORM\Column(name="address_country", type="string", length=255, nullable=true)
-     */
-    private $addressCountry;
-
-    /**
-     * @var string $addressCity
-     *
-     * @ORM\Column(name="address_city", type="string", length=255, nullable=true)
-     */
-    private $addressCity;
-
-    /**
-     * @var string $addressStreet
-     *
-     * @ORM\Column(name="address_street", type="string", length=255, nullable=true)
-     */
-    private $addressStreet;
-
-    /**
-     * @var string $addressExtd
-     *
-     * @ORM\Column(name="address_extd", type="string", length=255, nullable=true)
-     */
-    private $addressExtd;
-
-    /**
-     * @var string $phone
-     *
-     * @ORM\Column(name="phone", type="string", length=20, nullable=true)
-     */
-    private $phone;
-
-    /**
-     * @var string $mail
-     *
-     * @ORM\Column(name="mail", type="string", length=255, nullable=true)
-     */
-    private $mail;
-
-    /**
      * @var string $homepage
      *
      * @ORM\Column(name="homepage", type="string", length=255, nullable=true)
      */
     private $homepage;
-
-    /**
-     * @var string $contactPerson
-     *
-     * @ORM\Column(name="contact_person", type="string", length=255, nullable=true)
-     */
-    private $contactPerson;
-
-    /**
-     * @var string $mediapath
-     *
-     * @ORM\Column(name="mediapath", type="string", length=255, nullable=true)
-     */
-    private $mediapath;
 
     // http://docs.doctrine-project.org/projects/doctrine-orm/en/2.0.x/reference/association-mapping.html#many-to-many-unidirectional
     /**
@@ -137,12 +58,16 @@ class Location
      * Owning Side
      *
      * @ORM\OneToMany(targetEntity="UserLocationData", mappedBy="location")
+     * @ORM\OrderBy({"created_at" = "DESC"})
      */
-        private $userLocationData;
+    private $userLocationData;
         
-        public function getUserLocationData(){
-            return $this->userLocationData;
-        }
+    public function getUserLocationData($latestOnly = true){
+       if($latestOnly){
+           return $this->userLocationData->first();
+       }
+       return $this->userLocationData;
+    }
 
     /**
      * Get id
@@ -155,29 +80,6 @@ class Location
     }
 
     /**
-     * Set readableName
-     *
-     * @param string $readableName
-     * @return Location
-     */
-    public function setReadableName($readableName)
-    {
-        $this->readableName = $readableName;
-    
-        return $this;
-    }
-
-    /**
-     * Get readableName
-     *
-     * @return string 
-     */
-    public function getReadableName()
-    {
-        return $this->readableName;
-    }
-
-    /**
      * Set published
      *
      * @param boolean $published
@@ -186,7 +88,6 @@ class Location
     public function setPublished($published)
     {
         $this->published = $published;
-    
         return $this;
     }
 
@@ -203,170 +104,10 @@ class Location
 	public function mtGetPublishedTxt(){
 		return ($this->published)?'Ja':'Nej';
 	}
-    /**
-     * Set addressZip
-     *
-     * @param string $addressZip
-     * @return Location
-     */
-    public function setAddressZip($addressZip)
-    {
-        $this->addressZip = $addressZip;
-    
-        return $this;
-    }
-
-    /**
-     * Get addressZip
-     *
-     * @return string 
-     */
-    public function getAddressZip()
-    {
-        return $this->addressZip;
-    }
 
     public function mtGetAddressZip()
     {
-        return ($this->addressZip)?$this->addressZip:'----';
-    }
-
-    /**
-     * Set addressCountry
-     *
-     * @param string $addressCountry
-     * @return Location
-     */
-    public function setAddressCountry($addressCountry)
-    {
-        $this->addressCountry = $addressCountry;
-    
-        return $this;
-    }
-
-    /**
-     * Get addressCountry
-     *
-     * @return string 
-     */
-    public function getAddressCountry()
-    {
-        return $this->addressCountry;
-    }
-
-    /**
-     * Set addressCity
-     *
-     * @param string $addressCity
-     * @return Location
-     */
-    public function setAddressCity($addressCity)
-    {
-        $this->addressCity = $addressCity;
-    
-        return $this;
-    }
-
-    /**
-     * Get addressCity
-     *
-     * @return string 
-     */
-    public function getAddressCity()
-    {
-        return $this->addressCity;
-    }
-
-    /**
-     * Set addressStreet
-     *
-     * @param string $addressStreet
-     * @return Location
-     */
-    public function setAddressStreet($addressStreet)
-    {
-        $this->addressStreet = $addressStreet;
-    
-        return $this;
-    }
-
-    /**
-     * Get addressStreet
-     *
-     * @return string 
-     */
-    public function getAddressStreet()
-    {
-        return $this->addressStreet;
-    }
-
-    /**
-     * Set addressExtd
-     *
-     * @param string $addressExtd
-     * @return Location
-     */
-    public function setAddressExtd($addressExtd)
-    {
-        $this->addressExtd = $addressExtd;
-    
-        return $this;
-    }
-
-    /**
-     * Get addressExtd
-     *
-     * @return string 
-     */
-    public function getAddressExtd()
-    {
-        return $this->addressExtd;
-    }
-
-    /**
-     * Set phone
-     *
-     * @param string $phone
-     * @return Location
-     */
-    public function setPhone($phone)
-    {
-        $this->phone = $phone;
-    
-        return $this;
-    }
-
-    /**
-     * Get phone
-     *
-     * @return string 
-     */
-    public function getPhone()
-    {
-        return $this->phone;
-    }
-
-    /**
-     * Set mail
-     *
-     * @param string $mail
-     * @return Location
-     */
-    public function setMail($mail)
-    {
-        $this->mail = $mail;
-    
-        return $this;
-    }
-
-    /**
-     * Get mail
-     *
-     * @return string 
-     */
-    public function getMail()
-    {
-        return $this->mail;
+        return ($this->getAddressZip())?$this->getAddressZip():'----';
     }
 
     /**
@@ -392,89 +133,12 @@ class Location
         return $this->homepage;
     }
 
-    /**
-     * Set contactPerson
-     *
-     * @param string $contactPerson
-     * @return Location
-     */
-    public function setContactPerson($contactPerson)
-    {
-        $this->contactPerson = $contactPerson;
-    
-        return $this;
-    }
-
-    /**
-     * Get contactPerson
-     *
-     * @return string 
-     */
-    public function getContactPerson()
-    {
-        return $this->contactPerson;
-    }
-
-    /**
-     * Set mediapath
-     *
-     * @param string $mediapath
-     * @return Location
-     */
-    public function setMediapath($mediapath)
-    {
-        $this->mediapath = $mediapath;
-    
-        return $this;
-    }
-
-    /**
-     * Get mediapath
-     *
-     * @return string 
-     */
-    public function getMediapath()
-    {
-        return $this->mediapath;
-    }
-
-    /**
-     * @param $latitude
-     * @return $this
-     */
-    public function setLatitude($latitude){
-        $this->latitude=$latitude;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLatitude(){
-        return $this->latitude;
-    }
-
-    /**
-     * @param $longitude
-     * @return $this
-     */
-    public function setLongitude($longitude){
-        $this->longitude=$longitude;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getLongitude(){
-        return $this->longitude;
-    }
 
     /**
      * @return string
      */
     public function __toString(){
-		return $this->getReadableName();
+        $this->getUserLocationData()->getReadableName();
 	}
 
     /**
@@ -503,5 +167,23 @@ class Location
 
     public function getLocationCategories(){
         return $this->locationCategory;
+    }
+
+    public function getAddressCountryReadable(){
+        return 'Denmark';
+    }
+
+    public function __call($name, $arguments=null){
+        if(strpos($name, 'get') !== 0){
+          $name = 'get'.ucfirst($name);
+        }
+
+        if(!isset($this->locDataInstance)){
+            $this->locDataInstance = $this->getUserLocationData();
+        }
+        if(isset($this->locDataInstance) && $this->locDataInstance){
+            return $this->locDataInstance->$name($arguments);
+        }
+        return new UserLocationData();
     }
 }

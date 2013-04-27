@@ -29,6 +29,7 @@ class AppKernel extends Kernel
 	    new JMS\SerializerBundle\JMSSerializerBundle(),
 	new Bmatzner\FoundationBundle\BmatznerFoundationBundle(),
 	new Bmatzner\JQueryBundle\BmatznerJQueryBundle(),
+            new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

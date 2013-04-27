@@ -1,6 +1,7 @@
 <?php
 namespace Gladtur\TagBundle\Controller;
 
+use Gladtur\TagBundle\Form\UserLocationDataType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -157,8 +158,13 @@ class UserLocationDataController extends Controller
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        //$entity = $em->getRepository('GladturTagBundle:UserLocationData')->find($id);
 
-        $entity = $em->getRepository('GladturTagBundle:UserLocationData')->find($id);
+        $cur_usr= $this->get('security.context')->getToken()->getUser();
+        $dQuery=$em->createQuery("select d from Gladtur\TagBundle\Entity\UserLocationData d, Gladtur\TagBundle\Entity\User u where u.profile=" . $cur_usr->getProfile()->getId(). " and d.location=".$id." order by d.created_at desc")->setMaxResults(1);
+        //$dQuery=$em->createQuery("select l from Gladtur\TagBundle\Entity\Location l where l.id=1");
+        $entity = $dQuery->getSingleResult();
+
         $entityUserData = $em->getRepository('GladturTagBundle:UserLocationData')->createQueryBuilder('LocationUserDatas')->where('LocationUserDatas.location='.$entity->getId())->orderBy('LocationUserDatas.id', 'desc')->getQuery()->getResult();
         $entityUserTagData = $em->getRepository('GladturTagBundle:UserLocationTagData')->createQueryBuilder('LocationUserTagDatas')->where('LocationUserTagDatas.location='.$entity->getId())->orderBy('LocationUserTagDatas.user', 'desc')->getQuery()->getResult();
         /* http://docs.doctrine-project.org/en/2.0.x/reference/query-builder.html
@@ -170,7 +176,7 @@ class UserLocationDataController extends Controller
             throw $this->createNotFoundException('Unable to find Location entity.');
         }
 
-        $editForm = $this->createForm(new LocationType(), $entity);
+        $editForm = $this->createForm(new UserLocationDataType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(

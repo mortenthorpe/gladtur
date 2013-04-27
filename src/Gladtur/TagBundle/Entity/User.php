@@ -31,10 +31,19 @@ class User extends BaseUser
 
     /**
      *
-     * @ORM\OneToOne(targetEntity="TvguserProfile", mappedBy="user")
+     * @ORM\ManyToOne(targetEntity="TvguserProfile", inversedBy="user")
      */
     protected $profile;
-    
+
+    public function setProfile(TvguserProfile $profile){
+        $this->profile = $profile;
+        return $this;
+    }
+
+    public function getProfile(){
+        return $this->profile;
+    }
+
     public function __construct()
     {
         parent::__construct();
@@ -71,6 +80,7 @@ class User extends BaseUser
      */
     public function getProfileId()
     {
+        //return parent::getEmail();
         return $this->profileId;
     }
 
@@ -85,5 +95,9 @@ class User extends BaseUser
     public function getUserNameForUid($user_id){
         $userManager=$this->get('fos_user.user_manager');
         return $userManager->findBy(array('id'=>1))->getUsername();
+    }
+
+    public function getUniqeReference(){
+        return $this->username . '(' . $this->getId(). ')';
     }
 }

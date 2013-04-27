@@ -23,7 +23,9 @@
         "beberlei/DoctrineExtensions": "*",
         "friendsofsymfony/oauth-server-bundle": "*",
 	"bmatzner/foundation-bundle": "dev-master",
-	"bmatzner/jquery-bundle":"*"
+	"bmatzner/jquery-bundle": "*",
+        "egeloen/google-map-bundle": "*",
+	"willdurand/geocoder": "*"
     },
     "scripts": {
         "post-install-cmd": [

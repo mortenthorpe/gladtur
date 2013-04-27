@@ -9,6 +9,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Gladtur\TagBundle\Entity\Location;
 use Gladtur\TagBundle\Form\LocationType;
+use Ivory\GoogleMap\Overlays\Animation;
+use Ivory\GoogleMap\Overlays\Marker;
 
 /**
  * Location controller.
@@ -89,6 +91,7 @@ class LocationController extends Controller
     {
         $entity  = new Location();
         $form = $this->createForm(new LocationType(), $entity);
+        $form->remove('userData');
         $form->bind($request);
 
         if ($form->isValid()) {
@@ -128,15 +131,38 @@ class LocationController extends Controller
         }
 
         $editForm = $this->createForm(new LocationType(), $entity);
-        $locCategoryForm = $this->createForm(new LocationType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
+        $map = $this->get('ivory_google_map.map');
+        $map->setLanguage('da');
+        $latlong=$this->getLatLongGeoLoc($entity);
 
+        $marker = new Marker();
+
+// Configure your marker options
+        $marker->setPrefixJavascriptVariable('marker_');
+        $marker->setPosition($latlong['lat'], $latlong['lng'], true);
+        $marker->setAnimation(Animation::DROP);
+
+        $marker->setOption('clickable', false);
+        $marker->setOption('flat', true);
+        $marker->setOptions(array(
+                'clickable' => false,
+                'flat'      => true,
+            ));
+        $map->addMarker($marker);
+        $map->setCenter($latlong['lat'], $latlong['lng'], true);
+        $map->setStylesheetOption('width', '640px');
+        $map->setStylesheetOption('height', '300px');
+        $map->setAutoZoom(true);
+        $map->setBound(55.6, 12.5, 55.7, 12.6, true, true);
         return array(
             'entity'      => $entity,
             'userLocationData' => $entityUserData,
             'userLocationTagData' => $entityUserTagData,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
+            'geolocation' => $latlong,
+            'map' => $map,
         );
     }
 
@@ -159,6 +185,7 @@ class LocationController extends Controller
 
         $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new LocationType(), $entity);
+        $editForm->remove('userData');
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
@@ -201,5 +228,29 @@ class LocationController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    public function getLatLongGeoLoc(&$entity = null){
+        /* Google Vendor Bundle GeoLocation service called */
+        $geolocationApi = $this->get('google_geolocation.geolocation_api');
+        // Offline quick fix:
+        //return array('lat'=>'55.6', 'lng' => '12.6');
+        $location = $geolocationApi->locateAddress('Infinite Loop 1, Cupertino Ca., USA');
+        if($entity){
+            $location = $geolocationApi->locateAddress(implode(', ',array($entity->getAddressStreet(), $entity->getAddressCity(), $entity->getAddressCountry())));
+        }
+
+        if ($location->getMatches() > 0)
+        {
+            $matches = json_decode($location->getResult(), true);
+
+            // Get address components [city, country, postcode, etc] for 1st match
+            $components = $location->getAddressComponents(0);
+
+            // Get LatLng for first match
+            $latLng = $location->getLatLng(0);
+        }
+
+        return $latLng;
     }
 }
