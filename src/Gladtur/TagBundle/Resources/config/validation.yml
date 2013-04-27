@@ -1,0 +1,5 @@
+Gladtur\TagBundle\Entity\TvguserProfile:
+  properties:
+    avatar:
+      - File:
+          maxSize: 6000000

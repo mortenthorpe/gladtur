@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Gladtur\TagBundle\Entity\TvguserProfile;
 use Gladtur\TagBundle\Form\TvguserProfileType;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 /**
  * TvguserProfile controller.
@@ -140,8 +141,8 @@ class TvguserProfileController extends Controller
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $entity = $em->getRepository('GladturTagBundle:TvguserProfile')->find($id);
+
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find TvguserProfile entity.');
@@ -152,6 +153,7 @@ class TvguserProfileController extends Controller
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            $entity->upload($editForm, 'avatar');
             $em->persist($entity);
             $em->flush();
 
