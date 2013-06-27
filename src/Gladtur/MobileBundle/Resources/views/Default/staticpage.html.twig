@@ -1,0 +1,16 @@
+<!html>
+<head>
+    <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/bmatznerfoundation/js/foundation.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerfoundation/css/foundation.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/gladturmobile/css/layout.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/gladturadmin/css/zforms.css') }}"/>
+    <title>Gladtur - {{ pagetitle }}</title>
+
+</head>
+<body class="admin-{{ app.request.get('_route') | replace({'_' : '-'}) }}">
+<div id="main">
+    {{ content | raw }}
+</div>
+</body>
+</html>
