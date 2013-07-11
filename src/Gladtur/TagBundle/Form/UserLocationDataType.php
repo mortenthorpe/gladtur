@@ -6,9 +6,11 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
+
 class UserLocationDataType extends AbstractType{
 
     public function buildForm(FormBuilderInterface $builder, array $options){
+        $builder->add('media', 'collection', array('type'=>new UserLocationMediaType()));
         $builder->add('readableName', 'text', array('label'=>'Stedets navn','required'=>false))
             ->add('latitude', 'hidden', array('label'=>'Breddegrad','required'=>false))
             ->add('longitude', 'hidden', array('label'=>'Længdegrad','required'=>false))

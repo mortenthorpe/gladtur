@@ -25,35 +25,27 @@ class LocationCategory
      * @ORM\OneToMany(targetEntity="LocationCategory", mappedBy="parentCategory")
      **/
     private $childCategories;
-
-
-    public function getChildCategories(){
-        return $this->childCategories;
-    }
-
     /**
      * @ORM\ManyToOne(targetEntity="LocationCategory", inversedBy="childCategories")
      **/
     private $parentCategory;
 
-    public function getParentCategory(){
-        return ($this->parentCategory)?$this->parentCategory:null;
-    }
-
+    /**
+     * @ORM\ManyToMany(targetEntity="Location", mappedBy="locationCategories")
+     **/
+    private $categoriesLocation;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Location", mappedBy="locationCategory")
+     * @ORM\OneToMany(targetEntity="Location", mappedBy="locationTopCategory")
      **/
-    private $location;
 
-
+    private $topCategoryLocation;
     /**
      * @var string $readableName
      *
      * @ORM\Column(name="readable_name", type="string", length=255, nullable=true)
      */
     private $readableName;
-
     /**
      * @var boolean $published
      *
@@ -61,15 +53,20 @@ class LocationCategory
      */
     private $published;
 
-
-    public function __construct() {
+    public function __construct()
+    {
         $this->childCategories = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function getChildCategories()
+    {
+        return $this->childCategories;
     }
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -77,26 +74,13 @@ class LocationCategory
     }
 
     /**
-     * Set readableName
+     * Get published
      *
-     * @param string $readableName
-     * @return LocationCategory
+     * @return boolean
      */
-    public function setReadableName($readableName)
+    public function getPublished()
     {
-        $this->readableName = $readableName;
-    
-        return $this;
-    }
-
-    /**
-     * Get readableName
-     *
-     * @return string 
-     */
-    public function getReadableName()
-    {
-        return $this->readableName;
+        return $this->published;
     }
 
     /**
@@ -108,33 +92,57 @@ class LocationCategory
     public function setPublished($published)
     {
         $this->published = $published;
-    
+
         return $this;
     }
 
-    /**
-     * Get published
-     *
-     * @return boolean 
-     */
-    public function getPublished()
+    public function mtGetPublishedTxt()
     {
-        return $this->published;
+        return ($this->published) ? 'Ja' : 'Nej';
     }
 
-	public function mtGetPublishedTxt(){
-		return ($this->published)?'Ja':'Nej';
-	}
-        
-
-	public function __toString(){
-		return $this->getReadableName();
-	}
-
-    public function getNestedReadableName(){
-        if($this->getParentCategory()) return ' - '.$this->getReadableName();
+    public function __toString()
+    {
         return $this->getReadableName();
     }
+
+    /**
+     * Get readableName
+     *
+     * @return string
+     */
+    public function getReadableName()
+    {
+        return $this->readableName;
+    }
+
+    /**
+     * Set readableName
+     *
+     * @param string $readableName
+     * @return LocationCategory
+     */
+    public function setReadableName($readableName)
+    {
+        $this->readableName = $readableName;
+
+        return $this;
+    }
+
+    public function getNestedReadableName()
+    {
+        if ($this->getParentCategory()) {
+            return ' - ' . $this->getReadableName();
+        }
+
+        return $this->getReadableName();
+    }
+
+    public function getParentCategory()
+    {
+        return ($this->parentCategory) ? $this->parentCategory : null;
+    }
+
     /**
      * Set parentCategory
      *
@@ -144,12 +152,17 @@ class LocationCategory
     public function setParentCategory($parentCategory)
     {
         $this->parentCategory = $parentCategory;
-    
+
         return $this;
     }
 
-    public function getLocationCategoryUnassigned($categoryPublished=true){
+    public function getLocationCategoryUnassigned($categoryPublished = true)
+    {
 
+    }
+
+    public function getName(){
+        return $this->getReadableName();
     }
 
 }

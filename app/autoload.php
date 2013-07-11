@@ -16,5 +16,6 @@ AnnotationRegistry::registerLoader(array($loader, 'loadClass'));
 $loader->add('FOS', __DIR__.'/../vendor/bundles');
 $loader->add('Buzz', __DIR__.'/../vendor/bundles/Buzz/lib');
 $loader->add('Google', __DIR__.'/../vendor');
+$loader->add('FOS\\Rest', __DIR__.'/../vendor/fos');
 
 return $loader;

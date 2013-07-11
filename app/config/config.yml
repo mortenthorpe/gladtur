@@ -56,14 +56,19 @@ doctrine:
     orm:
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
+        filters:
+          softdeleteable:
+            class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+            enabled: true
 
 # Swiftmailer Configuration
 swiftmailer:
-    transport: %mailer_transport%
-    host:      %mailer_host%
-    username:  %mailer_user%
-    password:  %mailer_password%
-    spool:     { type: memory }
+  transport:  smtp
+#  encryption: ssl
+#  auth_mode:  login
+  host:       127.0.0.1
+#  username:   mortenthorpe@gmail.com
+#  password:   @tS0mmerhus
 
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
@@ -80,3 +85,53 @@ services:
         class: Gladtur\TagBundle\Form\Type\ImageTypeExtension
         tags:
             - { name: form.type_extension, alias: file }
+
+    oauth_event_listener:
+        class:  Gladtur\MobileBundle\Event\oAuthPreAuthListener
+        tags:
+          - { name: kernel.event_listener, event: fos_oauth_server.pre_authorization_process, method: onPreAuthorizationProcess, arguments: @service_container }
+    mobile_useragent_listener:
+        class: Gladtur\MobileBundle\Event\UserAgentListener
+        arguments: ["%useragents%"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelControllerPermission }
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelControllerReceiveJSON }
+
+    gedmo.listener.softdeleteable:
+        class: Gedmo\SoftDeleteable\SoftDeleteableListener
+        tags:
+            - { name: doctrine.event_subscriber, connection: default }
+        calls:
+            - [ setAnnotationReader, [ @annotation_reader ] ]
+
+#fos_oauth_server:
+#    db_driver: orm       # Driver availables: orm, mongodb, or propel
+#    client_class:        Gladtur\TagBundle\Entity\Client
+#    access_token_class:  Gladtur\TagBundle\Entity\AccessToken
+#    refresh_token_class: Gladtur\TagBundle\Entity\RefreshToken
+#    auth_code_class:     Gladtur\TagBundle\Entity\AuthCode
+#    service:
+#      user_provider: fos_user.user_manager
+
+#fos_rest:
+#    routing_loader:
+#        default_format: json
+#    format_listener:
+#        default_priorities: [html, json, '*/*']
+
+# See http://symfony.com/doc/2.1/cookbook/event_dispatcher/before_after_filters.html, also for token example!
+parameters:
+  useragents:
+    ios: "Gladtur - iOS"
+    android: "Gladtur - Android"
+
+#hwi_oauth:
+# name of the firewall in which this bundle is active, this setting MUST be set
+#  firewall_name: secured_area
+stof_doctrine_extensions:
+  default_locale: en_US
+  orm:
+    default:
+      timestampable: true
+
+

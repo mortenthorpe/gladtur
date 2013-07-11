@@ -9,20 +9,21 @@
 
 namespace Gladtur\MobileBundle\Event;
 
+use Gladtur\MobileBundle\Controller\UserAgentJSONController;
 use Gladtur\MobileBundle\Controller\UserAgentProceedController;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 class UserAgentListener
 {
-    private $tokens;
+    private $useragents;
 
     public function __construct($useragents)
     {
         $this->useragents = $useragents;
     }
 
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelControllerPermission(FilterControllerEvent $event)
     {
         $controller = $event->getController();
 
@@ -35,10 +36,25 @@ class UserAgentListener
         }
 
         if ($controller[0] instanceof UserAgentProceedController) {
-            $useragents = $event->getRequest()->query->get('useragents');
-            if (!in_array($useragents, $this->useragents)) {
-                throw new AccessDeniedHttpException('This action needs a valid user agent!');
+            //$useragents = $event->getRequest()->query->get('useragents');
+            $useragents = $event->getRequest()->headers->get('user-agent');
+           if (!in_array($useragents, array_values($this->useragents))) {
+                throw new AccessDeniedHttpException('This action needs a valid user agent! '.json_encode(array_values($this->useragents)));
             }
+        }
+    }
+
+    public function onKernelControllerReceiveJSON(FilterControllerEvent $event)
+    {
+        $controller = $event->getController();
+        if (!is_array($controller)) {
+            return;
+        }
+
+        if ($controller[0] instanceof UserAgentJSONController) {
+            if($event->getRequest()->headers->get('Content-Type') == 'application/json'){
+                $controller[0]->setConvertFromJSON(true);
+            };
         }
     }
 }

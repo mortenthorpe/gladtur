@@ -86,3 +86,11 @@ a.save {
 }
 
 #footer{display:block;clear:both;float:none}
+
+label.required{font-weight:900;font-size:16px}
+p{display:block;clear:both;float:none !important}
+ul.plainlist,ul.plainlist li{list-style:none}
+ul.plainlist li{display:block; clear:both}
+ul.plainlist li input, ul.plainlist li label{margin:0;float:left}
+ul.plainlist li input{margin-top:6px}
+ul.plainlist li label{margin-left:10px}

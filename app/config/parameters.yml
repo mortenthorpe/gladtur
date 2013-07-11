@@ -3,13 +3,10 @@ parameters:
     database_host:     localhost
     database_port:     ~
     database_name:     gladtur3
-    database_user:     glad
-    database_password: gladtur
-
-    mailer_transport:  smtp
-    mailer_host:       localhost
-    mailer_user:       ~
-    mailer_password:   ~
-
+    database_user:     root
+    database_password: master
     locale:            en
     secret:            t0kenized
+    livestate: false
+    dev_url: 'http://edge.gladtur.morning.dk'
+    prod_url: 'http://gladtur.morning.dk'

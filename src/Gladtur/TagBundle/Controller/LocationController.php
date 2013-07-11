@@ -90,6 +90,7 @@ class LocationController extends Controller
     public function createAction(Request $request)
     {
         $entity  = new Location();
+        $entity->setUserLocationData(new UserLocationData());
         $form = $this->createForm(new LocationType(), $entity);
         $form->remove('userData');
         $form->bind($request);
@@ -119,7 +120,10 @@ class LocationController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('GladturTagBundle:Location')->find($id);
-        $entityUserData = $em->getRepository('GladturTagBundle:UserLocationData')->createQueryBuilder('LocationUserDatas')->where('LocationUserDatas.location='.$entity->getId())->orderBy('LocationUserDatas.id', 'desc')->getQuery()->getResult();
+        $entityUserData = $em->getRepository('GladturTagBundle:UserLocationData')->createQueryBuilder('LocationUserDatas')->where('LocationUserDatas.location='.$entity->getId())->orderBy('LocationUserDatas.created_at', 'desc')->getQuery()->getResult();
+
+        $entityUserData=$em->createQuery("select d from Gladtur\TagBundle\Entity\UserLocationData d, Gladtur\TagBundle\Entity\User u where u.profile=" . $this->getUser()->getProfile()->getId(). " and d.location=".$id." order by d.created_at desc")->setMaxResults(1)->getSingleResult();
+
         $entityUserTagData = $em->getRepository('GladturTagBundle:UserLocationTagData')->createQueryBuilder('LocationUserTagDatas')->where('LocationUserTagDatas.location='.$entity->getId())->orderBy('LocationUserTagDatas.user', 'desc')->getQuery()->getResult();
         /* http://docs.doctrine-project.org/en/2.0.x/reference/query-builder.html
         // Example - $qb->leftJoin('u.Phonenumbers', 'p', Expr\Join::WITH, $qb->expr()->eq('p.area_code', 55))
@@ -142,9 +146,6 @@ class LocationController extends Controller
         $marker->setPrefixJavascriptVariable('marker_');
         $marker->setPosition($latlong['lat'], $latlong['lng'], true);
         $marker->setAnimation(Animation::DROP);
-
-        $marker->setOption('clickable', false);
-        $marker->setOption('flat', true);
         $marker->setOptions(array(
                 'clickable' => false,
                 'flat'      => true,
@@ -154,7 +155,7 @@ class LocationController extends Controller
         $map->setStylesheetOption('width', '640px');
         $map->setStylesheetOption('height', '300px');
         $map->setAutoZoom(true);
-        $map->setBound(55.6, 12.5, 55.7, 12.6, true, true);
+        $map->setBound($latlong['lat']-0.005, $latlong['lng']-0.005, $latlong['lat']+0.005, $latlong['lng']+0.005, true, true);
         return array(
             'entity'      => $entity,
             'userLocationData' => $entityUserData,
@@ -187,8 +188,12 @@ class LocationController extends Controller
         $editForm = $this->createForm(new LocationType(), $entity);
         $editForm->remove('userData');
         $editForm->bind($request);
+/**        $userManager = $this->get('fos_user.user_manager');  
+        $creatingUser = $userManager->findUserBy(array('id' => 2)); WORKS! */
+        $creatingUser = $this->getUser();
 
         if ($editForm->isValid()) {
+            $entity->getUserLocationData()->setUser($creatingUser);
             $em->persist($entity);
             $em->flush();
 

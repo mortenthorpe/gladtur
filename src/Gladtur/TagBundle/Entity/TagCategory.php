@@ -2,6 +2,7 @@
 
 namespace Gladtur\TagBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File as FILE;
 
@@ -13,6 +14,11 @@ use Symfony\Component\HttpFoundation\File\File as FILE;
  */
 class TagCategory
 {
+    public function __construct()
+    {
+        $this->tags = new ArrayCollection();
+    }
+
     /**
      * @var integer $id
      *
@@ -30,10 +36,48 @@ class TagCategory
     private $catid;
 
     /**
-        * @ORM\ManyToMany(targetEntity="TvguserProfile", mappedBy="tagCategories")
-        */
-       private $profiles;
-       
+     * @ORM\OneToMany(targetEntity="Tag", mappedBy="tagCategory")
+     */
+    private $tags;
+
+    public function getTags()
+    {
+        /**$tColl = new ArrayCollection();
+        for($i=0;$i<5;$i++){
+        $nt = new Tags();
+        $nt->setTagCategory($this);
+        $nt->setReadableName('test #'.$i);
+        $tColl->add($nt);
+        }
+         **/
+        return $this->tags;
+    }
+
+    public function setTags(ArrayCollection $tags)
+    {
+        $this->tags = $tags;
+    }
+
+    public function addTag(Tag $tag)
+    {
+        $this->tags->add($tag);
+    }
+
+    public function removeTag(Tag $tag)
+    {
+        $this->tags->removeElement($tag);
+    }
+
+    public function deleteTags()
+    {
+        $this->tags = null;
+    }
+
+    /**
+     * @ORM\ManyToMany(targetEntity="TvguserProfile", mappedBy="tagCategories")
+     */
+    private $profiles;
+
     /**
      * @var integer $published
      *
@@ -73,12 +117,12 @@ class TagCategory
      *
      * @ORM\Column(name="text_description", type="text", nullable=true)
      */
-	private $textDescription;
+    private $textDescription;
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -94,14 +138,14 @@ class TagCategory
     public function setCatid($catid)
     {
         $this->catid = $catid;
-    
+
         return $this;
     }
 
     /**
      * Get catid
      *
-     * @return integer 
+     * @return integer
      */
     public function getCatid()
     {
@@ -117,27 +161,30 @@ class TagCategory
     public function setPublished($published)
     {
         $this->published = $published;
-    
+
         return $this;
     }
 
     /**
      * Get published
      *
-     * @return integer 
+     * @return integer
      */
     public function getPublished()
     {
         return $this->published;
     }
 
-	public function mtGetPublishedTxt(){
-		return ($this->published)?'Ja':'Nej';
-	}
-	
-	public function mtGetIsGeneralTxt(){
-		return ($this->isGeneral)?'Ja':'Nej';
-	}
+    public function mtGetPublishedTxt()
+    {
+        return ($this->published) ? 'Ja' : 'Nej';
+    }
+
+    public function mtGetIsGeneralTxt()
+    {
+        return ($this->isGeneral) ? 'Ja' : 'Nej';
+    }
+
     /**
      * Set isGeneral
      *
@@ -147,14 +194,14 @@ class TagCategory
     public function setIsGeneral($isGeneral)
     {
         $this->isGeneral = $isGeneral;
-    
+
         return $this;
     }
 
     /**
      * Get isGeneral
      *
-     * @return boolean 
+     * @return boolean
      */
     public function getIsGeneral()
     {
@@ -170,14 +217,14 @@ class TagCategory
     public function setReadableName($readableName)
     {
         $this->readableName = $readableName;
-    
+
         return $this;
     }
 
     /**
      * Get readableName
      *
-     * @return string 
+     * @return string
      */
     public function getReadableName()
     {
@@ -193,14 +240,14 @@ class TagCategory
     public function setWeight($weight)
     {
         $this->weight = $weight;
-    
+
         return $this;
     }
 
     /**
      * Get weight
      *
-     * @return integer 
+     * @return integer
      */
     public function getWeight()
     {
@@ -216,14 +263,14 @@ class TagCategory
     public function setIconFilepath($iconFilepath)
     {
         $this->iconFilepath = $iconFilepath;
-    
+
         return $this;
     }
 
     /**
      * Get iconFilepath
      *
-     * @return string 
+     * @return string
      */
     public function getIconFilepath()
     {
@@ -234,26 +281,32 @@ class TagCategory
     {
         return new File($this->iconFilepath);
     }
-	/**
-	* Set textDescription
-	*
-	* @param string $textDescription
-	* @return $TagCategory
-	*/
-	public function setTextDescription($textDescription){
-		return $this->textDescription=$textDescription;
-		return $this;
-	}
-	/**
-	* Get textDescription
-	*
-	* @return string
-	*/
-	public function getTextDescription(){
-		return $this->textDescription;
-	}
-	
-	public function __toString(){
-		return $this->getReadableName();
-	}
+
+    /**
+     * Set textDescription
+     *
+     * @param string $textDescription
+     * @return $TagCategory
+     */
+    public function setTextDescription($textDescription)
+    {
+        return $this->textDescription = $textDescription;
+
+        return $this;
+    }
+
+    /**
+     * Get textDescription
+     *
+     * @return string
+     */
+    public function getTextDescription()
+    {
+        return $this->textDescription;
+    }
+
+    public function __toString()
+    {
+        return $this->getReadableName();
+    }
 }

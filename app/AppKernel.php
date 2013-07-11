@@ -25,11 +25,22 @@ class AppKernel extends Kernel
 //            new Gladtur\UserBundle\GladturUserBundle(),
 			new FOS\UserBundle\FOSUserBundle(),
 	//		new Gladtur\UserBundle\Entity\User(),
-            new Google\GeolocationBundle\GoogleGeolocationBundle(),
+            //new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
+	    //new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
+            //new Google\GeolocationBundle\GoogleGeolocationBundle(),
 	    new JMS\SerializerBundle\JMSSerializerBundle(),
 	new Bmatzner\FoundationBundle\BmatznerFoundationBundle(),
 	new Bmatzner\JQueryBundle\BmatznerJQueryBundle(),
             new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
+ new Neutron\FormBundle\NeutronFormBundle(),
+        // if you use form types which require neutron/datagrid-bundle
+        new Neutron\DataGridBundle\NeutronDataGridBundle(),
+        // if you use plupload
+            new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
+        new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
+            new Gladtur\MobileBundle\GladturMobileBundle(),
+            new FOS\RestBundle\FOSRestBundle(),
+            new AntiMattr\GoogleBundle\GoogleBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

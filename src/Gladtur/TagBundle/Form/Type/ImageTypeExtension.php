@@ -4,7 +4,8 @@ namespace Gladtur\TagBundle\Form\Type;
 use Symfony\Component\Form\AbstractTypeExtension;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
-use Symfony\Component\Form\Util\PropertyPath;
+use Symfony\Component\PropertyAccess\PropertyAccess;
+
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class ImageTypeExtension extends AbstractTypeExtension
@@ -42,14 +43,24 @@ if (array_key_exists('image_path', $options)) {
 $parentData = $form->getParent()->getData();
 
 if (null !== $parentData) {
-$propertyPath = new PropertyPath($options['image_path']);
-$imageUrl = $propertyPath->getValue($parentData);
+$propertyAccessor = PropertyAccess::getPropertyAccessor();
+
+//$propertyPath = new PropertyPath($options['image_path']);
+$imageUrl = $propertyAccessor->getValue($parentData, $options['image_path']);
 } else {
 $imageUrl = null;
 }
 
 // set an "image_url" variable that will be available when rendering this field
-$view->set('image_url', $imageUrl);
+    /**
+     * @var FormView $view
+     */
+    $view->vars['image_url']= $imageUrl;
+    //$view->set('image_url', $imageUrl);
+}
+else{
+    $view->vars['image_url'] = null;
+    //$view->set('image_url', null);
 }
 }
 }

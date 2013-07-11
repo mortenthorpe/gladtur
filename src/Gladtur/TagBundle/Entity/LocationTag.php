@@ -33,17 +33,16 @@ class LocationTag
      *
      * @ORM\ManyToOne(targetEntity="Tag")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="tag_id", referencedColumnName="id")
      * })
      */
     private $tag;
 
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -59,14 +58,14 @@ class LocationTag
     public function setLocationTagProperties($locationTagProperties)
     {
         $this->locationTagProperties = $locationTagProperties;
-    
+
         return $this;
     }
 
     /**
      * Get locationTagProperties
      *
-     * @return string 
+     * @return string
      */
     public function getLocationTagProperties()
     {
@@ -82,14 +81,14 @@ class LocationTag
     public function setTag(\Gladtur\TagBundle\Entity\Tag $tag = null)
     {
         $this->tag = $tag;
-    
+
         return $this;
     }
 
     /**
      * Get tag
      *
-     * @return Gladtur\TagBundle\Entity\Tag 
+     * @return Gladtur\TagBundle\Entity\Tag
      */
     public function getTag()
     {

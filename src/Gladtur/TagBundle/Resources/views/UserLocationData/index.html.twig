@@ -2,14 +2,14 @@
 <div>
     <p>User Location Data!</p>
     {% for entity in entities %}
-        {{ entity.location }} ({{ entity.location.id }}) - af brugeren '{{ entity.user }}'
+        {{ entity.readableName }} ({{ entity.location.id }}) - af brugeren '{{ entity.user.username }}'
         <ul>
             <li>Opens at: {{ entity.hoursOpeningtime | json_encode  }}</li>
             <li>Closes at: {{ entity.hoursClosingtime | json_encode }}</li>
         </ul>
         <div>
             <h3>Media and description of this place:</h3>
-            {{ entity.mediapath }}
+            {{ entity.media }}
             {{ entity.txtDescription }}
         </div>
     {% endfor %}

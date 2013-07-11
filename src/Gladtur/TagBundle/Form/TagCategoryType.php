@@ -11,17 +11,18 @@ class TagCategoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-		$catChoices=range(1,10);
 		$weightChoices=range(0,20);
         $builder
 //            ->add('catid', 'choice', array('choices'=>$catChoices, 'label'=>'Kategori nummer'))
-				->add('published','checkbox', array('label'=>'Skal vises?', 'required'=>false))
+			/*	->add('published','checkbox', array('label'=>'Skal vises?', 'required'=>false))
             ->add('isGeneral', 'checkbox', array('label'=>'Kategorien skal ALTID vises?','required'=>false))
 				->add('readableName','text', array('label'=>'Kategori navn'))
 					->add('textDescription', 'textarea', array('label'=>'Beskrivelse', 'required'=>false))
-			->add('weight', 'choice', array('choices'=>$weightChoices, 'label'=>'Rangering', 'attr'=>array('class'=>'small-1')))
+			->add('weight', 'choice', array('choices'=>$weightChoices, 'label'=>'Rangering', 'attr'=>array('class'=>'small-1')))*/
 			//->add('iconFilepath', 'file', array('label'=>'Kategori ikon', 'required'=>false))
-				
+            ->add('readableName', 'text', array('label'=>'Kategori navn'))
+	    //->add('tags', 'collection', array('type'=>new TagType())) // Works!
+            ->add('tags', 'entity', array('label'=>'Egenskaber', 'class'=>'GladturTagBundle:Tag', 'multiple'=>true, 'expanded'=>true))
         ;
     }
 
@@ -34,6 +35,6 @@ class TagCategoryType extends AbstractType
 
     public function getName()
     {
-        return 'gladtur_tagbundle_tagcategorytype';
+        return 'tagcategory';
     }
 }

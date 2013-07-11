@@ -74,14 +74,59 @@ class UserController extends JsonController implements ContainerAwareInterface
         //$view->setTemplate('LiipHelloBundle:Rest:getArticles.html.twig');
         return $this->get('fos_rest.view_handler')->handle($view);
     } // "rest_user_exists" [GET] rest/userexists/username/{usernameoremail}
+
+
     /**
-     * @Route("usercreate/username/{username}/email/{email}/password/{password}")
+     * @Route("register_deprecated")
      */
-    public function registerAction($username, $email, $password)
+    public function registerAction(Request $request)
     {
         /**
          * @var UserManager $userManager
          */
+        $userManager = $this->container->get('fos_user.user_manager');
+        $user = $userManager->findUserByUsernameOrEmail($request->get('username'));
+        if (!$user) {
+            /**
+             * @var User $user
+             */
+            $user = $userManager->createUser();
+            $user->setEnabled(true);
+            $user->setUsername($request->get('username'));
+            $user->setEmail($request->get('email'));
+            $user->setRoles(array('ROLE_TVGUSER'));
+            $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+            $encodedPass = $encoder->encodePassword($request->get('password'), $user->getSalt());
+            $user->setPassword($encodedPass);
+            $userManager->updateUser($user);
+
+            return parent::getJsonForData(array('success' => 1));
+        } else {
+            return parent::getJsonForData(array('success' => 0));
+        }
+    }
+
+    /**
+* @param Request $request
+ * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @Route("register")
+     */
+    public function registerJSONAction(Request $request){
+        /**
+         * @var UserManager $userManager
+         */
+
+        if(parent::getIsJSON()){
+            $reqAssoc = parent::getRequestFromJSON($request);
+            $username = $reqAssoc['username'];
+            $email = $reqAssoc['email'];
+            $password = $reqAssoc['password'];
+        }
+        else{
+            $username = $request->get('username');
+            $email = $request->get('email');
+            $password = $request->get('password');
+        }
         $userManager = $this->container->get('fos_user.user_manager');
         $user = $userManager->findUserByUsernameOrEmail($username);
         if (!$user) {
@@ -97,19 +142,18 @@ class UserController extends JsonController implements ContainerAwareInterface
             $encodedPass = $encoder->encodePassword($password, $user->getSalt());
             $user->setPassword($encodedPass);
             $userManager->updateUser($user);
-
-            return parent::getJsonForData(array('success' => 1));
+            return parent::getJsonForData(array('success' => 1, 'token' => $user->getSalt()));
         } else {
             return parent::getJsonForData(array('success' => 0));
         }
     }
-
     /**
-     * @Route("forgotpassword/{usernameoremail}/{newpassword}")
+     * @Route("forgotpassword/{usernameoremail}/{newpassword}/sendmail/{atomic}", defaults={"atomic" = 1})
      * @Method({"GET", "POST"})
      */
-    public function forgotPasswordAction($usernameoremail, $newpassword)
+    public function forgotPasswordAction($usernameoremail, $newpassword, $atomic)
     {
+        $atomic = (bool) $atomic;
         $userManager = $this->container->get('fos_user.user_manager');
         /**
          * @var User $user
@@ -147,8 +191,13 @@ class UserController extends JsonController implements ContainerAwareInterface
         } else {
             $response = 0;
         }
-
-        return parent::getJsonForData(array('success' => $response));
+        if(($response == 1) && $atomic){
+            // Send the email automatically!
+            return $this->sendForgotpasswordEmail($usernameoremail);
+        }
+        else{
+            return parent::getJsonForData(array('success' => $response));
+        }
     }
 
     /**
@@ -166,7 +215,7 @@ class UserController extends JsonController implements ContainerAwareInterface
         if ($user) {
             $message = Swift_Message::newInstance()
                 ->setSubject('Gladtur - Nyt kodeord til dig!')
-                ->setFrom('morten@edge.gladtur.morning.dk')
+                ->setFrom('account@edge.gladtur.morning.dk')
                 ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView(
@@ -224,5 +273,72 @@ class UserController extends JsonController implements ContainerAwareInterface
         }
 
         return parent::getJsonForData(array('success' => $response));
+    }
+
+    /**
+     * @Route("deleteuser")
+     */
+    public function deleteUserAction(){
+        $success = 0; // User does not exist, or is soft-deleted! //
+        $username = $this->getRequest()->get('username', null);
+        $userId = $this->getRequest()->get('id', null);
+        $userManager = $this->container->get('fos_user.user_manager');
+        if($username){
+            $user = $userManager->findUserByUsernameOrEmail($username);
+        }
+        if($userId){
+            $user = $userManager->findUserBy(array('id'=>$userId));
+        }
+
+        /**
+         * @var User $user
+         */
+        if($user){
+            $em = $this->getDoctrine()->getManager();
+            $em->remove($user);
+            $em->flush();
+            $success = 1;
+        }
+        return parent::getJsonForData(array('success' => $success));
+    }
+
+    /**
+     * @Route("undeleteuser")
+     */
+    public function undeleteUserAction(){
+        $em = $this->getDoctrine()->getManager();
+        $filters = $em->getFilters();
+        $filters->disable('softdeleteable');
+        $um = $this->container->get('fos_user.user_manager');
+        if($this->getRequest()->get('username', null)){
+            $user = $um->findUserByUsernameOrEmail($this->getRequest()->get('username'));
+        }
+        elseif($this->getRequest()->get('id', null)){
+            $user = $um->findUserBy(array('id'=>$this->getRequest()->get('id')));
+        }
+        $user->setDeletedAt(false);
+        $em->persist($user);
+        $em->flush();
+        return parent::getJsonForData(array('success' => 1));
+    }
+
+    /**
+     * @param Request $request
+     * @Route("mobile/login")
+     */
+    public function loginAction(Request $request){
+        if(parent::getIsJSON()){
+        $requestContent = parent::getRequestFromJSON($request);
+        if(!isset($requestContent['username']) || !isset($requestContent['password'])) return parent::getJsonForData(array('success' => 0));
+        $um = $this->container->get('fos_user.user_manager');
+        $user = $um->findUserBy(array('username'=>$requestContent['username']));
+        if($user){
+            $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+            $encodedUserRefPass = $user->getPassword();
+            $encodedReqPass = $encoder->encodePassword($requestContent['password'], $user->getSalt());
+            if($encodedReqPass == $encodedUserRefPass) return parent::getJsonForData(array('success' => 1, 'token'=>$user->getSalt()));
+        }
+        }
+        return parent::getJsonForData(array('success' => 0));
     }
 }

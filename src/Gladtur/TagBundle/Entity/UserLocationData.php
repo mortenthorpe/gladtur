@@ -2,12 +2,16 @@
 
 namespace Gladtur\TagBundle\Entity;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\Common\Collections\ArrayCollection;
+
+//use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Doctrine\UserManager as UserManager;
+
+//use FOS\UserBundle\Doctrine\UserManager as UserManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Security\Core\SecurityContextInterface;
+
 /**
  * Gladtur\TagBundle\Entity\UserLocationData
  *
@@ -15,14 +19,15 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  * @ORM\Entity
  */
 
-class UserLocationData extends EntityRepository{
-    protected $container;
+class UserLocationData extends EntityRepository
+{
 
-    public function __construct(){
-        //$this->_em = new EntityManager();
-
+    public function __construct()
+    {
         //$this->location_data_users = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->media = new \Doctrine\Common\Collections\ArrayCollection();
     }
+
     /**
      * @var integer $id
      *
@@ -39,34 +44,39 @@ class UserLocationData extends EntityRepository{
      */
     protected $created_at;
     /**
-    * @ORM\ManyToOne(targetEntity="User", inversedBy="userLocationData")
-    */
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="userLocationData", fetch="EXTRA_LAZY")
+     */
     protected $user;
 
     /*
      * @return Gladtur\TagBundle\Entity\User
      */
-    public function getUser(){
+    public function getUser()
+    {
         return $this->user;
     }
+
+    public function setUser(\Gladtur\TagBundle\Entity\User $user)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
     /**
      * @ORM\ManyToOne(targetEntity="Location", inversedBy="userLocationData")
      */
     protected $location;
 
-    public function getLocation(){
+    public function getLocation()
+    {
         return $this->location;
     }
 
-    public function getPublished(){
+    public function getPublished()
+    {
         return $this->location->getPublished();
     }
-    /**
-     * @var string $readableName
-     *
-     * @ORM\Column(name="readable_name", type="string", length=255, nullable=true)
-     */
-    private $readableName;
 
     /**
      * @var string $latitude
@@ -75,14 +85,18 @@ class UserLocationData extends EntityRepository{
      */
     private $latitude;
 
-    public function getLatitude(){
+    public function getLatitude()
+    {
         return $this->latitude;
     }
 
-    public function setLatitude($latitude=''){
+    public function setLatitude($latitude = '')
+    {
         $this->latitude = $latitude;
+
         return $this;
     }
+
     /**
      * @var string $longitude
      *
@@ -90,12 +104,15 @@ class UserLocationData extends EntityRepository{
      */
     private $longitude;
 
-    public function getLongitude(){
+    public function getLongitude()
+    {
         return $this->longitude;
     }
 
-    public function setLongitude($longitude=''){
+    public function setLongitude($longitude = '')
+    {
         $this->longitude = $longitude;
+
         return $this;
     }
 
@@ -162,7 +179,7 @@ class UserLocationData extends EntityRepository{
      * @ORM\Column(name="hours_openingtime", type="time", nullable=true)
      */
     private $hoursOpeningtime;
-	
+
     /**
      * @var integer $hoursClosingtime
      *
@@ -170,32 +187,63 @@ class UserLocationData extends EntityRepository{
      */
     private $hoursClosingtime;
 
-	/**
-	* @var string $mediapath
-	*
-	*@ORM\Column(name="mediapath", type="string", length=255, nullable=true)
-	*/
-	private $mediapath;
+    /**
+     * @var string $media
+     * @ORM\OneToMany(targetEntity="UserLocationMedia", mappedBy="userLocationData")
+     */
+    private $media;
 
-	/**
-	* @var string $txtDescription
-	*
-	*@ORM\Column(name="txt_description", type="text", nullable=true)
-	*/
-	private $txtDescription;
+
+    public function getMedia($latestOnly = true)
+    {
+        if ($latestOnly) {
+            $mediaCollection = new ArrayCollection();
+            $mediaCollection->add($this->media->first());
+
+            return $mediaCollection;
+        }
+
+        return $this->media;
+    }
+
+    public function setMedia(UserLocationMedia $data)
+    {
+        $this->media = $data;
+
+        return $this;
+    }
+
+    public function addMedia(UserLocationMedia $media)
+    {
+        $this->media->add($media);
+
+        return $this;
+    }
+
+    public function removeMedia(UserLocationMedia $media)
+    {
+        $this->media->removeElement($media);
+    }
 
     /**
-	* @var string $txtComment
-	*
-	*@ORM\Column(name="txt_comment", type="text", nullable=true)
-	*/
-	private $txtComment;
-	
+     * @var string $txtDescription
+     *
+     * @ORM\Column(name="txt_description", type="text", nullable=true)
+     */
+    private $txtDescription;
+
+    /**
+     * @var string $txtComment
+     *
+     * @ORM\Column(name="txt_comment", type="text", nullable=true)
+     */
+    private $txtComment;
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -211,14 +259,14 @@ class UserLocationData extends EntityRepository{
     public function setLocationId($locationId)
     {
         $this->locationId = $locationId;
-    
+
         return $this;
     }
 
     /**
      * Get locationId
      *
-     * @return integer 
+     * @return integer
      */
     public function getLocationId()
     {
@@ -234,14 +282,14 @@ class UserLocationData extends EntityRepository{
     public function setHoursOpeningtime($hoursOpeningtime)
     {
         $this->hoursOpeningtime = $hoursOpeningtime;
-    
+
         return $this;
     }
 
     /**
      * Get hoursOpeningtime
      *
-     * @return integer 
+     * @return integer
      */
     public function getHoursOpeningtime()
     {
@@ -257,41 +305,18 @@ class UserLocationData extends EntityRepository{
     public function setHoursClosingtime($hoursClosingtime)
     {
         $this->hoursClosingtime = $hoursClosingtime;
-    
+
         return $this;
     }
 
     /**
      * Get hoursClosingtime
      *
-     * @return integer 
+     * @return integer
      */
     public function getHoursClosingtime()
     {
         return $this->hoursClosingtime;
-    }
-
-    /**
-     * Set mediapath
-     *
-     * @param string $mediapath
-     * @return UserLocationData
-     */
-    public function setMediapath($mediapath)
-    {
-        $this->mediapath = $mediapath;
-    
-        return $this;
-    }
-
-    /**
-     * Get mediapath
-     *
-     * @return string 
-     */
-    public function getMediapath()
-    {
-        return $this->mediapath;
     }
 
     /**
@@ -303,14 +328,14 @@ class UserLocationData extends EntityRepository{
     public function setTxtDescription($txtDescription)
     {
         $this->txtDescription = $txtDescription;
-    
+
         return $this;
     }
 
     /**
      * Get txtDescription
      *
-     * @return string 
+     * @return string
      */
     public function getTxtDescription()
     {
@@ -325,7 +350,7 @@ class UserLocationData extends EntityRepository{
      */
     public function setTxtComment($txtComment)
     {
-        $this->txtComment= $txtComment;
+        $this->txtComment = $txtComment;
 
         return $this;
     }
@@ -339,126 +364,129 @@ class UserLocationData extends EntityRepository{
     {
         return $this->txtComment;
     }
-    
-    /*public function __toString(){
-        return (string) $this->getUser();
-    }*/
 
     /**
      * Get LocationDataUsers
      *
      * @return Doctrine\Common\Collections\Collection
      */
-    public function getLocationDataUsers(){
+    public function getLocationDataUsers()
+    {
         return $this->location_data_users;
     }
 
-    public function getAuthor(){
+    public function getAuthor()
+    {
 
     }
 
-    public function getAddressCity(){
+    public function getAddressCity()
+    {
         return $this->addressCity;
     }
 
-    public function setAddressCity($city=''){
+    public function setAddressCity($city = '')
+    {
         $this->addressCity = $city;
+
         return $this;
     }
 
-    public function getAddressStreet(){
+    public function getAddressStreet()
+    {
         return $this->addressStreet;
     }
 
-    public function setAddressStreet($street=''){
+    public function setAddressStreet($street = '')
+    {
         $this->addressStreet = $street;
+
         return $this;
     }
 
-    public function getAddressZip(){
+    public function getAddressZip()
+    {
         return $this->addressZip;
     }
 
-    public function setAddressZip($zip = ''){
+    public function setAddressZip($zip = '')
+    {
         $this->addressZip = $zip;
+
         return $this;
     }
 
-    public function getReadableName(){
-        return $this->readableName;
-    }
-
-    public function setReadableName($readableName=''){
-        $this->readableName = $readableName;
-        return $this;
-    }
-
-    public function getAddressCountry(){
+    public function getAddressCountry()
+    {
         return $this->addressCountry;
     }
 
-    public function setAddressCountry($countryCode='DK'){
+    public function setAddressCountry($countryCode = 'DK')
+    {
         $this->addressCountry = $countryCode;
+
         return $this;
     }
 
-    public function getAddressExtd(){
+    public function getAddressExtd()
+    {
         return $this->addressExtd;
     }
 
-    public function setAddressExtd($addExtd=''){
+    public function setAddressExtd($addExtd = '')
+    {
         $this->addressExtd = $addExtd;
+
         return $this;
     }
 
-    public function getPhone(){
+    public function getPhone()
+    {
         return $this->phone;
     }
 
-    public function setPhone($phone=''){
+    public function setPhone($phone = '')
+    {
         $this->phone = $phone;
+
         return $this;
     }
 
-    public function getMail(){
+    public function getMail()
+    {
         return $this->mail;
     }
 
-    public function setMail($email=null){
+    public function setMail($email = null)
+    {
         $this->mail = $email;
+
         return $this;
     }
 
-    public function getHomepage(){
+    public function getHomepage()
+    {
         return $this->getLocation()->getHomepage();
     }
 
-    public function setHomepage($homepage = 'http://www.tvglad.dk'){
-        $this->getLocation()->setHomepage($homepage );
+    public function setHomepage($homepage = 'http://www.tvglad.dk')
+    {
+        $this->getLocation()->setHomepage($homepage);
+
         return $this;
     }
 
-    public function getContactPerson(){
+    public function getContactPerson()
+    {
         return $this->contactPerson;
     }
 
-    public function setContactPerson($personName = ''){
+    public function setContactPerson($personName = '')
+    {
         $this->contactPerson = $personName;
+
         return $this;
     }
 
-    public $locationData;
-
-    public function getLocationDataForMyProfilePeers(){
-        //return $this->get('security.context');
-        //$cur_usr= $this->get('security.context')->getToken()->getUser();
-        /*return $this->container;
-        $em = $this->getDoctrine()->getEntityManager();
-        $dQuery=$em->createQuery("select d from Gladtur\TagBundle\Entity\UserLocationData d, FOS\UserBundle\Entity\User u where u.profile_id=1 and d.user_id = u.id");
-        return $dQuery->getResult();*/
-    }
-
-    public function __toString(){
-        return ($this->getReadableName()) ? $this->getReadableName() : '----';
-    }
+    private $locationData;
 }

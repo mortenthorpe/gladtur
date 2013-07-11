@@ -26,7 +26,7 @@ class LocationMapLocationtag
      *
      * @ORM\ManyToOne(targetEntity="Location")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="location_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="location_id", referencedColumnName="id")
      * })
      */
     private $location;
@@ -36,17 +36,16 @@ class LocationMapLocationtag
      *
      * @ORM\ManyToOne(targetEntity="LocationTag")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="location_tag_id", referencedColumnName="id")
+     * @ORM\JoinColumn(name="location_tag_id", referencedColumnName="id")
      * })
      */
     private $locationTag;
 
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -62,14 +61,14 @@ class LocationMapLocationtag
     public function setLocation(\Gladtur\TagBundle\Entity\Location $location = null)
     {
         $this->location = $location;
-    
+
         return $this;
     }
 
     /**
      * Get location
      *
-     * @return Gladtur\TagBundle\Entity\Location 
+     * @return Gladtur\TagBundle\Entity\Location
      */
     public function getLocation()
     {
@@ -85,14 +84,14 @@ class LocationMapLocationtag
     public function setLocationTag(\Gladtur\TagBundle\Entity\LocationTag $locationTag = null)
     {
         $this->locationTag = $locationTag;
-    
+
         return $this;
     }
 
     /**
      * Get locationTag
      *
-     * @return Gladtur\TagBundle\Entity\LocationTag 
+     * @return Gladtur\TagBundle\Entity\LocationTag
      */
     public function getLocationTag()
     {

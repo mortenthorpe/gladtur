@@ -47,7 +47,8 @@ class LocationType extends AbstractType
             //->add('locationCategory', 'collection', array('type' => new LocationCategoryType()));
             //$builder->add('userLocationData', new UserLocationDataType(), array())
             $builder->add('locationCategory', new LocationCategoryNType(), array('label'=>'Sted-kategorier', 'multiple'=>'true', 'expanded'=>'true'))
-            ->add('userLocationData', new UserLocationDataType(), array('label'=>'Seneste bruger-indtastet data'));
+            ->add('userLocationData', new UserLocationDataType(), array('data_class'=> 'Gladtur\TagBundle\Entity\UserLocationData', 'label'=>'Seneste bruger-indtastet data'))
+            ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

@@ -141,6 +141,9 @@ class TagController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        /**
+         * @var Tag $entity
+         */
         $entity = $em->getRepository('GladturTagBundle:Tag')->find($id);
 
         if (!$entity) {

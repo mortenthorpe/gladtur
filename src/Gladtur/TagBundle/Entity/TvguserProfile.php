@@ -1,5 +1,7 @@
 <?php
 namespace Gladtur\TagBundle\Entity;
+
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -16,17 +18,25 @@ class TvguserProfile
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
-//http://tracehello.wordpress.com/2011/05/08/symfony2-doctrine2-manytomany-association/
-// http://docs.doctrine-project.org/projects/doctrine-orm/en/2.0.x/reference/association-mapping.html#many-to-many-unidirectional
-/**
- * Owning Side
- *
- * @ORM\ManyToMany(targetEntity="TagCategory", inversedBy="profiles")
- * @ORM\JoinTable(name="tvguser_profile_tagcategories")
- */
-    private $tagCategories;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="profiles")
+     */
+    private $tags;
 
+    /*public function getTags(){
+        if(count($this->tags) == 0){
+            return null;
+        }
+        else{
+            return $this->tags;
+        }
+    }*/
+    /**
+     * @var integer $user
+     * @ORM\OneToMany(targetEntity="UserLocationTagData", mappedBy="user_profile")
+     */
+    private $userLocationTagData;
     /**
      *
      * @ORM\OneToMany(targetEntity="User", mappedBy="profile")
@@ -35,7 +45,7 @@ class TvguserProfile
 
     public function __construct()
     {
-    
+        $this->tags = new ArrayCollection();
     }
 
     /**
@@ -45,13 +55,15 @@ class TvguserProfile
      */
     private $readableName;
 
-    public function getFullName(){
+    public function getFullName()
+    {
         return $this->getReadableName();
     }
+
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -68,45 +80,28 @@ class TvguserProfile
      */
     private $path;
 
-    /**
-     * Add tagCategories
-     *
-     * @param Gladtur\TagBundle\Entity\TagCategory $tagCategories
-     * @return TvguserProfile
-     */
-    public function addTagcategory(\Gladtur\TagBundle\Entity\TagCategory $tagCategories)
-    {
-        $this->tagCategories[] = $tagCategories;
-    
+    public function addTags(\Gladtur\TagBundle\Entity\Tag $tags){
+        $this->tags[] = $tags;
         return $this;
     }
 
-    /**
-     * Remove tags
-     *
-     * @param Gladtur\TagBundle\Entity\Tag $tags
-     */
-    public function removeTagcategory(\Gladtur\TagBundle\Entity\TagCategory $tagCategories)
-    {
-        $this->tagCategories->removeElement($tagCategories);
+    public function removeTags(\Gladtur\TagBundle\Entity\Tag $tag){
+        $this->tags->removeElement($tag);
     }
 
-    /**
-     * Get tags
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getTagcategories()
-    {
-        return $this->tagCategories;
+    public function getTags(){
+        return $this->tags;
     }
-    
-    public function getReadableName(){
+
+    public function getReadableName()
+    {
         return $this->readableName;
     }
-    
-    public function setReadableName($readableName){
-        $this->readableName=$readableName;
+
+    public function setReadableName($readableName)
+    {
+        $this->readableName = $readableName;
+
         return $this;
     }
 
@@ -115,7 +110,8 @@ class TvguserProfile
      *
      * @return UploadedFile
      */
-    public function getAvatar(){
+    public function getAvatar()
+    {
         return $this->avatar;
     }
 
@@ -124,7 +120,8 @@ class TvguserProfile
      *
      * @param UploadedFile $avatar
      */
-    public function setAvatar(UploadedFile $avatar = null){
+    public function setAvatar(UploadedFile $avatar = null)
+    {
         $this->avatar = $avatar;
     }
 
@@ -133,21 +130,21 @@ class TvguserProfile
     {
         return null === $this->path
             ? null
-            : $this->getUploadRootDir().'/'.$this->path;
+            : $this->getUploadRootDir() . '/' . $this->path;
     }
 
     public function getWebPath()
     {
         return null === $this->path
             ? null
-            : $this->getUploadDir().'/'.$this->path;
+            : $this->getUploadDir() . '/' . $this->path;
     }
 
     protected function getUploadRootDir()
     {
         // the absolute directory path where uploaded
         // documents should be saved
-        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
 
     protected function getUploadDir()
@@ -157,23 +154,26 @@ class TvguserProfile
         return 'uploads/icons/profiles';
     }
 
-    public function upload($profileForm,$fieldname=null)
+    public function upload($profileForm, $fieldname = null)
     {
-    if(!$fieldname) return; // Nofilefield used asa source
-    /*
- *
-        // the file property can be empty if the field is not required
-        if (null === $this->getAvatar()) {
+        if (!$fieldname) {
             return;
-        }
-*/
+        } // Nofilefield used asa source
+        /*
+     *
+            // the file property can be empty if the field is not required
+            if (null === $this->getAvatar()) {
+                return;
+            }
+    */
         // use the original file name here but you should
         // sanitize it at least to avoid any security issues
 
         // move takes the target directory and then the
         // target filename to move to
+	if($profileForm[$fieldname]->getData()){
         $profileForm[$fieldname]->getData()->move(
-       // $this->getAvatar()->move(
+        // $this->getAvatar()->move(
             $this->getUploadRootDir(),
             $profileForm[$fieldname]->getData()->getClientOriginalName()
         );
@@ -182,6 +182,15 @@ class TvguserProfile
         $this->path = $profileForm[$fieldname]->getData()->getClientOriginalName();
 
         // clean up the file property as you won't need it anymore
-       // $this->avatar = null;
+        // $this->avatar = null;
+	}
+    }
+
+    public function asJSON(){
+        return array($this->getId(), $this->getReadableName());
+    }
+
+    public function __toString(){
+        return $this->getReadableName();
     }
 }

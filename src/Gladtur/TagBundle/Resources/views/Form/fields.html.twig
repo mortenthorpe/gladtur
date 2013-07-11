@@ -17,6 +17,25 @@
     {% endspaceless %}
 {% endblock %}
 
+{% block choice_widget_expanded %}
+    {% spaceless %}
+        {% if expanded %}
+            <ul class="plainlist" {{ block('widget_container_attributes') }}>
+                {% for child in form %}
+                    <li>
+                        {{ form_widget(child) }}
+                        {{ form_label(child) }}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {# just let the choice widget render the select tag #}
+            {{ block('choice_widget') }}
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}
+
+
 {% block file_widget %}
     {% spaceless %}
         {% if image_url is not null %}

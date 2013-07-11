@@ -168,10 +168,10 @@ class TagCategoryController extends Controller
 
 
         if ($editForm->isValid()) {
-            $file=$editForm->getData()->getIconFilepath();
+           /* $file=$editForm->getData()->getIconFilepath();
             $fName = 'aNewFile2' . '.png';
-            $file->move('/Users/mortenthorpe/sites/gladtur/web/uploads', $fName);
-            $entity->setIconFilepath('/Users/mortenthorpe/sites/gladtur/web/uploads/' . $fName);
+		$file->move('/Users/mortenthorpe/sites/gladtur/web/uploads', $fName);
+            	$entity->setIconFilepath('/Users/mortenthorpe/sites/gladtur/web/uploads/' . $fName);*/
             $em->persist($entity);
             $em->flush();
 

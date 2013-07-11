@@ -1,3 +1,7 @@
+MST: FOS-OauthV2 functioning setup and usage tutorial:
+http://blog.logicexception.com/2012/04/securing-syfmony2-rest-service-wiith.html
+
+
 Version 2.1.7
 Symfony Standard Edition
 ========================

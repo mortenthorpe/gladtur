@@ -43,11 +43,10 @@ class LocationTagComment
     private $mediaFilepath;
 
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -63,14 +62,14 @@ class LocationTagComment
     public function setLocationTagId($locationTagId)
     {
         $this->locationTagId = $locationTagId;
-    
+
         return $this;
     }
 
     /**
      * Get locationTagId
      *
-     * @return integer 
+     * @return integer
      */
     public function getLocationTagId()
     {
@@ -86,14 +85,14 @@ class LocationTagComment
     public function setCommenttext($commenttext)
     {
         $this->commenttext = $commenttext;
-    
+
         return $this;
     }
 
     /**
      * Get commenttext
      *
-     * @return string 
+     * @return string
      */
     public function getCommenttext()
     {
@@ -109,14 +108,14 @@ class LocationTagComment
     public function setMediaFilepath($mediaFilepath)
     {
         $this->mediaFilepath = $mediaFilepath;
-    
+
         return $this;
     }
 
     /**
      * Get mediaFilepath
      *
-     * @return string 
+     * @return string
      */
     public function getMediaFilepath()
     {
