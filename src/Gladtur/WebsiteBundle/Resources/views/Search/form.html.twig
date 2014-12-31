@@ -1,0 +1,26 @@
+<form method="POST" action="{{ path('sitesearch') }}" class="large-12 searchform"/>
+<div class="large-7 right"><div id="categories_list">
+        {% form_theme searchform.category 'WebsiteBundle:Form:fields.html.twig' %}
+        {{ form_widget(searchform.category) }}
+    </div>
+</div>
+<div class="large-5 left form_city_padding">{{ form_widget(searchform.query) }}
+    <div class="previous_searchterm">
+        {% set searchFlash = app.session.flashbag.get('rawSearchQuery') %}
+        {% if searchFlash is empty %}
+          <i>Find tilgængelige steder i din by</i>
+          {% else %}
+                <div class="flash-notice">
+                  Du har søgt på:
+                    {% for query in searchFlash %}
+                        '{{ query|e }}'
+                    {% endfor %}
+                </div>
+        {% endif %}
+    </div>
+    <div class="search_submit">
+        <input type="submit" id="op_text_search" value="Søg" class="buttony custom manualwidth"/>
+    </div>
+</div>
+    {{ form_rest(searchform) }}
+</form>

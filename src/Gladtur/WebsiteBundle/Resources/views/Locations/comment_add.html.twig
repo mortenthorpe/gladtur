@@ -1,0 +1,11 @@
+<form id="location_commentform" method="post" action="{{ path('location_save_comment') }}?locationslug={{ locationslug }}" enctype="multipart/form-data" novalidate>
+    <div id="commentForm_container">
+    {{ form_errors(commentForm) }}
+    {{ form_row(commentForm.comment_txt) }}
+    {{ form_errors(commentForm.comment_image) }}
+    {{ form_label(commentForm.comment_image, label|default(null), { 'label_attr': { 'class': 'file inline' } }) }}
+    {{ form_widget(commentForm.comment_image, { 'attr': {'class': 'inline'} }) }}
+    {{ form_rest(commentForm) }}
+    <input type="submit" value="Gem kommentar" class="buttony custom"/>
+    </div>
+</form>

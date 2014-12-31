@@ -45,14 +45,6 @@ class ApiLog
         $this->setUpdated(new \DateTime());
     }
 
-    /**
-     * @ORM\preUpdate
-     */
-    public function setUpdatedValue()
-    {
-       $this->setUpdated(new \DateTime());
-    }
-
     public function incrementRequests()
     {
         $this->setRequests($this->getRequests() + 1);

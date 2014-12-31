@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" version="1.2">
+  <file source-language="da" datatype="plaintext" original="file.ext">
+    <body>
+      <trans-unit id="893cd883592e8cc6e180788ca82b4927" resname="Choose a file to replace the existing image">
+        <source>Choose a file to replace the existing image</source>
+        <target>__Choose a file to replace the existing image</target>
+      </trans-unit>
+      <trans-unit id="8932334d8321deb2f8515b289141c059" resname="View media">
+        <source>View media</source>
+        <target>__View media</target>
+      </trans-unit>
+      <trans-unit id="fc7b8d4f03c8fd90e6be5fe0119e9936" resname="Upload media">
+        <source>Upload media</source>
+        <target>__Upload media</target>
+      </trans-unit>
+      <trans-unit id="33d6d7294e38f2b9fd5acef805292586" resname="general.noimage">
+        <source>general.noimage</source>
+        <target>-- Ikke uploadet --</target>
+      </trans-unit>
+      <trans-unit id="a9a5a2465e01d018582837737b92cbcb" resname="No tags are assigned to this category yet">
+        <source>No tags are assigned to this category yet</source>
+        <target>__No tags are assigned to this category yet</target>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

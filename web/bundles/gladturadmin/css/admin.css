@@ -94,3 +94,8 @@ ul.plainlist li{display:block; clear:both}
 ul.plainlist li input, ul.plainlist li label{margin:0;float:left}
 ul.plainlist li input{margin-top:6px}
 ul.plainlist li label{margin-left:10px}
+#msgs .flash-notice,#msgs .flash-warning{border:1px solid;background:limegreen;font-style: italic;padding:10px 14px;margin:0 0 30px 0}
+#stats_filters{display: block;clear:both;float:none;width:100%;}
+#form_allstats fieldset{display:block;float:left;margin-right:10px}
+/*#form_allstats fieldset fieldset{display:none !important}*/
+.field_date select{display:block;float:left;margin-right:10px;width:auto;}

@@ -1,0 +1,206 @@
+{% extends "GladturTagBundle::layout.html.twig" %}
+{% block pagejs %}
+    <script>
+        var day_nos = [];
+
+        for (var i = 1; i <= 31; i++) {
+            day_nos.push(i);
+        }
+
+        var usersdata = {
+            labels: day_nos,
+            datasets: [
+                {
+                    label: "Forrige periode",
+                    fillColor: "rgba(220,220,220,0.2)",
+                    strokeColor: "rgba(220,220,220,1)",
+                    pointColor: "rgba(220,220,220,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(220,220,220,1)",
+                    data: [65, 59, 80, 81, 56, 55, 40]
+                },
+                {
+                    label: "Denne periode",
+                    fillColor: "rgba(151,187,205,0.2)",
+                    strokeColor: "rgba(151,187,205,1)",
+                    pointColor: "rgba(151,187,205,1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(151,187,205,1)",
+                    data: [28, 48, 40, 19, 86, 27, 90]
+                }
+            ]
+        };
+    $(document).ready(function(){
+    // Get context with jQuery - using jQuery's .get() method.
+    var ctx = $("#chart_new_users").get(0).getContext("2d");
+    // This will get the first returned node in the jQuery collection.
+    var myNewChart = new Chart(ctx).Line(usersdata);
+    });
+    </script>
+{% endblock %}
+{% block content %}
+<div id="form_allstats">
+<form method="GET" action="" id="stats_filters">
+<div style="display:block;float:left;margin-right:40px" class="field_date">{{ form_row(dateform.sdate) }}</div><div style="display:block;float:left;margin-right:40px" class="field_date">{{ form_row(dateform.edate) }}</div>
+  {{ form_rest(dateform) }}
+  <input type="submit" value="Udfør"/>
+</form>
+    <div style="display:block;clear:both;float:none">
+<fieldset>
+    <legend>Hjemmesiden og Apps - Fælles statistikker</legend>
+    <fieldset>
+        <canvas id="chart_new_users" width="400" height="300"></canvas>
+        <legend>Brugere - ialt {{ general_allUsers }} </legend>
+        <ul>
+        <li>Antal nye: {{ general_newUsers }} (i forrige periode: {{ general_newUsers_prev }})</li>
+        <li>Antal ny-afmeldte: {{ general_newUsersUnsubscribed }}</li>
+        <li>Max. voteringer: {{ general_userLocationMaxVote }} (i forrige periode: {{ general_userLocationMaxVote_prev }})</li>
+        <li>Max. steder oprettet: {{ period_maxcreatedLocationsCount }}</li>
+        </ul>
+        <h2>Nye brugere fordelt på profiler:</h2>
+        <ul>
+            <li>Profil-XXX: </li>
+            <li>Profil-XXX: </li>
+            <li>Profil-XXX: </li>
+            <li>Profil-XXX: </li>
+        </ul>
+        <h2>Top-10 mest voterende:</h2>
+        <ul>
+            <li>Profil-XXX: </li>
+            <li>Profil-XXX: </li>
+            <li>Profil-XXX: </li>
+            <li>Profil-XXX: </li>
+        </ul>
+        Må gerne kontaktes af Glad Tur:
+        Vil modtage nyhedsbrev:
+    </fieldset>
+    <fieldset>
+        <legend>Steder ialt {{ general_allLocations }} (heraf udgivne: {{ general_publishedLocations }})</legend>
+        Antal vist ialt:
+        <ul>
+            <li>Antal voterede - positivt: </li>
+            <li>Antal voterede - negativt: </li>
+            <li>Antal voterede - neutrale: </li>
+        </ul>
+    </fieldset>
+</fieldset>
+<fieldset>
+    <legend>Mobil-anvendelse - iOS og Android Apps</legend>
+    <fieldset>
+    <h2>Antal steder vist:</h2>
+    <ul>
+        <li>Antal steder vist - bruger er anonym:</li>
+        <li>Antal steder vist - bruger er kendt: </li>
+    </ul>
+    Vist per top-kategori:
+        <ul>
+            <li>Butikker:  </li>
+            <li>Parkering: </li>
+        </ul>
+    <h2>Antal steder oprettet:</h2>
+    Oprettet per top-kategori:
+        <ul>
+            <li>Butikker:  </li>
+            <li>Parkering: </li>
+        </ul>
+    <h2>Antal steder voteret:</h2>
+        Voteret per top-kategori:
+        <ul>
+            <li>Butikker:  </li>
+            <li>Parkering: </li>
+        </ul>
+    <h2>Top-10 steder vist:</h2>
+        <ul>
+            <li></li>
+        </ul>
+    <h2>Anmeldte steder: </h2>
+        <ul>
+            <li>Antal anmeldte: </li>
+        </ul>
+    </fieldset>
+    <fieldset>
+        <legend>Søgninger - ialt ####### </legend>
+        Antal søgninger ialt:
+        Søgninger med resultat:
+        Søgninger uden resultat:
+        Søgninger uden kategori:
+        Søgninger med kategori:
+        <h2>Top-10 populære kategorier:</h2>
+        <ul>
+            <li></li>
+        </ul>
+    </fieldset>
+    <fieldset>
+        <legend>Øvrige sider - Visninger</legend>
+        <ul>
+            <li></li>
+        </ul>
+    </fieldset>
+</fieldset>
+    <fieldset>
+        <legend>Hjemmesiden - Desktop og mobil</legend>
+        <fieldset>
+            <h2>Antal steder vist:</h2>
+            <ul>
+                <li>Antal steder vist - bruger er anonym:</li>
+                <li>Antal steder vist - bruger er kendt: </li>
+            </ul>
+            Vist per top-kategori:
+            <ul>
+                <li>Butikker:  </li>
+                <li>Parkering: </li>
+            </ul>
+            <h2>Antal steder oprettet:</h2>
+            Oprettet per top-kategori:
+            <ul>
+                <li>Butikker:  </li>
+                <li>Parkering: </li>
+            </ul>
+            <h2>Antal steder voteret:</h2>
+            Voteret per top-kategori:
+            <ul>
+                <li>Butikker:  </li>
+                <li>Parkering: </li>
+            </ul>
+            <h2>Top-10 steder vist:</h2>
+            <ul>
+                <li></li>
+            </ul>
+            <h2>Anmeldte steder: </h2>
+            <ul>
+                <li>Antal anmeldte: </li>
+            </ul>
+        </fieldset>
+        <fieldset>
+            <legend>Søgninger - ialt ####### </legend>
+            Antal søgninger ialt:
+            Søgninger med resultat:
+            Søgninger uden resultat:
+            Søgninger uden kategori:
+            Søgninger med kategori:
+            <h2>Top-10 populære kategorier:</h2>
+            <ul>
+                <li></li>
+            </ul>
+        </fieldset>
+    <fieldset>
+        <legend>Øvrige sider - Visninger</legend>
+        <ul>
+            <li></li>
+        </ul>
+    </fieldset>
+    <fieldset>
+        <legend>Browsere</legend>
+        Internet Explorer:
+        Safari:
+        Firefox:
+        Chrome:
+        Andre...:
+    </fieldset>
+
+ </fieldset>
+        </div>
+ </div>
+{% endblock %}

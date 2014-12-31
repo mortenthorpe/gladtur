@@ -3,6 +3,7 @@
 namespace Google\GeolocationBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gladtur\TagBundle\Entity\UserLocationData;
 
 /**
  * @ORM\Entity(repositoryClass="Google\GeolocationBundle\Repository\LocationRepository")
@@ -59,14 +60,6 @@ class Location
         $this->setHits(0);
         $this->setCreated(new \DateTime());
         $this->setUpdated(new \DateTime());
-    }
-
-    /**
-     * @ORM\preUpdate
-     */
-    public function setUpdatedValue()
-    {
-       $this->setUpdated(new \DateTime());
     }
 
     public function incrementHits()
@@ -291,4 +284,5 @@ class Location
     {
         return $this->status;
     }
+
 }

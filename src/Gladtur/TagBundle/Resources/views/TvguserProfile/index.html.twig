@@ -14,6 +14,8 @@
         <tr>
             <th>Id</th>
             <th>Profil-navn</th>
+            <th>App profil ikon</th>
+            <th>Website profil ikon</th>
             <th>Udfør</th>
         </tr>
         </thead>
@@ -22,6 +24,8 @@
             <tr>
                 <td><a href="{{ path('tvguserprofile_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
                 <td>{{ entity.readableName }}</td>
+                <td>{% if entity.path %}<img src="/uploads/avalanche/thumbnail/icons/profiles/{{ entity.path }}" class="profile-icon"/>{% else %}- Ingen upload -{% endif %}</td>
+                <td>{% if entity.webiconpath %}<img src="/uploads/avalanche/thumbnail/icons/profiles/website/{{ entity.webiconpath }}" class="profile-icon"/>{% else %}- Ingen upload -{% endif %}</td>
                 <td>
                     <ul class="adminmenu_local">
                         <li>

@@ -1,0 +1,16 @@
+<li class="accessibility_listitem">
+    <div class="right">
+        <div class="right relative"><div class="info_icon clickable" onClick="javascript:$(this).next().toggle();void(0);"><img style="CURSOR: pointer; cursor: hand;" src="/assets/infoicon.png" style="width:40x;height:40px;overflow:hidden"></div><div class="info_text" style="display:none">{{ user_location_data.tag.textDescription }}</div></div>
+    <span class="accessibility allthumbs">
+        <!-- * neutral (0), bad(1) and perfect(2), unrated(3) //-->
+        {% if user_location_data.tagvalue == 2 %}<div class="clickable thumbs up active" title="vote up">&nbsp;</div>{% endif %}
+        {% if user_location_data.tagvalue == 0 %}<div class="clickable thumbs neutral active" title="vote neutral">&nbsp;</div>{% endif %}
+        {% if user_location_data.tagvalue == 1 %}<div class="clickable thumbs down active" title="vote down" >&nbsp;</div>{% endif %}
+    </span>
+
+  </div>
+    <div class="left">
+        <img style="width:60px;min-height:40px;overflow:hidden" src="/{{ user_location_data.tag.path }}" class="accessibility icon left">
+        <div class="accessibility name right">{{ user_location_data.tag.readableName }}</div>
+    </div>
+</li>

@@ -1,0 +1,18 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+<form action="{{ path('fos_user_resetting_reset', {'token': token}) }}" {{ form_enctype(form) }} method="POST" class="fos_user_resetting_reset" novalidate>
+    <div>
+        {{ form_errors(form.plainPassword.first) }}
+        <label>Vælg ny adgangskode</label>
+        {{ form_widget(form.plainPassword.first) }}
+    </div>
+    <div>
+    {{ form_errors(form.plainPassword.second) }}
+    <label>Bekræft adgangskode</label>
+    {{ form_widget(form.plainPassword.second) }}
+    </div>
+    {{ form_rest(form) }}
+    <div>
+        <input type="submit" value="Skift adgangskode" />
+    </div>
+</form>

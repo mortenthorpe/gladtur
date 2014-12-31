@@ -1,33 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8"/>
-    <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/bmatznerfoundation/js/foundation.min.js') }}"></script>
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerfoundation/css/foundation.min.css') }}"/>
-    <link rel="stylesheet" href="{{ asset('bundles/gladturadmin/css/admin.css') }}"/>
-</head>
-<body>
-<div id="main">
-    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-        <div class="centered">
-            {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
-            <a href="{{ path('fos_user_security_logout') }}">
-                {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
-            </a>
+{% extends "@Website/WebpageTemplates/skabelon3.html.twig" %}
+{% block content_left %}
+    <div>
+        {% if app.user %}
+        <div class="block signed_in">
+            <div id="login_as_user">{{ "Hej" |trans() }} {{ app.user.username }}</div>
+            <a href="{{ path('fos_user_security_logout') }}" class="edit">Log af</a>
         </div>
-    {% endif %}
-
-    {% for key, message in app.session.getFlashes() %}
-        <div class="{{ key }}">
-            {{ message|trans({}, 'FOSUserBundle') }}
+        {% endif %}
+        <div class="signinform">
+            {% block fos_user_content %}
+            {% endblock fos_user_content %}
         </div>
-    {% endfor %}
-
-    <div class="signinform">
-        {% block fos_user_content %}
-        {% endblock fos_user_content %}
     </div>
-</div>
-</body>
-</html>
+{% endblock content_left %}
+{% block content_right %}
+    {% include "@Website/Login/index.html.twig" %}
+{% endblock content_right %}

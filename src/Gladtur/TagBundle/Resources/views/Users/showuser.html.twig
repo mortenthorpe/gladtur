@@ -1,0 +1,10 @@
+{% extends "GladturTagBundle::layout.html.twig" %}
+{% block content %}
+    <ul>
+    <li><label>Username: </label><a href="{{ path('admin_user_show', {'username' : user.username }) }}">{{ user.username }}</a></li>
+    <li><label>User enabled: </label>{{ user.enabled ? 'Yes': 'No'}}</li>
+    <li><label>User email: </label>{{ user.email }}</li>
+    <li><label>User ID: </label>{{ user.id }}</li>
+    <li><label>User created on date: </label>{{ user.created | date('d-m-Y, H:i:s') }}</li>
+    </ul>
+{% endblock %}

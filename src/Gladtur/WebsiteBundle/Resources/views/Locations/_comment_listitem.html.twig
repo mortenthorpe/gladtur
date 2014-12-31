@@ -1,0 +1,17 @@
+<li class="comment_listitem">
+<div class="comment-meta">
+    <div class="comment-author radius secondary label">{{ comment.user.userName }}</div>
+    <div class="comment-created clear">{{ comment.created | date('d/m-Y - H:i') }}</div>
+    {% if block_view %} <div class="comment-location"><a href="/sted/{{ comment.location.getSlug() }}">{{ comment.location.readableName }}</a></div>{% endif %}
+</div>
+    <div class="comment-text">{{ comment.commentTxt }}</div>
+    <div class="comment-media">
+        <!-- <ul class="plainlist" data-clearing> //-->
+        <ul class="plainlist">
+    {% for mediaelem in comment.media %}
+        <li><a href="/uploads/comments/{{ mediaelem.mediaPath }}" target="_blank" alt="Klik her, billedet åbner i et nyt vindue" title="Klik her, billedet åbner i et nyt vindue"><img class="comment-media" src="/uploads/avalanche/website_comment_list/comments/{{ mediaelem.mediaPath }}" alt="Klik her, billedet åbner i et nyt vindue" title="Klik her, billedet åbner i et nyt vindue"/></a></li>
+    {% endfor %}
+        </ul>
+    </div>
+
+</li>

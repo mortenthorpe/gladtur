@@ -1,0 +1,74 @@
+<div class="item_container row columns">
+{% if location.mainImageThumbnail or location.media %}
+{% set imagecount = location.media|length %}
+<div class="detail-images">
+    <div class="slideshow-wrapper">
+        <ul {##% if ( location.mainImageThumbnail and location.media|length > 0) or location.media|length > 1 %} data-orbit data-clearing{% endif %##} data-clearing>
+            {% if location.mainImageThumbnail %}
+            {% set imagecount = imagecount+1 %}
+                <li><a href="/uploads/locations/{{ location.id }}/{{ location.mainImageThumbnail }}"><img src="/uploads/avalanche/website_detail_full/locations/{{ location.id }}/{{ location.mainImageThumbnail }}"/></a></li>
+            {% endif %}
+            {% for onemedia in location.media %}
+                <li><a href="/uploads/locations/{{ location.id }}/{{ onemedia.mediaPath}}"><img src="/uploads/avalanche/website_detail_full/locations/{{ location.id }}/{{ onemedia.mediaPath}}"/></a></li>
+            {% endfor %}
+        </ul>
+        <div class="image-thumbnails">
+            <ul class="plainlist" data-clearing >
+                {% if location.mainImageThumbnail %}
+                    <li><a href="/uploads/locations/{{ location.id }}/{{ location.mainImageThumbnail }}"><img src="/uploads/avalanche/thumbnail/locations/{{ location.id }}/{{ location.mainImageThumbnail }}"/></a></li>
+                {% endif %}
+            {% for onemedia in location.media %}
+                <li><a href="/uploads/locations/{{ location.id }}/{{ onemedia.mediaPath}}"><img src="/uploads/avalanche/thumbnail/locations/{{ location.id }}/{{ onemedia.mediaPath}}"/></a></li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+    <div class="location_title">
+        <h1>{{ location.readableName|capitalize }}</h1>
+        <div>
+        <div style="display:none !important" class="latitude">{{ location.latitude }}</div>
+        <div style="display:none !important" class="longitude">{{ location.longitude }}</div><div class="minor radius secondary label">Afstand: <span class="js_distance"><span class="clickable distance-help">?</span></span></div>
+        </div>
+         <div>
+    <div class="location_categories">
+        <a href="/{{ path('findplaces_in_category', {'categoryslug': location.topCategory.getSlug()}) }}" class="tiny button secondary left topcategory">{{ location.topCategory.readableName|capitalize }}</a>
+        {% for category in location.locationCategories %}
+        {% if not category.isTopcategory %}
+        <a href="/kategori/{% if category.getSlug() %}{{ category.getSlug() }}{% else %}{{ category.readableName|lower }}{% endif %}" class="tiny button secondary left subcategory">{{ category.readableName|capitalize }}</a>
+        {% endif %}
+        {% endfor %}
+    </div>
+    <div class="location_info">{{ location.addressStreet|capitalize }}, {{ location.addressZip}} {{ location.addressCity|capitalize }}</div>
+    <ul id="toggle-info">
+	<li>
+		<h2>&raquo;&Aring;bningstider</h2>
+		<span>+</span>
+		<div class="panel toggle-panel">
+			<ul class="plainlist location hours">
+                {% for dayHours in location.getUserLocationData(true).getDaysHoursOpenClosedPadded() %}
+                    <li>{{ dayHours.dayName}}: {% if dayHours.timesTxt %}{{ dayHours.timesTxt}}{% else %}<span class="nullvalue">- Ikke angivet -</span>{% endif %}</li>
+                {% endfor %}
+			</ul>
+		</div>
+	</li>
+	<li>
+		<h2>&raquo;Kontakt info</h2>
+		<span>+</span>
+		<div class="panel toggle-panel">
+            <ul class="plainlist location contactinfo">
+			<li>Telefon: {% if location.getUserLocationData(true).phone %}{{ location.getUserLocationData(true).phone }}{% else %}-{% endif %}</li>
+            <li>E-mail: {% if location.getUserLocationData(true).mail %} <a href="mailto:{{ location.getUserLocationData(true).mail }}">{{ location.getUserLocationData(true).mail }}</a>{% else %}<span class="nullvalue">- Ikke angivet -</span>{% endif %}</li>
+            <li>Website: {% if location.homepage %}<a href="http://{{ location.homepage }}" target="_blank">{{ location.homepage }}</a>{% else %}<span class="nullvalue">- Ikke angivet -</span>{% endif %}</li>
+            <li>Kontakt: {% if location.getUserLocationData(true).contactPerson %}{{ location.getUserLocationData(true).contactPerson }}{% else %}<span class="nullvalue">- Ikke angivet -</span>{% endif %}</li>
+            <li>Beskrivelse:{% if location.getUserLocationData(true).txtDescription %}<br/>{{ location.getUserLocationData(true).txtDescription }}{% else %}<span class="nullvalue">- Ikke angivet -</span>{% endif %}</li>
+            </ul>
+		</div>
+	</li>
+</ul>
+     </div>
+
+    </div>
+</div>

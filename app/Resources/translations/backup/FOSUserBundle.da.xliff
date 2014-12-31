@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2013-08-01T10:41:23Z" source-language="en" target-language="da" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="3ed6a1235bf3e6337f499ec08dd3a1d6768b0c57" resname="layout.logged_in_as">
+        <source>layout.logged_in_as</source>
+        <target>Du er logget ind som brugeren</target>
+        <jms:reference-file line="14">FOSUserBundle/views/layout.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="80a0b95340202d0b8c88ba8bd10b315ecdd1feba" resname="layout.logout">
+        <source>layout.logout</source>
+        <target>Log ud</target>
+        <jms:reference-file line="16">FOSUserBundle/views/layout.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="62d5564c383b885ff0de25abd24a41080499970b" resname="security.login.password">
+        <source>security.login.password</source>
+        <target>Adgangskode</target>
+        <jms:reference-file line="23">views/Security/login.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d074ed9a0eb75b7f17ef2274c21d4c3d12d91634" resname="security.login.remember_me">
+        <source>security.login.remember_me</source>
+        <target>Husk min bruger på denne computer</target>
+        <jms:reference-file line="35">views/Security/login.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="79c180ac5e987e195d1dfeda857a114ed692d07f" resname="security.login.submit">
+        <source>security.login.submit</source>
+        <target>Log ind nu</target>
+        <jms:reference-file line="40">views/Security/login.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="64e1b2aaf6156a7e34a13fbc38801e89478efff8" resname="security.login.username">
+        <source>security.login.username</source>
+        <target>Dit brugernavn</target>
+        <jms:reference-file line="14">views/Security/login.html.twig</jms:reference-file>
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

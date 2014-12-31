@@ -1,0 +1,40 @@
+{% set disabledclass = 'disabled' %}
+{% set disabled = 'disabled' %}
+{% if profileTagData|length == 0 %}
+    <li>Der findes ingen relevante stedegenskaber for kategorien <strong>{{ location_top_category_name }}</strong> ud fra din angivne profil <strong>{{ profile.readableName }}</strong></li>
+{% else %}
+{% for tagData in profileTagData %}
+    {% set unselected = true %}
+    <li>
+    {% if not app.user or not edit %}
+        <img src="{{ asset(tagData.getWebPath())}}" class="tag_icon left inline" style="height:40px !important; width:auto !important"/>
+        <label>{{ tagData.readableName }}</label>
+        {% if ((tagData.id in tagswithvalues|keys) and (tagswithvalues[tagData.id]['value']==2)) %}
+            <img class="label_icon yes view" src="/assets/thumbs_up.png"/>
+            {% set unselected = false %}
+        {% endif %}
+        {% if ((tagData.id in tagswithvalues|keys) and (tagswithvalues[tagData.id]['value']==1)) %}
+            <img class="label_icon no view" src="/assets/thumbs_down.png"/>
+            {% set unselected = false %}
+        {% endif %}
+        {% if unselected is defined and unselected %}
+            <img class="label_icon unrated view" src="/assets/thumbs_unrated.png"/>
+        {% endif %}
+    {% endif %}
+    {% if (app.user) and edit %}
+        <img src="{{ asset(tagData.getWebPath())}}" class="tag_icon left inline" style="height:40px !important; width:auto !important"/>
+        <label>{{ tagData.readableName }}</label><label class="label_icon yes {% if tagData.id in tagswithvalues|keys and (tagswithvalues[tagData.id]['value']==2) %}active{% endif %}" for="{{ tagData.id }}_2"></label>
+        <input id="{{ tagData.id }}_2" type="radio" class="locationtag" name="userlocationtags[{{ tagData.id }}]" value="2" {% if tagData.id in tagswithvalues|keys and (tagswithvalues[tagData.id]['value']==2) %}checked{% endif %}/>
+        <label class="label_icon no {% if tagData.id in tagswithvalues|keys and (tagswithvalues[tagData.id]['value']==1) %}active{% endif %}" for="{{ tagData.id }}_1"></label>
+        <input id="{{ tagData.id }}_1" type="radio" class="locationtag" name="userlocationtags[{{ tagData.id }}]" value="1" {% if tagData.id in tagswithvalues|keys and (tagswithvalues[tagData.id]['value']==1) %}checked{% endif %}/>
+        <input id="{{ tagData.id }}_reset" type="radio" class="locationtag" name="userlocationtags[{{ tagData.id }}]" value="" />
+    {% endif %}
+    </li>
+{% endfor %}
+{% if (app.user) and edit %}
+<li>
+    <input type="submit" value="Gem" class="buttony custom"/>
+    <input type="button" value="Fortryd" onClick="javascript:$('#editAccessibilities').trigger('click');"/>
+</li>
+{% endif %}
+{% endif %}

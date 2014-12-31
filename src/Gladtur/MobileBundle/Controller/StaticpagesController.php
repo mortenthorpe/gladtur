@@ -15,15 +15,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\CssSelector\CssSelector;
 use Symfony\Component\DomCrawler\Crawler;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class StaticpagesController extends JsonController
 {
     /**
      * @Route("read/{pagename}", name="static_page")
+     * @Method("GET")
      */
     public function indexAction($pagename)
     {
-        $pageHTML = file_get_contents('staticpages/' . $pagename . '.html');
+        if(strpos($pagename, '.html') === false){
+            $pagename .= '.html';
+        }
+        $pageHTML = file_get_contents('staticpages/' . $pagename);
         $crawler = new Crawler($pageHTML);
         $ptitle = $crawler->filter('h1')->extract(array('_text'));
         $ptitle = $ptitle[0];

@@ -1,41 +1,4 @@
 {% extends 'form_div_layout.html.twig' %}
-{% block location_category_widget %}
-    {% spaceless %}
-        {% if expanded %}
-            <ul {{ block('widget_container_attributes') }}>
-                {% for child in form %}
-                    <li>
-                        {{ form_widget(child) }}
-                        {{ form_label(child) }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            {# just let the choice widget render the select tag #}
-            {{ block('choice_widget') }}
-        {% endif %}
-    {% endspaceless %}
-{% endblock %}
-
-{% block choice_widget_expanded %}
-    {% spaceless %}
-        {% if expanded %}
-            <ul class="plainlist" {{ block('widget_container_attributes') }}>
-                {% for child in form %}
-                    <li>
-                        {{ form_widget(child) }}
-                        {{ form_label(child) }}
-                    </li>
-                {% endfor %}
-            </ul>
-        {% else %}
-            {# just let the choice widget render the select tag #}
-            {{ block('choice_widget') }}
-        {% endif %}
-    {% endspaceless %}
-{% endblock %}
-
-
 {% block file_widget %}
     {% spaceless %}
         {% if image_url is not null %}
@@ -47,3 +10,15 @@
         <div style="float:none;clear:both"></div>
     {% endspaceless %}
 {% endblock %}
+
+{% block form_errors %}
+    {% spaceless %}
+        {% if errors|length > 0 %}
+            <ul class="errors form field">
+                {% for error in errors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endspaceless %}
+{% endblock form_errors %}

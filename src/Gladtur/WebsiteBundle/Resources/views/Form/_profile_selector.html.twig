@@ -1,0 +1,44 @@
+{% block _fos_user_profile_form_profile_widget %}
+    {{ block('profile_select_choice_widget') }}
+{% endblock %}
+
+{% block profile_select_choice_widget %}
+    {% spaceless %}
+            {{ block('profile_choice_widget_collapsed') }}
+    {% endspaceless %}
+{% endblock profile_select_choice_widget %}
+
+{% block profile_choice_widget_collapsed %}
+{% spaceless %}
+    <select {{ block('widget_attributes') }}{% if multiple %} multiple="multiple"{% endif %}>
+        {% if empty_value is not none %}
+            <option value=""{% if required %} disabled="disabled"{% if value is empty %} selected="selected"{% endif %}{% endif %}>{{ empty_value|trans({}, translation_domain) }}<img src="http://images.apple.com/global/nav/images/globalsearch_reset.gif"/></option>
+        {% endif %}
+        {% if preferred_choices|length > 0 %}
+            {% set options = preferred_choices %}
+            {{ block('choice_widget_options') }}
+            {% if choices|length > 0 and separator is not none %}
+                <option disabled="disabled">{{ separator }}</option>
+            {% endif %}
+        {% endif %}
+        {% set options = choices %}
+        {{ block('profile_choice_widget_options') }}
+    </select>
+{% endspaceless %}
+{% endblock profile_choice_widget_collapsed %}
+
+{% block profile_choice_widget_options %}
+    {% spaceless %}
+        {% for group_label, choice in options %}
+            {% if choice is iterable %}
+                <optgroup label="{{ group_label|trans({}, translation_domain) }}">
+                    {% set options = choice %}
+                    {{ block('profile_choice_widget_options') }}
+                </optgroup>
+            {% else %}
+                <option value="{{ choice.value }}"{% if choice is selectedchoice(value) %} selected="selected"{% endif %}><img src="http://images.apple.com/global/nav/images/globalsearch_reset.gif"/>{{ choice.label|trans({}, translation_domain) }}</option>
+            {% endif %}
+        {% endfor %}
+    {% endspaceless %}
+
+{% endblock profile_choice_widget_options %}

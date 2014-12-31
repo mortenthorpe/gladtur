@@ -1,0 +1,43 @@
+{% trans_default_domain 'FOSUserBundle' %}
+{{ render(controller("WebsiteBundle:Profiles:profileIcons")) }}
+<form action="{{ path('fos_user_profile_edit') }}" {{ form_enctype(form) }} method="POST" class="fos_user_profile_edit" autocomplete="off" novalidate>
+    {{ form_row(form.username) }}
+    {{ form_row(form.email) }}
+    {{ form_label(form.profile) }}
+    <div style="float:none;clear:both"><img id="profile_icon" src="/uploads/icons/profiles/{{ form.profile.vars.data.getPath() }}" style="width:40px;height:40px;float:left;margin-right:6px"/>
+    <div style="float:left;width:260px;padding:12px">{{ form_errors(form.profile) }} {{ form_widget(form.profile) }}</div>
+    </div>
+    <div  style="float:none;clear:both">
+    <p>Du skal vælge mindst een tilgængelighed der passer til netop dit handikap, hvis du vælger profilen: <strong>{{ render(controller("WebsiteBundle:Profiles:getIndividualized")) }}</strong>
+    </p>
+    </div>
+    <div id="fos_user_profile_form_tags">
+        <div class="row"><label>Vælg tilgængeligheder for profilen - <strong>{{ render(controller("WebsiteBundle:Profiles:getIndividualized")) }}</strong></label></div>
+    {% if form.freeprofileTags is defined and form.freeprofileTags|length > 0 %}
+    {% for tag in form.freeprofileTags %}
+        <div class="row">
+       {{ form_widget(tag) }}
+       {{ form_label(tag) }}
+       </div>
+    {% endfor %}
+     {% endif %}
+    </div>
+    <div style="display:block;clear:both;float:none">
+    <div id="user_profile_extras">
+        {{ form_widget(form.newsletter) }}
+        {{ form_label(form.newsletter) }}
+        {{ form_widget(form.contact) }}
+        {{ form_label(form.contact) }}
+        {{ form_widget(form.deleted) }}
+        {{ form_label(form.deleted) }}
+    </div>
+    <div>
+        <h3>Indtast venligst dit nuværende adgangskode, så vi ved at det netop er dig der er ved at ændre din profil</h3>
+    {{ form_row(form.current_password) }}
+    </div>
+    {{ form_rest(form) }}
+    </div>
+    <div style="display:block;clear:both;float:none">
+        <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+    </div>
+</form>

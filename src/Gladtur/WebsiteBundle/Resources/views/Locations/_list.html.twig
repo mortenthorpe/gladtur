@@ -1,0 +1,6 @@
+<div id="paged_locations">
+{% for location in locations %}
+    {% if loop.index0 is divisibleby(20) %}<a name="{{ loop.index0//20 }}"></a>{% endif %}
+    {% include "@Website/Locations/_location_listitem.html.twig" with {'location': location, 'thumbnail': location.mainImageThumbnail, index:loop.index } %}
+{% endfor %}
+</div>

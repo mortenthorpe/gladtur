@@ -1,0 +1,23 @@
+<div class="block login">
+    <a name="login_block"></a>
+    {% if app.user %}
+        <div id="login_as_user">{{ "Hej" |trans() }} {{ app.user.username }}</div>
+        <a href="{{ path('fos_user_security_logout') }}" class="edit">Log af</a>
+        <div class="msg"><h3>Du er nu logget på og kan oprette, redigere og anmelde steder</h3>
+        </div>
+    {% else %}
+        <div class="msg"><h3>Husk at du skal være logget ind for at oprette, redigere og anmelde steder</h3>
+        </div>
+        <form action="{{ path("fos_user_security_check") }}" method="post" autocomplete="off">
+            <label>{{ 'security.login.username' | trans({}, 'FOSUserBundle') }}</label>
+            <input type="text" name="_username" required="required" />
+            <label>{{ 'security.login.password' | trans({}, 'FOSUserBundle') }}</label>
+            <input type="password" name="_password" required="required" />
+            <input type="hidden" name="_target_path" value="/app_dev.php"/>
+            <input type="hidden" name="_csrf_token" value="{{ fos_csrf_provider.generateCsrfToken('authenticate') }}" />
+            <button class="submit_gt" type="submit">Log på</button>
+            <div><a href="{{ path('fos_user_registration_register') }}" class="edit">Opret dig som bruger</a></div>
+            <div><a href="{{ path('fos_user_resetting_request') }}" class="edit">Glemt adgangskoden</a></div>
+        </form>
+    {% endif %}
+</div>

@@ -1,0 +1,18 @@
+<form method="POST" action="{{ path('location_save_tagdata') }}?locationslug={{ locationslug }}" id="locationtagsforprofile">
+   <div id="profile_selector_icons">
+    {% for aprofile in profiles  %}
+           <img class="icon active_profile" {% if aprofile.id != profile.id %}style="display:none"{% endif %} id="icon_{{ aprofile.id}}" src="/{{ aprofile.getWebPath() }}">
+    {% endfor %}
+    <select name="pid" id="pid">
+        {% for aprofile in profiles  %}
+                <option value="{{ aprofile.id }}" {% if aprofile.id == profile.id %}selected{% endif %}>{{ aprofile.readableName() }}</option>
+        {% endfor %}
+    </select>
+   </div>
+    <div style="clear:both">
+    <ul class="plainlist" id="accessibilities_listitems">
+        {% include "@Website/Default/_ajax_profiles_radio_listitems.html.twig" with {'profileTagData': profileTagData, 'edit': edit} %}
+    </ul>
+    <div id="data_saved"></div>
+    </div>
+</form>

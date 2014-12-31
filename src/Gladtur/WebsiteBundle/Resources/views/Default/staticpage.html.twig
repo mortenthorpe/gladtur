@@ -1,0 +1,127 @@
+{% extends "@Website/layout.html.twig" %}
+{% block pagejs %}
+    {% if (app.user and app.user.hasRole('ROLE_ADMIN')) %}
+    <script src="//cdn.ckeditor.com/4.4.3/standard-all/ckeditor.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.4.2/adapters/jquery.min.js"></script>
+    <script src="/bundles/website/js/ckeditor/plugins/ckfinder/ckfinder.js"></script>
+    <script>
+        // See: http://ckeditor.com/forums/CKEditor/CKEditor-v4-Double-Click-to-Initiate-Editor
+        // We need to turn off the automatic editor creation first.
+        CKEDITOR.disableAutoInline = true;
+
+        var activeEditor = 0;
+        var activeEditorElement = 0;
+        var activeId = '';
+
+        function editorInit(id) {
+
+            // Is there already an editor active?
+            if (activeEditor) {
+
+                // Is the active editor the same
+                // as the one being requested?
+                if (activeEditor.element.getId() == activeId) {
+
+                    // Then our editor is already running
+                    // so there's nothing to do!
+                    return;
+                }
+                activeEditor.destroy();
+            }
+
+            // Find the element that we want to
+            // attach the editor to
+            if (! (activeEditorElement = document.getElementById(id))) {
+                return;
+            }
+
+            // TODO - verify that the element is either a
+            // div or a textarea which are the only two
+            // element types supporting contenteditable=true
+
+            // Make the element editable
+            activeEditorElement.setAttribute('contenteditable', 'true');
+
+            // Create a new inline editor for this div
+            activeEditor = CKEDITOR.inline(id);
+
+            // Set up a destruction function that will occur
+            // when the user clicks out of the editable space
+            activeEditor.on('blur', function() {
+                this.element.setAttribute('contenteditable', 'false');
+                activeId = '';
+                activeEditor = 0;
+                activeEditorElement = 0;
+                this.destroy();
+            });
+
+            // Now set the focus to our editor so
+            // that it will open up for business
+            activeEditorElement.focus();
+        }
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            // Slideshow dialog - consider: http://docs.ckeditor.com/#!/api/CKEDITOR.dialog.definition.html
+            // AnoSlide lightweight Jquery - http://www.anowave.com/ultra-lightweight-responsive-carousel/
+          CKEDITOR.plugins.addExternal('clipboard', '/bundles/website/js/ckeditor/plugins/clipboard/', 'plugin.js');
+          CKEDITOR.plugins.addExternal('savebtn', '/bundles/website/js/ckeditor/plugins/savebtn/', 'plugin.js');
+          CKEDITOR.plugins.addExternal('dialog', '/bundles/website/js/ckeditor/plugins/dialog/', 'plugin.js');
+          CKEDITOR.plugins.addExternal('dialogui', '/bundles/website/js/ckeditor/plugins/dialogui/', 'plugin.js');
+          CKEDITOR.plugins.addExternal('lineutils', '/bundles/website/js/ckeditor/plugins/lineutils/', 'plugin.js');
+          CKEDITOR.plugins.addExternal('widget', '/bundles/website/js/ckeditor/plugins/widget/', 'plugin.js');
+          CKEDITOR.plugins.addExternal('oembed', '/bundles/website/js/ckeditor/plugins/oembed/', 'plugin.js');
+          CKEDITOR.disableAutoInline = true;
+            CKEDITOR.stylesSet.add( 'my_styles', [
+                { name: 'Blok titel', element: 'span', attributes: { 'class' : 'h3' } },
+                { name: 'Fremhaevet', element: 'span', attributes: { 'class': 'fremhaevet' } },
+                { name: 'Understreget', element: 'span', attributes: { 'class': 'understreget' } },
+                { name: 'SlideShow', element: 'ul', attributes: {'class': 'carousel'}}
+            ] );
+
+          $('.ck_editable').each(function(){
+          CKEDITOR.inline($(this).attr('id'),{
+              language: 'da',
+              extraPlugins : 'savebtn,oembed',
+              saveSubmitURL: '{{ path('websitestatic_page_saveslot') }}',
+              stylesSet : 'my_styles',
+              toolbar: [{ name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ]},'|', { name: 'media', items: ['Image','oembed'] },'/', { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] }, { name: 'styles', items: [ 'Styles', 'RemoveFormat']}, '/', { name: 'lists', items: ['NumberedList', 'BulletedList', 'Blockquote'] }, { name: 'savebtn', items: ['savebtn']}],
+              filebrowserUploadUrl : '/bundles/website/js/ckeditor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&currentFolder=/',
+              filebrowserImageUploadUrl : '/bundles/website/js/ckeditor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&currentFolder=/',
+              filebrowserFlashUploadUrl : '/bundles/website/js/ckeditor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash',
+          } );});
+            // CKFinder integration: http://docs.cksource.com/CKFinder_2.x/Developers_Guide/PHP/CKEditor_Integration
+         //CKFinder.setupCKEditor( null, '/bundles/website/js/ckeditor/plugins/ckfinder' );
+        });
+    </script>
+    {% endif %}
+    <script type="text/javascript" src="/bundles/website/js/anoslide/js/jquery.anoslide.js"></script>
+    <script type="text/javascript">
+        $(window).load(function() {
+            initSlideshowsAfterPrepare(prepareSlideshows());
+        });
+
+        function prepareSlideshows(){
+            $('ul.carousel').wrap('<div class="carousel">').parents('div.carousel').prepend('<a class="prev"></a>').append('<a class="next"></a>');
+        }
+
+        function initSlideshowsAfterPrepare(callback){
+            $('ul.carousel').anoSlide(
+                    {
+                        items: 1,
+                        speed: 250,
+                        prev: 'a.prev',
+                        next: 'a.next',
+                        lazy: false
+                        /*auto: 4000*/
+                    });
+        }
+    </script>
+{% endblock %}
+{% block content_left %}
+    {{ content | raw }}
+    {{ render(controller('WebsiteBundle:Default:slotsForSlugAndPosition', {'slug':pagename, 'position':'Static1', 'slotclasses': ['onehalf'], 'containerclasses': ['horizontal']})) }}
+{% endblock content_left %}
+{% block content_right %}
+    {{ render(controller('WebsiteBundle:Default:slotsForSlugAndPosition', {'slug':pagename, 'position':'Static2', 'slotclasses': [''], 'containerclasses': ['vertical']})) }}
+{% endblock %}

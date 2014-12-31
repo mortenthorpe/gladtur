@@ -1,0 +1,32 @@
+{
+    "name": "yzalis/ua-parser",
+    "type": "library",
+    "description": "The missing UAParser PHP library.",
+    "keywords": ["user agent", "parser", "browser", "operating system", "email client", "plateform"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Benjamin Laugueux",
+            "email": "benjamin@yzalis.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "symfony/yaml": "~2.1",
+        "doctrine/inflector": "~1.0"
+    },
+    
+    "require-dev": {
+        "phpunit/phpunit": "~3.7"
+    },
+
+    "autoload": {
+        "psr-0": { "UAParser": "src/" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1.0-dev"
+        }
+    }
+}
+

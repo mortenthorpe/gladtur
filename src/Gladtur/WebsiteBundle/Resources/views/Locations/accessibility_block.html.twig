@@ -1,0 +1,15 @@
+<div class="block accessibility">
+    {{ render(controller("WebsiteBundle:Profiles:profileIcons"))}}
+    {{ render(controller("WebsiteBundle:Profiles:profileSelector", {'selectedProfile':1})) }}
+    <h2>Stedets anmeldelser</h2>
+        <div id="location_accessibility_edit" class="edit"><a href="{{ path('location_add_tagdata', {'locationslug':location.slug}) }}" class="edit">Anmeld stedet</a></div>
+    {% if user_location_datas | length >0 %}
+        <ul class="accessibilities_list">
+            {% for user_location_data in user_location_datas %}
+                {% include "@Website/Locations/_accessibility_listitem.html.twig" with {'user_location_data': user_location_data} %}
+            {% endfor %}
+        </ul>
+    {% else %}
+        <div class="msg">Stedet har endnu ingen anmeldelser!</div>
+    {% endif %}
+</div>

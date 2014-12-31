@@ -1,0 +1,12 @@
+{% extends '@Website/Admin/_edit.html.twig' %}
+{% block slot %}
+{% if (app.user and app.user.hasRole('ROLE_ADMIN')) %}
+<div class="slot_admin ck_editable {{ slotclasses }}" contenteditable="true" id="slot_{{ slot.id }}">
+    {{ slot.html | raw }}
+</div>
+{% elseif slot.html is not empty %}
+    <div class="slot{{ slotclasses }}"id="slot_{{ slot.id }}">
+        {{ slot.html | raw }}
+    </div>
+{% endif %}
+{% endblock %}

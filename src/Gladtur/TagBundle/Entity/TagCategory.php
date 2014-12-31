@@ -43,12 +43,12 @@ class TagCategory
     public function getTags()
     {
         /**$tColl = new ArrayCollection();
-        for($i=0;$i<5;$i++){
-        $nt = new Tags();
-        $nt->setTagCategory($this);
-        $nt->setReadableName('test #'.$i);
-        $tColl->add($nt);
-        }
+         * for($i=0;$i<5;$i++){
+         * $nt = new Tags();
+         * $nt->setTagCategory($this);
+         * $nt->setReadableName('test #'.$i);
+         * $tColl->add($nt);
+         * }
          **/
         return $this->tags;
     }
@@ -72,11 +72,6 @@ class TagCategory
     {
         $this->tags = null;
     }
-
-    /**
-     * @ORM\ManyToMany(targetEntity="TvguserProfile", mappedBy="tagCategories")
-     */
-    private $profiles;
 
     /**
      * @var integer $published

@@ -1,0 +1,13 @@
+{% if (app.user and app.user.hasRole('ROLE_ADMIN')) %}
+<div class="slot_admin_container {{ slotclasses }}">
+{% endif %}
+    {% if (false and app.user and app.user.hasRole('ROLE_ADMIN')) %}
+    <ul style="list-style:none">
+        <li><a href="#" class="admin_publish_link"><img class="admin_publish_status" src="/bundles/website/images/admin/{% if slot.published %}published.png{% else %}unpublished.png{% endif %}"/></a></li>
+    </ul>
+    {% endif %}
+{% block slot %}
+{% endblock %}
+{% if (app.user and app.user.hasRole('ROLE_ADMIN')) %}
+</div>
+{% endif %}

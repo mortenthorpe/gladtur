@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:jms="urn:jms:translation" version="1.2">
+  <file date="2013-08-05T16:54:18Z" source-language="en" target-language="da" datatype="plaintext" original="not.available">
+    <header>
+      <tool tool-id="JMSTranslationBundle" tool-name="JMSTranslationBundle" tool-version="1.1.0-DEV"/>
+      <note>The source node in most cases contains the sample message as written by the developer. If it looks like a dot-delimitted string such as "form.label.firstname", then the developer has not provided a default message.</note>
+    </header>
+    <body>
+      <trans-unit id="6e5e2b8bc208d130958996d665b1037f631d308c" resname="-- Ingen --">
+        <source>-- Ingen --</source>
+        <target state="new">-- Ingen --</target>
+        <jms:reference-file line="15">TagBundle/Form/LocationCategoryType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="24f75ce7240a31383279b6e5df406fb7e3acec84" resname="Billede/film-upload">
+        <source>Billede/film-upload</source>
+        <target state="new">Billede/film-upload</target>
+        <jms:reference-file line="13">TagBundle/Form/UserLocationMediaType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="b17d7cb8e6eb32539d3a426488c7bb6ff06cef77" resname="Breddegrad">
+        <source>Breddegrad</source>
+        <target state="new">Breddegrad</target>
+        <jms:reference-file line="15">TagBundle/Form/UserLocationDataType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="2dd332f5071c6ea89597c400f304fc37b9f60548" resname="Brugerprofil-navn">
+        <source>Brugerprofil-navn</source>
+        <target state="new">Brugerprofil-navn</target>
+        <jms:reference-file line="15">TagBundle/Form/TvguserProfileType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="cfadbd7a577133041a60f331a0e2ad6af20f3f8b" resname="By">
+        <source>By</source>
+        <target state="new">By</target>
+        <jms:reference-file line="20">TagBundle/Form/UserLocationDataType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="b15cf7fd63cfb5a606d325d868705cfd8e6f4225" resname="Choose a file to replace the existing image">
+        <source>Choose a file to replace the existing image</source>
+        <target state="new">Choose a file to replace the existing image</target>
+        <jms:reference-file line="46">views/Form/fields.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="42052e36548ffb5ca4ec8602022a029eca2eb404" resname="Danmark">
+        <source>Danmark</source>
+        <target state="new">Danmark</target>
+        <jms:reference-file line="19">TagBundle/Form/UserLocationDataType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="79c90516286386e50639f4719db27a0cc9fb8f6f" resname="Denne kategori er en top-kategori!">
+        <source>Denne kategori er en top-kategori!</source>
+        <target state="new">Denne kategori er en top-kategori!</target>
+        <jms:reference-file line="14">TagBundle/Form/LocationCategoryType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7018f3abcf9aaca3a1e5434057bc73fcfe78182a" resname="Egenskaber">
+        <source>Egenskaber</source>
+        <target state="new">Egenskaber</target>
+        <jms:reference-file line="25">TagBundle/Form/TagCategoryType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="84add5b2952787581cb9a8851eef63d1ec75d22b" resname="Email">
+        <source>Email</source>
+        <target state="new">Email</target>
+        <jms:reference-file line="24">TagBundle/Form/UserLocationDataType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="ce59784e41299a6e1d7486cb08e92a1fba9eb872" resname="Gade/vej navn">
+        <source>Gade/vej navn</source>
+        <target state="new">Gade/vej navn</target>
+        <jms:reference-file line="21">TagBundle/Form/UserLocationDataType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="086be1580966bab613e54dfab773a79c52221f87" resname="Hjemmeside adresse">
+        <source>Hjemmeside adresse</source>
+        <target state="new">Hjemmeside adresse</target>
+        <jms:reference-file line="25">TagBundle/Form/UserLocationDataType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="6e04c7a14689c0a8d31138bad770ad2641fca790" resname="Kategori navn">
+        <source>Kategori navn</source>
+        <target state="new">Kategori navn</target>
+        <jms:reference-file line="23">TagBundle/Form/TagCategoryType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="993a6db68c63336f08f109966467467705304d15" resname="Kategoriens navn">
+        <source>Kategoriens navn</source>
+        <target state="new">Kategoriens navn</target>
+        <jms:reference-file line="18">TagBundle/Form/LocationCategoryType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="dff2ebf8bf6dbf1db61af164f8fdf79094eb401b" resname="Kontaktperson">
+        <source>Kontaktperson</source>
+        <target state="new">Kontaktperson</target>
+        <jms:reference-file line="26">TagBundle/Form/UserLocationDataType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d9df90d8002f6aa1b3d7d2501de9221ce5a84207" resname="Land">
+        <source>Land</source>
+        <target state="new">Land</target>
+        <jms:reference-file line="19">TagBundle/Form/UserLocationDataType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="3a4d93b0517a2991baf9882fe779c039a4e5b122" resname="Længdegrad">
+        <source>Længdegrad</source>
+        <target state="new">Længdegrad</target>
+        <jms:reference-file line="16">TagBundle/Form/UserLocationDataType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="32dae7e1dc4d7dc1a0564c3abcc19137cea4f14d" resname="Navn">
+        <source>Navn</source>
+        <target state="new">Navn</target>
+        <jms:reference-file line="14">TagBundle/Form/TagType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="d93f13492765566ae378040ffd8d711f2ebec531" resname="No tags are assigned to this category yet">
+        <source>No tags are assigned to this category yet</source>
+        <target state="new">No tags are assigned to this category yet</target>
+        <jms:reference-file line="16">views/TvguserProfile/edit.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="e346d4a7e6fa6f7542650cdc0908150443ae4e59" resname="Postnr.">
+        <source>Postnr.</source>
+        <target state="new">Postnr.</target>
+        <jms:reference-file line="18">TagBundle/Form/UserLocationDataType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="daa4e8071a68e5eeff321f4a0b5e2a666730b482" resname="Profile Icon (PNG, GIF)">
+        <source>Profile Icon (PNG, GIF)</source>
+        <target state="new">Profile Icon (PNG, GIF)</target>
+        <jms:reference-file line="16">TagBundle/Form/TvguserProfileType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="8b9a286a0979a37f3a3e0aa19255b7c818f85020" resname="Profilens sted-egenskaber">
+        <source>Profilens sted-egenskaber</source>
+        <target state="new">Profilens sted-egenskaber</target>
+        <jms:reference-file line="19">TagBundle/Form/TvguserProfileType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="48ae686999cead187c07280a6454f2a1520c4043" resname="Relevant for bruger-profilerne">
+        <source>Relevant for bruger-profilerne</source>
+        <target state="new">Relevant for bruger-profilerne</target>
+        <jms:reference-file line="20">TagBundle/Form/TagType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="f1ae2ec675412a129346a55c354478fe692dedae" resname="Seneste bruger-indtastet data">
+        <source>Seneste bruger-indtastet data</source>
+        <target state="new">Seneste bruger-indtastet data</target>
+        <jms:reference-file line="50">TagBundle/Form/LocationType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="548e932e7d84ddec556d9628187de3d3e29606ab" resname="Skal fremvises?">
+        <source>Skal fremvises?</source>
+        <target state="new">Skal fremvises?</target>
+        <jms:reference-file line="17">TagBundle/Form/UserLocationDataType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="98d0acddb52c829cc31709dc6b5fc8f46049654e" resname="Sted egenskab">
+        <source>Sted egenskab</source>
+        <target state="new">Sted egenskab</target>
+        <jms:reference-file line="15">TagBundle/Form/LocationTagType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="1419094dbcdddd3ed4099537868f2bc55a4d688b" resname="Sted-kategorier">
+        <source>Sted-kategorier</source>
+        <target state="new">Sted-kategorier</target>
+        <jms:reference-file line="49">TagBundle/Form/LocationType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="7f489b196ab2919e7658a521980b049d92851e3c" resname="Stedets navn">
+        <source>Stedets navn</source>
+        <target state="new">Stedets navn</target>
+        <jms:reference-file line="14">TagBundle/Form/UserLocationDataType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="40314f882822f7fccd78a36ac4c977000e334136" resname="Telefon">
+        <source>Telefon</source>
+        <target state="new">Telefon</target>
+        <jms:reference-file line="23">TagBundle/Form/UserLocationDataType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="839de63d77c3b8d86576f7f47807fbe012970d9e" resname="Tilhører top-kategorien">
+        <source>Tilhører top-kategorien</source>
+        <target state="new">Tilhører top-kategorien</target>
+        <jms:reference-file line="15">TagBundle/Form/LocationCategoryType.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="ef8a36f079a3be2b0ea2bc8af788998c2b3cd44e" resname="Upload media">
+        <source>Upload media</source>
+        <target state="new">Upload media</target>
+        <jms:reference-file line="14">views/Location/edit.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="a7efabb4c4b2146b363b84f99a0712f0824bd087" resname="View media">
+        <source>View media</source>
+        <target state="new">View media</target>
+        <jms:reference-file line="12">views/Location/edit.html.twig</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="976ee7f85f1611c5513421ff523af5118170aee0" resname="gladtur_report_error">
+        <source>gladtur_report_error</source>
+        <target>Der opstod en fejl i afsending af din kommentar, prøv venligst igen eller senere.</target>
+        <jms:reference-file line="39">MobileBundle/Controller/ReportItemsController.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="4fe82f75992ef3d801fe4c5c58dc32b95722acc9" resname="gladtur_report_success">
+        <source>gladtur_report_success</source>
+        <target>Tak for din anmeldelse. Vi gennemser din kommentar og følger snarest muligt op på sagen.</target>
+        <jms:reference-file line="37">MobileBundle/Controller/ReportItemsController.php</jms:reference-file>
+      </trans-unit>
+      <trans-unit id="303096689fafd87dbcf1c6ad9f8e174762a80489" resname="location_address_extd">
+        <source>location_address_extd</source>
+        <target>Yderligere adresse</target>
+        <jms:reference-file line="22">TagBundle/Form/UserLocationDataType.php</jms:reference-file>
+      </trans-unit>
+       <trans-unit resname="fos_user.username.already_used">
+       <source>fos_user.username.already_used</source>
+       <target>Brugernavnet er allerede i brug, vælg venligst et andet</target>
+       </trans-unit>
+    </body>
+  </file>
+</xliff>

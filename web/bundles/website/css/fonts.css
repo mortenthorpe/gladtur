@@ -1,0 +1,120 @@
+body {
+    font-family: Verdana, "Lucida Grande", Lucida, sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+}
+
+p, div, a, span, ul.plainlist,ul.plainlist li, ol, ol li, .label{font-size: 14px; line-height: 147%;color:#000}
+#paged_locations p,#paged_locations div,#paged_locations span,#paged_locations ul.plainlist,#paged_locations ul.plainlist li,#paged_locations ol,#paged_locations ol li{font-size: 15px; line-height: 147%;}
+#paged_locations button.tiny, #paged_locations .button.secondary,#paged_locations .radius.label, select, input, .submit, .reset, .buttony.custom, .button.submit, .submit_gt,#paged_locations .js_distance{font-size:13px}
+h1, span.h1, a, #paged_locations *,body, label, label, #main_right label, fieldset legend, #locationForm *, #main_left h3, #main_left h3 a, #main_left .h3,#main_left .h3 a, #main_right h3, #main_right .h3, #main_right .block.login a.edit{
+    color: rgb(88,104,114);
+}
+#paged_locations a{line-height:100%}
+label, #main_right label, label.required, fieldset legend{font-size: 15px;font-weight:normal;margin:0 0 2px 0}
+ul.plainlist.location.contactinfo{margin:0 10px;}
+ul.plainlist.location.contactinfo label, ul.plainlist.location.contactinfo .label{font-size:14px;background-color:transparent;margin:0;padding:0;font-weight:normal;text-align:left}
+fieldset legend{font-weight:900}
+input, submit, reset, .button{font-size:12px}
+input[type='checkbox'], input[type='radio']{font-size:14px;margin:4px 12px 12px 0 !important}
+h1, .h1{font-weight:900}
+h1, .h1, #paged_locations h5 a, #paged_locations h3 a{font-size:20px}
+h1.inline{clear:none;margin:0 12px 0 0}
+h2, .h2{font-size:20px !important;display:block;clear:both;font-weight:900}
+h3, .h3{font-size:18px;display:block;clear:both;font-weight:900}
+#main_right p,#main_right a, #main_right div,#main_right li, #main_right a.edit, select{font-size:16px;color:#000}
+#main_right p, #main_right ul li, #main_right ol li{line-height:125%}
+#main_right .comments_list li *{font-size:13px;}
+#maincontent a.edit{text-transform:uppercase}
+#main_right .block.login a.edit{font-weight:900}
+#footer p, #footer a, .footer.copyright_contact div p,.footer.copyright_contact div span, .footer.copyright_contact div a{color:white}
+.footer.copyright_contact div p,.footer.copyright_contact div span, .footer.copyright_contact div a{font-size:14px;line-height:125%;}
+
+.notice a{color:#000;text-decoration: underline !important}
+button.tiny, .button.secondary{font-size:13px;color:rgb(88,104,114);background-color:#fff;font-weight:normal}
+h1, h2, h3, h4, h5, h6 {
+    font-style: normal;
+    font-weight: bold;
+    line-height: 120%;
+    margin: 0 0 6px 0;
+}
+h5{margin: 0}
+
+.buttony.custom, .button.submit, .submit_gt{text-align: center; text-decoration: none; line-height:1;}
+.comment-location{
+    font-weight: normal;
+}
+.topcategory{font-weight:900;}
+form#locationForm .plupload_wrapper ul li{font-weight: 900;color: #000}
+input[type="submit"], input[type="reset"], submit, reset, button{
+    color: rgb(88,104,114);
+    font-weight: normal;
+    line-height: 1;
+    text-align: center;
+    text-decoration: none;
+}
+
+ul.categories_list label:hover .label_title{
+    color: black;
+    line-height:120%;
+    background-color: white;
+}
+
+.info_text{
+    background:#ccc;
+    color: black;
+}
+
+#toggle-info span, #toggle-info-deprecated span {
+    color:#222222;
+}
+
+.nullvalue {color:#CCCCCC !important;}
+
+input[readonly], input[readonly="readonly"]{background:#ddd; color: #333; font-style: italic;}
+
+#login-msg{font-style:italic;}
+#login-msg.notice{color:green}
+#login-msg.error{background:red;color:#efefef;}
+.error, ul.errors li{background:red; color: #efefef;}
+
+.footer {
+    background-color: #CC3399;
+    color: white;
+}
+
+div.menu a:link, div.menu a:visited {
+    color: #fff;
+}
+div.menu a:hover, menu a:active {
+    color: black;
+}
+
+.menu{
+    color: white;
+}
+
+.accessibility{
+    color: #666666;
+}
+
+.radius.label{font-weight: normal}
+
+.menu ul li a{
+    font-size: 18px;
+}
+
+ul.plainlist.bulletminus{
+    padding-left: 20px;
+}
+
+ul.plainlist.bulletminus, ul.plainlist.bulletminus li{
+  list-style: circle !important;
+}
+
+ul.plainlist.bulletminus li{
+    display: list-item;
+}
+.capitalize{text-transform: uppercase !important}
+h2.expander{font-weight:normal;font-size:16px !important;}

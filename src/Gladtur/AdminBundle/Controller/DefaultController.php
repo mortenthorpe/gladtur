@@ -4,6 +4,7 @@ namespace Gladtur\AdminBundle\Controller;
 
 use Gladtur\TagBundle\Controller\JsonController;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends JsonController
 {

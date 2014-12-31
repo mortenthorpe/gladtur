@@ -1,4 +1,13 @@
 {% extends "GladturTagBundle::layout.html.twig" %}
+{% block pagejs %}
+<script type="text/javascript">
+    $(document).ready(function(){
+       $('#user_data_sidebar #user_data_list li').click(function(){
+            $(this).find('ul.user_data').toggle();
+       });
+    });
+</script>
+{% endblock %}
 {% form_theme edit_form 'GladturTagBundle:Form:form_row.html.twig' %}
 {% block content %}
     {% if map %}
@@ -7,20 +16,23 @@
     {% endif %}
     <ul id="gmap_footer">
 <li><a href="#" class="active">View map</a></li>
-    {% if entity.getUserLocationData().media %}
-	{{ entity.getUserLocationData().media | json_encode }}
+      {% for aMedia in entity.getUserMedia() %}
+	    {{ aMedia.getMediaPath() }}
+      {% endfor %}
     <li><a href="#">{{ 'View media' | trans }}</a></li>
-{% endif %}
     <li><a href="#">{{ 'Upload media' | trans }}</a></li>
     </ul>
 <form action="{{ path('location_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
     <div class="main_right" style="float:right;width:336px">
-        <div id="locationCategories">
-            {{ form_row(edit_form.locationCategory) }}
+        <div id="locationTopCategory">
+            {{ form_row(edit_form.location_top_category) }}
         </div>
-        {#% include "GladturTagBundle:UserLocationData:sidebar.html.twig" with{'location':entity, 'locationData':userLocationData} %#}
+        <div id="locationCategories">
+            {{ form_row(edit_form.locationCategories) }}
+        </div>
+        {% include "GladturTagBundle:UserLocationData:sidebar.html.twig" with{'location':entity, 'locationData':userLocationAllData} %}
         {#% include "GladturTagBundle:Location:location_data_sidebar.html.twig" with{'location':entity} %#}
-        {% include "GladturTagBundle:UserLocationTagData:sidebar.html.twig" with{'location':entity, 'locationTagData':userLocationTagData} %}
+        {#% include "GladturTagBundle:UserLocationTagData:sidebar.html.twig" with{'location':entity, 'locationTagData':userLocationTagData} %#}
     </div>
 <div class="main_left" style="float:left;width:580px;margin-right:45px">
 <h1>Rediger '{{ entity.readableName }}'</h1>

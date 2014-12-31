@@ -1,11 +1,12 @@
-{% extends "FOSUserBundle::layout.html.twig" %}
-
+{% extends "@FOSUser/layout.html.twig" %}
+{% block content_left %}
+{{ render(controller('WebsiteBundle:Default:slotsForSlugAndPosition', {'slug':'fosuser-login', 'position':'form_prefix', 'slotclasses': [''], 'containerclasses': ['vertical']})) }}
 {% block fos_user_content %}
     {% if error %}
-        <div>{{ error|trans({}, 'FOSUserBundle') }}</div>
+        <div><ul class="errors"><li>{{ error|trans({}, 'FOSUserBundle') }}</li></ul></div>
     {% endif %}
 
-    <form id="loginform" action="{{ path("fos_user_security_check") }}" method="post">
+    <form id="loginform" action="{{ path("fos_user_security_check") }}" method="post" autocomplete="off" novalidate>
         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}"/>
         <table border="0" cellpadding="0" cellspacing="0">
             <tr>
@@ -42,4 +43,29 @@
             </tr>
         </table>
     </form>
+    <form method="post" novalidate>
+        <table border="0" cellpadding="0" cellspacing="0">
+            <tr>
+                <td colspan="2">
+                    {{ 'security.login.enableacct_txt'|trans({}, 'FOSUserBundle') }}
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label class="left"
+                           for="username">{{ 'security.login.usernameoremail'|trans({}, 'FOSUserBundle') }}</label>
+                </td>
+                <td>
+                    <input type="text" id="username" name="_usernameoremail" value="" required="required"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <input class="login" type="submit" id="_submit" name="_submit"
+                           value="{{ 'security.renewaccount.submit'|trans({}, 'FOSUserBundle') }}"/>
+                </td>
+            </tr>
+        </table>
+    </form>
 {% endblock fos_user_content %}
+{% endblock content_left %}

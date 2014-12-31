@@ -11,31 +11,50 @@ framework:
         strict_requirements: %kernel.debug%
     form:            true
     csrf_protection: true
-    validation:      { enable_annotations: true }
+    validation:
+      enabled: true
+      enable_annotations: true
     templating:      #assets_version: SomeVersionScheme
       engines: ['twig']
       form:
         resources:
           - 'TagBundle:Form'
+          - 'WebsiteBundle:Form'
     default_locale:  %locale%
     trust_proxy_headers: false # Should Request object should trust proxy headers (X_FORWARDED_FOR/HTTP_CLIENT_IP)
-    session:         ~
+    session: ~
+#      save_path: %kernel.root_dir%/var/sessions
 
 # Twig Configuration
 twig:
+#    exception_controller:  website.controller.default:exceptionAction
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
     form:
       resources:
         - 'GladturTagBundle:Form:fields.html.twig'
+#        - 'WebsiteBundle:Form:fields.html.twig'
+    globals:
+      fos_csrf_provider: "@form.csrf_provider"
+      appstore:
+        appid: 123456
+        affiliate_data: "config_aff_data"
+
+      livesite_url: "http://www.gladtur.dk"
 
 # Assetic Configuration
 assetic:
-    debug:          %kernel.debug%
-    use_controller: false
-    bundles:        [ ]
+    debug:          false
+    #use_controller: false
+    #bundles:        [ ]
     #java: /usr/bin/java
     filters:
+        uglifyjs2:
+          # the path to the uglifyjs executable
+          bin: /usr/bin/uglifyjs
+        uglifycss:
+          # the path to the uglifyjs executable
+          bin: /usr/bin/uglifycss
         cssrewrite: ~
         #closure:
         #    jar: %kernel.root_dir%/Resources/java/compiler.jar
@@ -54,6 +73,9 @@ doctrine:
         charset:  UTF8
 
     orm:
+        metadata_cache_driver: apc
+        query_cache_driver: apc
+       # result_cache_driver: apc
         auto_generate_proxy_classes: %kernel.debug%
         auto_mapping: true
         filters:
@@ -61,9 +83,19 @@ doctrine:
             class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
             enabled: true
 
+#doctrine_mongodb:
+#    connections:
+#        default:
+#            server: mongodb://localhost:27017
+#            options: {}
+#    default_database: test_database
+#    document_managers:
+#        default:
+#            auto_mapping: true
+# MongoDB terminal and browser - http://blog.nicoversity.com/2013/04/tutorial-mongodb-2-4-2-on-os-x-using-homebrew/#installMongoDB
 # Swiftmailer Configuration
 swiftmailer:
-  transport:  smtp
+#  transport:  gmail
 #  encryption: ssl
 #  auth_mode:  login
   host:       127.0.0.1
@@ -74,17 +106,74 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Gladtur\TagBundle\Entity\User
+    from_email:
+      address:        noreply@gladtur.dk
+      sender_name:    Glad Tur
+    registration:
+      form:
+        type: gladtur_user_registration
+    profile:
+      form:
+        type: gladtur_user_profile
+
+#    from_email:
+#      address:        thomas@morning.dk
+#      sender_name:    GladTur-Brugerservice
 
 services:
+    twig.extension.text:
+       class: Twig_Extensions_Extension_Text
+       tags:
+            - { name: twig.extension }
+
     acme_hello.twig.extension.debug:
         class:        Twig_Extension_Debug
         tags:
              - { name: 'twig.extension' }
 
+    gladtur.website.setLatitudeLongitude:
+      class: Gladtur\WebsiteBundle\EventListener\PageloadSetUserGeolocationListener
+      arguments: []
+      tags:
+        - { name: kernel.event_subscriber }
+
+    gladtur.registerStat:
+      class: Gladtur\TagBundle\EventListener\PageloadStatsListener
+      arguments: []
+      tags:
+        - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+
+    gladtur.website.userstateswitch:
+      class: Gladtur\WebsiteBundle\EventListener\FOSPostLoginListener
+      arguments: [@service_container]
+      tags:
+        - { name: kernel.event_subscriber }
+
     GladturTagBundle.image_type_extension:
         class: Gladtur\TagBundle\Form\Type\ImageTypeExtension
         tags:
             - { name: form.type_extension, alias: file }
+
+    gladtur.location.pagedlocations:
+      class: Gladtur\MobileBundle\Helper\LocationHelper
+      arguments: [@service_container, @doctrine.orm.entity_manager]
+
+    gladtur.website.cities:
+      class: Gladtur\WebsiteBundle\Helper\OioHelper
+      arguments: []
+
+    gladtur.stats:
+      class: Gladtur\TagBundle\Controller\GladTurStatsController
+#      scope: request
+      arguments: [@service_container]
+      tags:
+          - { name: 'gladtur.stats' }
+
+    gladtur.stats.uaparser:
+      class: UAParser\UAParser
+      arguments: []
+      tags:
+            - { name: gladtur.stats.uaparser }
 
     oauth_event_listener:
         class:  Gladtur\MobileBundle\Event\oAuthPreAuthListener
@@ -103,6 +192,95 @@ services:
             - { name: doctrine.event_subscriber, connection: default }
         calls:
             - [ setAnnotationReader, [ @annotation_reader ] ]
+
+    location_category_icon_type:
+      class: Gladtur\WebsiteBundle\Form\Type\LocationCategoryIconType
+      tags:
+        -  { name: form.type }
+
+    gladtur_user.registration_listener:
+      class: Gladtur\WebsiteBundle\EventListener\RegistrationListener
+      arguments: []
+      tags:
+        - { name: kernel.event_subscriber }
+
+    gladtur_user.registration.form.type:
+      class: Gladtur\WebsiteBundle\Form\Type\RegistrationFormType
+      arguments: [%fos_user.model.user.class%]
+      tags:
+        - { name: form.type, alias: gladtur_user_registration }
+
+    gladtur_user.profile.form.type:
+      class: Gladtur\WebsiteBundle\Form\Type\ProfileFormType
+      arguments: [%fos_user.model.user.class%]
+      tags:
+        - { name: form.type, alias: gladtur_user_profile }
+
+    gladtur.password_resetting:
+            class: Gladtur\TagBundle\EventListener\PasswordResettingListener
+            arguments: [@router, @service_container]
+            tags:
+                - { name: kernel.event_subscriber }
+
+    gladtur.profile_updated:
+            class: Gladtur\TagBundle\EventListener\ProfileEditListener
+            arguments: [@router]
+            tags:
+                - { name: kernel.event_subscriber }
+
+    gladtur.user_location_data:
+      class: Gladtur\WebsiteBundle\Form\Type\UserLocationDataType
+      tags:
+        - { name: form.type, alias: user_location_data }
+
+    gladtur.gladtur_hours_open:
+      class: Gladtur\WebsiteBundle\Form\Type\daysHoursOpenClosedType
+      tags:
+        - { name: form.type, alias: gladtur_hours_open }
+    gladtur.api.search:
+      class: Gladtur\MobileBundle\Controller\SearchController
+      calls:
+        - [setContainer, ["@service_container"]]
+#avalanche_imagine:
+#  web_root: %kernel.root_dir%/../web
+#  source_root: %kernel.root_dir%/../web/uploads
+#  cache_prefix: uploads/avalanche/
+#  driver: gd
+#  filters:
+#    thumbnail:
+#      type: thumbnail
+#      options: { size: [114, 114], mode: inset, quality: 100, format: png  }
+#    fullsize:
+#      type:    thumbnail
+#      options: { size: [800, 600] , mode: inset, quality: 100, format: png }
+
+
+liip_imagine:
+  web_root: %kernel.root_dir%/../web
+  data_root: %kernel.root_dir%/../web/uploads
+  cache_prefix: uploads/avalanche/
+  cache_clearer: false
+  filter_sets:
+    thumbnail:
+      quality: 60
+      filters:
+        thumbnail: { size: [114, 114], mode: inset }
+    fullsize:
+      quality: 75
+      filters:
+        thumbnail: { size: [800, 600], mode: inset }
+    website_detail_full:
+      quality: 75
+      filters:
+        thumbnail: { size: [256, 200], mode: outbound }
+    website_detail_thumbnail:
+      quality: 75
+      filters:
+        thumbnail: { size: [120, 120], mode: outbound }
+    website_comment_list:
+      quality: 75
+      filters:
+        thumbnail: { size: [240, 116], mode: inset}
 
 #fos_oauth_server:
 #    db_driver: orm       # Driver availables: orm, mongodb, or propel
@@ -135,3 +313,39 @@ stof_doctrine_extensions:
       timestampable: true
 
 
+nelmio_solarium:
+    endpoints:
+        default:
+            host: 46.4.103.106
+            port: 8080
+            path: /solr
+            core: collection1
+            timeout: 5
+    clients:
+        default:
+            endpoints: [default]
+
+#jms_translation:
+#  configs:
+#      app:
+#          dirs: [%kernel.root_dir%, %kernel.root_dir%/../src]
+#          output_dir: %kernel.root_dir%/Resources/translations
+#          ignored_domains: [routes]
+#          excluded_names: [*TestCase.php, *Test.php]
+#          excluded_dirs: [cache, data, logs, ../src/Gladtur]
+google:
+  maps: ~
+  analytics:
+    trackers:
+        default:
+            name:      gladtur_website
+            accountId: UA-XXXXXXXXXX-X
+            domain:    gladturdev.dk
+            trackPageLoadTime: true
+
+oneup_uploader:
+    mappings:
+        main_image:
+            frontend: blueimp
+        subcategory_images:
+            frontend: blueimp

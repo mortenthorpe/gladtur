@@ -1,0 +1,93 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: mortenthorpe
+ * Date: 28/06/14
+ * Time: 23.31
+ */
+
+namespace Gladtur\TagBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use Gladtur\TagBundle\Entity\LocationAliasRepository;
+use Symfony\Component\Validator\Constraints as Assert;
+
+/**
+ * Properties declared here are STATIC to the location, any mutable properties are declared inside the UserLocationData Class, as the mutability consists of changing users providing differing property-data for a specific location.
+ * Static properties (the ones in this Class) have values assigned by the first user, or overridden by an ADMINISTRATOR type actor
+ */
+
+/**
+ * Gladtur\TagBundle\Entity\LocationAliases
+ *
+ * @ORM\Table(name="location_aliases")
+ * @ORM\Entity(repositoryClass="Gladtur\TagBundle\Entity\LocationAliasesRepository")
+ */
+class LocationAliases
+{
+    /**
+     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     */
+    private $id;
+    /**
+     * @ORM\ManyToOne(targetEntity="Location", inversedBy="location_aliases")
+     */
+    private $location;
+
+    /**
+     * @ORM\Column(name="alias_url", type="string", length=255, nullable=false)
+     * @var string $alias_url
+     */
+    private $alias_url;
+
+    /**
+     * @param string $alias_url
+     */
+    public function setAliasUrl($alias_url)
+    {
+        $this->alias_url = $alias_url;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAliasUrl()
+    {
+        return $this->alias_url;
+    }
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+
+    /**
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * @param mixed $location
+     */
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+} 

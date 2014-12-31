@@ -1,0 +1,393 @@
+{% extends "WebsiteBundle::layout.html.twig" %}
+{% set uploader = 'plupload' %}
+{% block pagecss %}
+    {% if uploader == 'plupload' %}
+    <link rel="stylesheet" href="{{ asset('bundles/website/js/plupload/js/jquery.ui.plupload/css/jquery.ui.plupload.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/website/js/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css') }}"/>
+    {% endif %}
+    {% if uploader == 'jquery_basic' %}
+    <link rel="stylesheet" href="{{ asset('bundles/website/css/jquery.fileupload.css')}}"/>
+    {% endif %}
+{%  endblock %}
+{% block pagejs %}
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('#gladturlocation_location_top_category').change(function(){
+                var topcat = $(this);
+                $.ajax({
+                    type: "GET",
+                    url: "/subcategories/"+$(this).val(),
+                }).done(function( data ) {
+                    $('#subcategories input').each(function(){
+                        if(data['subcategories'].indexOf($(this).attr('id')) == -1){
+                            $(this).next().hide();
+                            $(this).hide();
+                        }
+                        else{
+                            $(this).next().show();
+                            $(this).show();
+                        }
+                    });
+                });
+                $('#subcategories').show();
+            });
+        });
+        $('document').ready(function(){
+            if($('#gladturlocation_location_top_category').val()){
+                $('#gladturlocation_location_top_category').attr('readonly', 'readonly');
+            }
+            $('#gladturlocation_location_top_category').trigger('change');
+        });
+    </script>
+    {% if uploader == 'plupload' %}
+    <script type="text/javascript" src="{{ asset('bundles/website/js/plupload/js/plupload.full.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/website/js/plupload/js/jquery.ui.plupload/jquery.ui.plupload.min.js') }}"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function()
+        {
+            var multiimageDelta=1;
+            plupload.addI18n({
+                'Select files' : 'Vælg billeder',
+                'Add files to the upload queue and click the start button.' : 'Tilføj billeder til køen, og tryk på Upload!',
+                'Filename' : 'Filnavn',
+                'Status' : 'Status',
+                'Size' : 'Størrelse',
+                'Add Files' : 'Tilføj billede',
+                'Start Upload': 'Upload!',
+                'Stop Upload': 'Afbryd',
+                'Stop current upload' : 'Afbryd',
+                'Start uploading queue' : 'Upload!',
+                'Drag files here.' : 'Træk billeder her.',
+                '%d files queued' : '%d billeder i kø'
+            });
+            $("#imageupload_subs").plupload(
+                    {
+                        runtimes: "html5, browserplus, flash",
+                        filters : [
+                            {title : "Images", extensions : "jpg,jpeg,gif,png"}
+                        ],
+                        max_file_size : '5mb',
+                        chunk_size : '5mb',
+                        unique_names : true,
+                        url: "{{ oneup_uploader_endpoint('subcategory_images') }}",
+                        init:{
+                            FilesAdded: function(up, files) {
+                                multiimageDelta++;
+                            },
+                            FileUploaded: function(up, file, info) {
+                                $('#secondary_images').append('<div class="image_secondary newimage"><img src="/assets/starred.png" style="position:absolute;top:-15px;left:-15px;z-index:1000"/><img src="/uploads/avalanche/thumbnail/locations/{{ location.id }}/' + file['name']+'"/></div>');
+                            }},
+                        multipart_params: {location_id : {{ location.id }}, delta : multiimageDelta}
+                    });
+
+            $("#imageupload_main").plupload(
+                    {
+                        runtimes:  "html5, browserplus, flash",
+                        filters : [
+                            {title : "Images", extensions : "jpg,jpeg,gif,png"}
+                        ],
+                        max_file_size : '5mb',
+                        chunk_size : '5mb',
+                        unique_names : true,
+                        url: "{{ oneup_uploader_endpoint('main_image') }}",
+                        multi_selection: false,
+                        browse_button : 'pickmainfile',
+                        container: document.getElementById('container_pickmainfile'),
+                        init:{
+                            /*PostInit: function() {
+                                document.getElementById('filelist').innerHTML = '';
+
+                                document.getElementById('uploadmainfile').onclick = function() {
+                                    uploader.start();
+                                    return false;
+                                };
+                            },*/
+                            FilesAdded: function(up, files) {
+                                var maxfiles = 1;
+                                if(up.files.length > maxfiles )
+                                {
+                                    up.splice(maxfiles);
+                                    alert('Et sted kan kun have 1 profil-billede. Tilføj resten til de øvrige billeder herunder');
+                                }
+                                if (up.files.length === maxfiles) {
+                                    $(this).hide("slow"); // provided there is only one #uploader_browse on page
+                                }
+                            },
+                            FileUploaded: function(up, file, info) {
+                                $('#image_main').append('<div style="position:relative;display:inline;margin-left:30px;"><div style="display:inline-block;width:150px;margin:0 14px;"><img src="/assets/left_replaced_by_right.png" style="display:block;clear:both;margin-top:30px"/><div style="display:block;clear:both;padding:5px 0 0 20px;">Erstattes af...</div></div><img src="/uploads/avalanche/thumbnail/locations/{{ location.id }}/' + file['name']+'"/></div>');
+                            }},
+                        multipart_params: {location_id : {{ location.id }}}
+                    });
+
+         });
+        $('document').ready(function(){
+           $('#imageupload_main .plupload_droptext').html('Træk 1 billede her...');
+           $('#imageupload_main .plupload_add .ui-button-text').html('Tilføj billede');
+        });
+    </script>
+
+        {% endif %}
+    {% if uploader == 'jquery_basic' %}
+        <script src="{{ asset('bundles/website/js/jquery_basic/vendor/jquery.ui.widget.js')}}"></script>
+        <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+        <script src="{{ asset('bundles/website/js/jquery_basic/jquery.iframe-transport.js')}}"></script>
+        <!-- The basic File Upload plugin -->
+        <script src="{{ asset('bundles/website/js/jquery_basic/jquery.fileupload.js')}}"></script>
+        <script>
+            $(function () {
+                'use strict';
+                // Change this to the location of your server-side upload handler:
+                $('#mainfile').fileupload({
+                   // url: url,
+                    dataType: 'json',
+                    done: function (e, data) {
+                        $.each(data.result.files, function (index, file) {
+                            $('<p/>').text(file.name).appendTo('#imageupload_main_fresh');
+                        });
+                    },
+                    progressall: function (e, data) {
+                        var progress = parseInt(data.loaded / data.total * 100, 10);
+                        $('#progress .progress-bar').css(
+                                'width',
+                                progress + '%'
+                        );
+                    }
+                }).prop('disabled', !$.support.fileInput)
+                        .parent().addClass($.support.fileInput ? undefined : 'disabled');
+            });
+        </script>
+
+    {% endif %}
+    <script>
+        // Autocomplete for Location ReadableName -> Duplicate suggestion
+        $(function () {
+            var xhr;
+            var locationReadableNamesMatch;
+            $('#gladturlocation_readableName').autocomplete({
+                minLength: 4,
+                source: function( request, response ) {
+                    var regex = new RegExp(request.term, 'i');
+                    if(xhr){
+                        xhr.abort();
+                    }
+                    xhr = $.ajax({
+                        url : "{{ path('_ajax_location_duplicates') }}",
+                        dataType: "json",
+                        data: {
+                            readableName: request.term,
+                        },
+                        cache: false,
+                        success: function(data) {
+                            locationReadableNamesMatch = data;
+                            locationReadableNamesMatchItemsHTML = '';
+                            response($.map(data, function(item) {
+                                if(regex.test(item.label)){
+                                    locationReadableNamesMatchItemsHTML += '<li><a href="/sted/' + item.slug + '">&raquo;' + item.readableName + ", " + item.streetname + ", " + item.city + '</a></li>';
+                                    };
+                            }));
+                            if(locationReadableNamesMatch.length>0){
+                            $("#duplicatecheck_existing" ).html('<div class="notice"><strong>Mente du?</strong><p>Stederne herunder minder om dit indtastede. Hvis du kan finde det sted du er ved at oprette i listen, så klik gerne på stedet istedet for påny at oprette dit sted.</p><ul class="nostyle plainlist">' + locationReadableNamesMatchItemsHTML +'</ul></div>');
+                            }
+                            else{
+                                $("#duplicatecheck_existing" ).html('');
+                            }
+                            return false;
+                        }
+                    });
+                },
+            });
+        });
+        // Autocomplete for Streetname -> Zipcode resolution
+        $(function () {
+            var xhr;
+            $('#gladturlocation_addressStreet').autocomplete({
+                minLength: 4,
+                source: function( request, response ) {
+                    var regex = new RegExp(request.term, 'i');
+                    if(xhr){
+                        xhr.abort();
+                    }
+                    xhr = $.ajax({
+                        url : "{{ path('_ajax_zipcode_autocomplete') }}",
+                        dataType: "json",
+                        data: {
+                            streetname: request.term,
+                        },
+                        cache: false,
+                        success: function(data) {
+                            response($.map(data, function(item) {
+                                if(regex.test(item.label)){
+                                    return {
+                                        label: item.streetname + ", " + item.city,
+                                        streetname: item.streetname,
+                                        zipcode: item.zipcode
+                                    };
+                                }
+                            }));
+                        }
+                    });
+                },
+                select: function( event, ui ) {
+                    $("#gladturlocation_addressStreet" ).val( ui.item.streetname);
+                    $("#gladturlocation_addressCityAndZip").val(ui.item.zipcode);
+                    return false;
+                }
+            });
+        });
+    </script>
+{% endblock %}
+{% block content_left %}
+    {{ render(controller('WebsiteBundle:Default:slotsForSlugAndPosition', {'slug':'opretsted', 'position':'form_prefix', 'slotclasses': [''], 'containerclasses': ['vertical']})) }}
+    <div id="form_errors"></div>
+<form id="locationForm" action="{{ path('location_form_submit')}}?locationslug={{ locationslug }}" method="post" {{ form_enctype(form) }} novalidate>
+    {% if app.user.hasRole('ROLE_ADMIN') %}
+    <div style="display:block;clear:both;float:none;">
+        <div style="display:block;float:left;">{{ form_widget(form.admin_validated_boolean) }}</div><div style="display:block;float:left;">{{ form_label(form.admin_validated_boolean) }}</div>
+    </div>
+    {% endif %}
+    <fieldset class="required">
+        <legend>{{ "Stedets navn og adresse" | trans }}</legend>
+   {%if (not location.published) or (app.user.hasRole('ROLE_ADMIN')) %}
+   <div class="readablename">
+   {{ form_row(form.readableName, {'attr': {'class': 'required'}}) }}
+       <div id="duplicatecheck_existing">
+       </div>
+   </div>
+   {% else %}
+    <div class="readablename" style="display:none">
+       {{ form_widget(form.readableName, {'attr': {'class': 'required hidden'}}) }}
+   </div>
+   {% endif %}
+        {{ form_row(form.addressStreet)}}
+        {{ form_row(form.addressCityAndZip)}}
+    </fieldset>
+    <fieldset class="required categories">
+        <legend>{{ "Top- og underkategorier" | trans }}</legend>
+        <div class="willshowonhide">Klik på titlen for at vise indholdet</div>
+        <div class="willhide">
+        {%  if not location.published %}
+            {{ form_row(form.location_top_category, {'attr': {'class': 'required'}}) }}
+            <div id="subcategories">
+                {#{ form_label(form.locationCategories, 'Stedets øvrige kategorier', {'label_attr': {'class': 'h2'}}) }#}
+                {{ form_widget(form.locationCategories)}}
+            </div>
+        {% else %}
+            {{ form_widget(form.location_top_category, {'attr': {'class': 'required hidden'}}) }}
+            {{ form_label(form.location_top_category) }}<div style="display:inline-block;margin:1px 0 0 14px;"><strong class="static-txt">{{ location.getLocationTopCategory() }}</strong></div>
+            <div id="subcategories">
+                {#{ form_label(form.locationCategories, 'Stedets øvrige kategorier', {'label_attr': {'class': 'h2'}}) }#}
+                {{ form_widget(form.locationCategories)}}
+            </div>
+        {% endif %}
+        </div>
+    </fieldset>
+<fieldset class="optional">
+    <legend>{{ "Billeder der beskriver stedet" | trans }}</legend>
+    <div class="willshowonhide">Klik på titlen for at vise indholdet</div>
+    <div class="willhide">
+    <h2>{{ "Stedets profil-billede" | trans }}</h2>
+    {% if location.mainImageThumbnail is not empty %}
+    <h3>{{ "Stedet har allerede billedet" | trans }}</h3>
+    <div id="image_main">
+    {% include "@Website/Locations/_location_images.html.twig" with {'location': location, 'mainimage': true, 'secondaryimages': false } %}
+    </div>
+    {% else %}
+        <div id="image_main"></div>
+    {% endif %}
+    <h3>{{ "Upload et nyt billede - Det erstatter det nuværende " | trans }}</h3>
+        <h4>Sådan uploader du stedets profil-billede: </h4>
+     <ol>
+         <li>Tryk på knappen "Tilføj billede"</li>
+         <li>Tryk på knappen "Upload!"</li>
+         <li>Benyt knappen "Afbryd" hvis du fortryder en upload mens den foregår</li>
+     </ol>
+    <div id="imageupload_main">
+        {%  if uploader == 'jquery_basic' %}
+        <span class="btn btn-success fileinput-button">
+        <i class="glyphicon glyphicon-plus"></i>
+        <span>Select files...</span>
+        <input id="mainfile" type="file" name="files[]" data-url="{{ oneup_uploader_endpoint('main_image') }}?location_id={{ location.id }}" multiple />
+            </span>
+            <br>
+            <br>
+            <!-- The global progress bar -->
+            <div id="progress" class="progress">
+                <div class="progress-bar progress-bar-success"></div>
+            </div>
+        {% else %}
+        <div id="container_pickmainfile">
+            <a id="pickmainfile" href="javascript:;">[Select files]</a>
+            <a id="uploadmainfile" href="javascript:;">[Upload files]</a>
+            <div id="filelist">Your browser doesn't have Flash, Silverlight or HTML5 support.</div>
+        </div>
+       {% endif %}
+    </div>
+    <h2>{{ "Øvrige billeder" | trans }}</h2>
+    {% if location.media | length > 0 %}
+    <h3>{{ "Stedet har allerede billederne" | trans }}</h3>
+    <div id="secondary_images">
+    {% include "@Website/Locations/_location_images.html.twig" with {'location': location, 'mainimage': false, 'secondaryimages': true } %}
+    </div>
+    {% endif %}
+    <h3>{{ "Upload flere billeder" | trans }}</h3>
+        <h4>Sådan uploader du billeder til stedet: </h4>
+        <ol>
+            <li>Tryk på knappen "Tilføj billede"
+                <ul><li>... Gentag for hvert billede du vil tilføje</li></ul>
+            </li>
+            <li>Tryk på knappen "Upload!"</li>
+            <li>Benyt knappen "Afbryd" hvis du fortryder en upload mens den foregår</li>
+        </ol>
+    <div id="imageupload_subs"></div>
+    </div>
+</fieldset>
+
+<fieldset class="optional">
+    <legend>{{ "Kontakt" | trans }}</legend>
+    <div class="willshowonhide">Klik på titlen for at vise indholdet</div>
+    <div class="willhide">
+    {{ form_row(form.userLocationDataLatest.mail)}}
+    {{ form_row(form.userLocationDataLatest.phone)}}
+    {{ form_row(form.userLocationDataLatest.contactPerson)}}
+    {{ form_row(form.userLocationDataLatest.txtDescription)}}
+    {{ form_row(form.homepage)}}
+    </div>
+</fieldset>
+    <!-- Opening hours, disabled! -->
+    {#}
+    <fieldset class="optional">
+        <legend>{{ "Åbningstider" | trans }}</legend>
+        <div class="willshowonhide">Klik på titlen for at vise indholdet</div>
+        <div class="willhide">
+            {% for hours in location.userLocationDataLatest.daysHoursOpenClosed %}
+                <div class="hours_row {% if loop.index0 is even %}even{% else %}odd{% endif %}">
+                <label>{{ hours.getDayName() }}</label>
+                {{ form_widget(form.userLocationDataLatest.daysHoursOpenClosed[loop.index0]) }}
+                </div>
+            {% endfor %}
+        </div>
+    </fieldset>
+    {#}
+    <div style="display:block;clear:both;float:none;padding-top:20px">
+    <input type="submit" value="Gem ændringer"/><input type="reset" value="Fortryd ændringer"/>
+    {% if location.getPublished() and location.getSlug() %}
+    <a href="{{ path('location_details', {'locationslug' : location.getSlug()}) }}">&raquo;&nbsp;Fortryd og vis stedet</a>
+    {% endif %}
+    <div class="hidden">{{ form_rest(form) }}</div>
+    </div>
+</form>
+{% endblock%}
+{% block content_right %}
+    {{ google_map_container(map) }}
+    {{ google_map_js(map) }}
+{% endblock content_right %}
+
+{% block content_right_prefix %}
+    {{ render(controller('WebsiteBundle:Default:globalSlotsForPosition', {'position':'content_right_prefix', 'slotclasses': [''], 'containerclasses': ['vertical']})) }}
+{% endblock %}
+
+{% block content_right_after %}
+    {{ render(controller('WebsiteBundle:Default:globalSlotsForPosition', {'position':'content_right_after', 'slotclasses': [''], 'containerclasses': ['vertical']})) }}
+
+{% endblock %}

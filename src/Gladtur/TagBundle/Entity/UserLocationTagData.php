@@ -2,15 +2,16 @@
 
 namespace Gladtur\TagBundle\Entity;
 
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\DBAL\Types\DateTimeType as ORMTYPE;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
  * Gladtur\TagBundle\Entity\UserLocationTagData
  *
  * @ORM\Table(name="user_location_tag_data")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Gladtur\TagBundle\Entity\UserLocationTagDataRepository")
+ * @ORM\HasLifecycleCallbacks
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class UserLocationTagData
@@ -25,9 +26,18 @@ class UserLocationTagData
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="Tag", inversedBy="userLocationTagData")
+     * @ORM\ManyToOne(targetEntity="Tag", inversedBy="userLocationTagData")
      */
     private $tag;
+
+    /**
+     * @param mixed $tag
+     */
+    public function setTag($tag)
+    {
+        $this->tag = $tag;
+    }
+
 
     public function getTag()
     {
@@ -88,17 +98,17 @@ class UserLocationTagData
     /**
      * @param int $tagvalue
      */
-    public function setTagvalue($tagvalue)
+    public function setTagValue($tagvalue)
     {
-        if(is_int($tagValue)){
-            if(0 <= $tagValue && $tagValue <= 2){
+        if (is_int($tagvalue)) {
+            if (0 <= $tagvalue && $tagvalue <= 3) {
                 /**
                  * Enumerated value, range 0-2
                  * null/0 = Unrated
                  * 1 = Rated positively
                  * 2 = Rated negatively
                  */
-                $this->tagvalue=$tagValue;
+                $this->tagvalue = $tagvalue;
             }
         }
     }
@@ -108,7 +118,10 @@ class UserLocationTagData
      */
     public function getTagvalue()
     {
-        if(!$this->tagvalue) return 0;
+        if (!$this->tagvalue) {
+            return 0;
+        }
+
         return $this->tagvalue;
     }
 
@@ -240,5 +253,37 @@ class UserLocationTagData
     public function getRelevant()
     {
         return $this->relevant;
+    }
+
+    /**
+     * @var integer $score
+     *
+     * @ORM\Column(name="score", type="integer", nullable=true)
+     */
+    private $score;
+
+    /**
+     * @ORM\PrePersist
+     */
+    private function setScore($scoreVal)
+    {
+        $this->score = 1;
+    }
+
+    public function getScore()
+    {
+        return $this->score;
+    }
+}
+
+class UserLocationTagDataRepository extends EntityRepository
+{
+    public function getLocationTagValue($tag_dataId, $location, $userProfileId)
+    {
+        return $this->_em->createQuery(
+            "select tag_data.tagvalue from Gladtur\TagBundle\Entity\UserLocationTagData tag_data where tag_data.location = " . $location->getId(
+            ) . " and tag_data.tag = " . $tag_dataId . " and tag_data.user_profile=" . $userProfileId . " order by tag_data.updated desc"
+        )->getSingleScalarResult();
+        //      return $this->_em->createQuery("select tag_data.tagvalue from Gladtur\TagBundle\Entity\UserLocationTagData tag_data where tag_data.location = ".$location->getId()." and tag_data.tag = ".$tag_dataId." and tag_data.user_profile in(select profile.id from Gladtur\TagBundle\Entity\TvguserProfile profile) order by tag_data.updated desc")->getArrayResult();
     }
 }

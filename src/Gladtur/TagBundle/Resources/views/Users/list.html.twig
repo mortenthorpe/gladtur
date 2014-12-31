@@ -1,0 +1,27 @@
+{% extends "GladturTagBundle::layout.html.twig" %}
+{% block content %}
+    <table id="user_listing">
+        <tr>
+            <th>Username</th>
+            <th>User ID</th>
+            <th>User enabled</th>
+            <th>User email</th>
+            <th>Created on date<br/>(d-m-Y, time)</th>
+            <th>Actions</th>
+        </tr>
+        {% for user in users %}
+            <tr>
+            <td><a href="{{ path('admin_user_show', {'username' : user.username }) }}">{{ user.username }}</a></td>
+            <td>{{ user.id }}</td>
+            <td>{{ user.enabled ? 'Enabled': 'Disabled'}}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.created | date('d-m-Y, H:i:s') }}</td>
+            <td>
+                <ul>
+                    <li><a href="{{ path('admin_user_edit', {'username' : user.username }) }}">Edit</a></li>
+                </ul>
+            </td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,30 @@
+<!html>
+<head>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/plupload/1.5.5/jquery.plupload.queue/css/jquery.plupload.queue.css"/>
+<link rel="stylesheet" href="//cdn.jsdelivr.net/plupload/1.5.5/jquery.plupload.queue/img/backgrounds.gif"/>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://bp.yahooapis.com/2.4.21/browserplus-min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.9/jquery-ui.min.js"></script>
+<script type="text/javascript" src="http://www.plupload.com/plupload/js/plupload.full.js"></script>
+<script type="text/javascript" src="http://www.plupload.com/plupload/js/jquery.ui.plupload/jquery.ui.plupload.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $("#subcategory_images").plupload(
+                {
+                    runtimes: "html5",
+                    url: "{{ oneup_uploader_endpoint('subcategory_images') }}",
+                    init:{
+                    FileUploaded: function(up, file, info) {
+                        $('#images_freshuploads').append('<img src="/'+file['name']+'"/>');
+                    }}
+
+                });
+    });
+</script>
+</head>
+<body>
+<div id="subcategory_images"></div>
+<div id="images_freshuploads"></div>
+</body>

@@ -1,0 +1,8 @@
+{% if location.mainImageThumbnail is not empty and mainimage %}
+    <img src="/uploads/avalanche/website_detail_thumbnail/locations/{{ location.id }}/{{ location.mainImageThumbnail }}"/>
+{% endif %}
+{% if secondaryimages %}
+{% for onemedia in location.media %}
+    <div class="image_secondary"><img src="/uploads/avalanche/website_detail_thumbnail/locations/{{ location.id }}/{{ onemedia.mediaPath}}"/></div>
+{% endfor %}
+{% endif %}

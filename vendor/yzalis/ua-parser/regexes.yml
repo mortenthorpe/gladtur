@@ -1,0 +1,158 @@
+browser_parsers:
+    - regex: '(CriOS)/(\d+)\.(\d+)\.(\d+)'
+      family_replacement: Chrome
+    - regex: '(Opera)/9.80.*Version/(\d+)\.(\d+)(?:\.(\d+))?'
+    - regex: '(Opera)[/\s](\d+)\.(\d+)'
+    - regex: '(Firefox)/(\d+)\.(\d+)\.(\d+)'
+    - regex: '(Firefox)/(\d+)\.(\d+)'
+    - regex: '(Chrome)/(\d+)\.(\d+)\.(\d+)'
+    - regex: '(Version)/(\d+)\.(\d+)(?:\.(\d+))?.*Safari/'
+      family_replacement: Safari
+    - regex: '(Safari)/\d+'
+    - regex: '(MSIE) (\d+)\.(\d+)'
+      family_replacement: Internet Explorer
+    - regex: 'Trident/(.*); rv:(\d+)\.(\d+)'
+      family_replacement: Internet Explorer
+    - regex: '(konqueror)\/(\d+)\.(\d+)(?:\.(\d+))?'
+
+rendering_engine_parsers:
+    - regex: 'rv\:([\w\.]+).*(Gecko)'
+      family_replacement: $2
+      version_replacement: $1
+    - regex: '(presto)\/([\w\.]+)'
+    - regex: '(webkit|trident)\/([\w\.]+)'
+    - regex: '(MSOffice 12)'
+      family_replacement: Microsoft Word
+    - regex: '(khtml|tasman|links)[/ ]([\w\.]+)?'
+
+device_parsers:
+    - regex: '(RIM Tablet OS)'
+      constructor_replacement: 'BlackBerry'
+      type_replacement: tablet
+    - regex: '(Play[Bb]ook)'
+      constructor_replacement: 'BlackBerry'
+      type_replacement: tablet
+    - regex: '(Black[bB]erry)'
+      constructor_replacement: BlackBerry
+      mobile_replacement: true
+    - regex: '(iPad)'
+      constructor_replacement: Apple
+      model_replacement: $1
+      type_replacement: tablet
+    - regex: '(iPod)'
+      constructor_replacement: Apple
+      model_replacement: $1
+      type_replacement: mobile
+    - regex: '(iPhone)'
+      constructor_replacement: Apple
+      model_replacement: $1
+      type_replacement: mobile
+    - regex: '(lg)[e;\s-\/]+(\w+)*'
+      constructor_replacement: LG
+      model_replacement: $2
+      type_replacement: mobile
+
+operating_system_parsers:
+    - regex: '(Symbian[ ]?os)/(\d+)\.(\d+)'
+      family_replacement: 'Symbian'
+    - regex: '(Symbian OS)'
+      family_replacement: 'Symbian'
+    - regex: '(Black[bB]erry).+Version/(\d+)\.(\d+)\.(\d+)'
+      family_replacement: 'BlackBerry OS'
+    - regex: '(Black[Bb]erry)[0-9a-z]+/(\d+)\.(\d+)\.(\d+)(?:\.(\d+))?'
+      family_replacement: 'BlackBerry OS'
+    - regex: '(Black[bB]erry)\s?(\d+)'
+      family_replacement: 'BlackBerry OS'
+    - regex: '(Android)[- ](\d+)\.(\d+)(?:[.\-]([a-z0-9]+))?'
+    - regex: '(CPU OS|iPhone OS) (\d+)_(\d+)(?:_(\d+))?'
+      family_replacement: iOS
+    - regex: '(XBLWP7)'
+      family_replacement: Windows Phone
+      major_replacement: 7
+    - regex: '(Windows NT 6\.2)'
+      family_replacement: Windows
+      major_replacement: 8
+    - regex: '(Windows NT 6\.1)'
+      family_replacement: Windows
+      major_replacement: 7
+    - regex: '(Windows (?:NT 5\.2|NT 5\.1))'
+      family_replacement: Windows
+      major_replacement: XP
+    - regex: '(Windows NT 6\.0)'
+      family_replacement: Windows
+      major_replacement: Vista
+    - regex: '(Windows NT 5\.0)'
+      family_replacement: Windows
+      major_replacement: 2000
+    - regex: '(Windows Phone) (\d+)\.(\d+)'
+    - regex: '(Windows Phone) OS (\d+)\.(\d+)'
+    - regex: '(Windows) (XP|98|95|CE)'
+    - regex: '(Win(98))'
+      family_replacement: Windows
+    - regex: '(Win(95))'
+      family_replacement: Windows
+    - regex: '(Mac OS X) (\d+)[_.](\d+)(?:[_.](\d+))?'
+      family_replacement: Mac OS
+
+email_client_parsers:
+    - regex: '(Thunderbird)/(\d+)\.(\d+)(?:\.(\d+))?'
+    - regex: '(Lotus-Notes)/(\d+)\.(\d+)(?:\.(\d+))?'
+      family_replacement: Lotus Notes
+    - regex: '(Postbox)[/ ](\d+)\.(\d+)(?:\.(\d+))?'
+    - regex: '(Outlook-Express/7)'
+      family_replacement: Windows Live Mail
+      major_replacement: 2009
+    - regex: '(Outlook-Express)/(\d+)'
+      family_replacement: Outlook-Express
+    - regex: '(MSOffice 15|Outlook 15)'
+      family_replacement: Outlook
+      major_replacement: 2013
+    - regex: '(MSOffice 14|Outlook 14)'
+      family_replacement: Outlook
+      major_replacement: 2010
+    - regex: '(MSOffice 12)'
+      family_replacement: Outlook
+      major_replacement: 2007
+    - regex: '(MSOffice 11)'
+      family_replacement: Outlook
+      major_replacement: 2003
+    - regex: '(MSOffice 10)'
+      family_replacement: Outlook
+      major_replacement: XP
+    - regex: '(MSOffice 9)'
+      family_replacement: Outlook
+      major_replacement: 2000
+    - regex: '(MSOffice 8)'
+      family_replacement: Outlook
+      major_replacement: 97
+    - regex: '(MSOffice 7)'
+      family_replacement: Outlook
+      major_replacement: 95
+    - regex: '(Exchange|owa)'
+      family_replacement: Outlook
+      major_replacement: Web Access
+      type_replacement: webmail
+    - regex: '(yahoo)'
+      family_replacement: Yahoo!
+      type_replacement: webmail
+    - regex: '(live.com)'
+      family_replacement: Hotmail
+      type_replacement: webmail
+    - regex: '(me.com)'
+      family_replacement: MobileMe
+      type_replacement: webmail
+    - regex: '(aol.com)'
+      family_replacement: AOL
+      type_replacement: webmail
+    - regex: '(orange.fr)'
+      family_replacement: Orange
+      type_replacement: webmail
+    - regex: '(laposte.net)'
+      family_replacement: LaPoste
+      type_replacement: webmail
+    - regex: '(free.fr)'
+      family_replacement: Free
+      type_replacement: webmail
+    - regex: '(sfr.fr)'
+      family_replacement: SFR
+      type_replacement: webmail

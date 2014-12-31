@@ -45,11 +45,34 @@ class UserPassword
     protected $newpassword_plain;
 
     /**
+     * @ORM\Column(name="newpassword_token", type="string", length=255, nullable=false)
+     */
+    protected $newpassword_token;
+
+    /**
+     * @param mixed $newpassword_token
+     */
+    public function setNewpasswordToken($newpassword_token)
+    {
+        $this->newpassword_token = $newpassword_token;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNewpasswordToken()
+    {
+        return $this->newpassword_token;
+    }
+
+
+    /**
      * @param string $newpassword_plain
      */
     public function setNewpasswordPlain($newpassword_plain)
     {
         $this->newpassword_plain = $newpassword_plain;
+        $this->newpassword_token = md5($this->getUsernameoremail() . $this->getUser()->getUsername());
     }
 
     /**

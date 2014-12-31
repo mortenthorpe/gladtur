@@ -1,11 +1,6 @@
 {% extends "GladturTagBundle::layout.html.twig" %}
 {% block content %}
     <!-- Location/index.html.twig //-->
-    <!--<ul id="adminmenu">
-	{% for itemName, itemURL in menuItems %}
-	<li class=""><a href="{{ itemURL }}">{{itemName}}</a></li>
-	{% endfor %}
-</ul>//-->
     <h1>Oversigt over steder</h1>
     <ul class="list_plain">
         <li>
@@ -14,37 +9,61 @@
             </a>
         </li>
     </ul>
-    <table class="records_list">
+    <div style="display:block;clear:both;float:none;">
+    <h3>Viser {{ rows }} rækker ad gangen, skift side med pilene herunder</h3>
+    <ul class="list_plain paginator" style="margin:0 auto;">
+        {% if start > 0 %}
+        <li><a href="{{ path('location_paged', {'start': prev_start, 'sortby':sortby}) }}">&laquo;&nbsp;S. {{ prev_pageno }}</a></li>
+        {% else %}
+        <li>&nbsp;&nbsp;S. 1</li>
+        {% endif %}
+        <li>|&nbsp;Du er på S. {{ cur_pageno }}&nbsp;|</li>
+        <li><a href="{{ path('location_paged', {'start': next_start, 'sortby':sortby}) }}">S. {{ next_pageno }}&nbsp;&raquo;</a></li>
+    </ul>
+    </div>
+<div style="display:block;clear:both;float:none;">
+    <table style="width:100%;">
         <thead>
         <tr>
-            <th>Id</th>
-            <th>Navn</th>
-            <th>Bynavn</th>
-            <th>Gade/vej og nr.</th>
-            <th>Post nr.</th>
-            <th>Skal vises?</th>
+            <th><a href="{{ path('location_paged', {'start': start, 'sortby':'id'}) }}">Id</a></th>
+            <th><a href="{{ path('location_paged', {'start': start, 'sortby':'readableName'}) }}">Navn</a></th>
+            <th><a href="{{ path('location_paged', {'start': start, 'sortby':'addressCity'}) }}">Bynavn</a></th>
+            <th><a href="{{ path('location_paged', {'start': start, 'sortby':'addressStreet'}) }}">Gade/vej og nr.</a></th>
+            <th><a href="{{ path('location_paged', {'start': start, 'sortby':'addressZip'}) }}">Post nr.</a></th>
+            <th><a href="{{ path('location_paged', {'start': start, 'sortby':'published'}) }}">Skal vises?</a></th>
+            <th><a href="{{ path('location_paged_directed', {'start': start, 'sortby':'admin_validated', 'sortdir':'DESC'}) }}">Godkendt af administrator?</a></th>
             <th>Udfør</th>
         </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
+            {% if entity.published == 0 %}
+                {% set rowcolor = '#ff6666 !important' %}
+            {% else %}
+                {% set rowcolor = 'transparent !important' %}
+            {% endif %}
             <tr>
-                <td>{{ entity.id }}</td>
-                <td><a href="{{ path('location_show', { 'id': entity.id }) }}">{{ entity.readableName }}</a></td>
-                <td>{{ entity.addressCity }}</td>
-                <td>{{ entity.addressStreet }}</td>
-                <td>{{ entity.mtGetAddressZip }}</td>
-                <td>{{ entity.mtGetPublishedTxt }}</td>
-                <td>
+                <td style="background-color:{{ rowcolor }}">{{ entity.id }}</td>
+                <td style="background-color:{{ rowcolor }}"><a href="{{ path('location_show', { 'id': entity.id }) }}">{{ entity.readableName }}</a></td>
+                <td style="background-color:{{ rowcolor }}">{{ entity.addressCity }}</td>
+                <td style="background-color:{{ rowcolor }}">{{ entity.addressStreet }}</td>
+                <td style="background-color:{{ rowcolor }}">{{ entity.mtGetAddressZip }}</td>
+                <td style="background-color:{{ rowcolor }}">{{ entity.mtGetPublishedTxt }}</td>
+                <td style="background-color:{{ rowcolor }}">{% if entity.getAdminValidatedBoolean %}Ja{% else %}Nej{% endif %}</td>
+                <td style="background-color:{{ rowcolor }}">
                     <ul class="adminmenu_local">
                         <li>
                             <a href="{{ path('location_show', { 'id': entity.id }) }}"class="view">Vis</a>
                         </li>
                         <li>
-                            <a href="{{ path('location_edit', { 'id': entity.id }) }}">Rediger</a>
+                            <a href="{{ path('location_form_edit', { 'locationslug': entity.getSlug() }) }}" target="_blank">Rediger</a>
                         </li>
                         <li>
-                            <a href="{{ path('location_delete', { 'id': entity.id }) }}" class="delete">Slet</a>
+                            {% if entity.published %}
+                                <a href="{{ path('location_delete', { 'id': entity.id }) }}" class="delete">Slet</a>
+                            {% else %}
+                                <a href="{{ path('location_revive', { 'id': entity.id }) }}" class="delete">Genopret</a>
+                            {% endif %}
                         </li>
                     </ul>
                 </td>
@@ -52,4 +71,17 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
+    <div style="display:block;clear:both;float:none;">
+        <h3>Viser {{ rows }} rækker ad gangen, skift side med pilene herunder</h3>
+        <ul class="list_plain paginator" style="margin:0 auto;">
+            {% if start > 0 %}
+                <li><a href="{{ path('location_paged', {'start': prev_start}) }}">&laquo;&nbsp;S. {{ prev_pageno }}</a></li>
+            {% else %}
+                <li>&nbsp;&nbsp;S. 1</li>
+            {% endif %}
+            <li>|&nbsp;Du er på S. {{ cur_pageno }}&nbsp;|</li>
+            <li><a href="{{ path('location_paged', {'start': next_start}) }}">S. {{ next_pageno }}&nbsp;&raquo;</a></li>
+        </ul>
+    </div>
 {% endblock %}

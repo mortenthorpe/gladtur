@@ -8,27 +8,25 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 
 class UserLocationDataType extends AbstractType{
-
+//http://sf.khepin.com/2011/08/basic-usage-of-the-symfony2-collectiontype-form-field/
     public function buildForm(FormBuilderInterface $builder, array $options){
-        $builder->add('media', 'collection', array('type'=>new UserLocationMediaType()));
-        $builder->add('readableName', 'text', array('label'=>'Stedets navn','required'=>false))
-            ->add('latitude', 'hidden', array('label'=>'Breddegrad','required'=>false))
-            ->add('longitude', 'hidden', array('label'=>'Længdegrad','required'=>false))
-            ->add('published', 'checkbox', array('label'=>'Skal fremvises?','required'=>false))
-            ->add('addressZip', 'text', array('label'=>'Postnr.','required'=>false))
-            ->add('addressCountry', 'choice', array('label'=>'Land','required'=>false, 'choices'=>array('DK'=>'Danmark'), 'empty_value' => false))
-            ->add('addressCity', 'text', array('label'=>'By','required'=>false))
-            ->add('addressStreet', 'text', array('label'=>'Gade/vej navn','required'=>false))
-            ->add('addressExtd', 'text', array('label'=>'Yderligere adresse','required'=>false))
-            ->add('phone', 'text', array('label'=>'Telefon','required'=>false))
+        $openingHoursEnabled = false;
+        //$builder->add('media', 'collection', array('type'=>new UserLocationMediaType()));
+      //  $builder->add('readableName', 'text', array('label'=>'Stedets navn','required'=>false))
+        $builder->add('phone', 'text', array('label'=>'Telefon','required'=>false))
             ->add('mail', 'email', array('label'=>'Email','required'=>false))
-            ->add('homepage', 'url', array('label'=>'Hjemmeside adresse','required'=>false))
             ->add('contactPerson', 'text', array('label'=>'Kontaktperson','required'=>false))
-        ->add('hoursOpeningtime', 'time')
-        ->add('hoursClosingtime', 'time')
-        ->add('txtDescription', 'text')
-        ->add('txtComment', 'text')
-        ;
+            ->add('txtDescription', 'textarea', array('label'=>'Kort beskrivelse'));
+        if($openingHoursEnabled){
+        $builder->add('daysHoursOpenClosed', 'collection', array(
+                'type'   => 'gladtur_hours_open',
+                'allow_add'    => true,
+                'options'  => array(
+                    'required'  => false,
+                    'attr'      => array('class' => 'textfield openinghours'),
+                    'data_class' => 'Gladtur\TagBundle\Entity\UserLocationHours',
+                )));
+        }
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

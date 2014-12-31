@@ -1,0 +1,115 @@
+<!html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+    {{ "Gladtur - Din profil"| trans }}
+    </title>
+    <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/bmatznerfoundation/js/foundation.min.js') }}"></script>
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerfoundation/css/foundation.min.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/website/css/layout.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/gladturadmin/css/zforms.css') }}"/>
+    {% block pagecss %}{% endblock %}
+    {% block pagejs %}{% endblock %}
+    <script type="text/javascript">
+
+        // Javascript indexOf function
+        // Usage: var myArray = [0,1,2],
+        // needle = 1,
+        // index = indexOf.call(myArray, needle); // 1
+        var indexOf = function(needle) {
+            if(typeof Array.prototype.indexOf === 'function') {
+                indexOf = Array.prototype.indexOf;
+            } else {
+                indexOf = function(needle) {
+                    var i = -1, index = -1;
+
+                    for(i = 0; i < this.length; i++) {
+                        if(this[i] === needle) {
+                            index = i;
+                            break;
+                        }
+                    }
+
+                    return index;
+                };
+            }
+
+            return indexOf.call(this, needle);
+        };
+        // ./indexOf function
+
+        $(document).ready(function(){
+          var std_profile_selector = $('#fos_user_profile_form_profile, #fos_user_registration_form_profile');
+          var profile_selector_icon_prefix = $('#profile_icon');
+
+            if(parseInt($(std_profile_selector).val()) == parseInt({{ render(controller("WebsiteBundle:Profiles:getIndividualizedId")) }})){
+                $('#fos_user_profile_form_tags .row').show();
+                $('#fos_user_registration_form_freeprofileTags').show();
+            }
+            else{
+                $('#fos_user_profile_form_tags .row').hide();
+                $('#fos_user_registration_form_freeprofileTags').hide();
+            }
+
+          // An individualized profile field indication
+            $(std_profile_selector).change( function() {
+                // id=12 is currently the individualized profile-ID
+              if(parseInt($(this).val()) == parseInt({{ render(controller("WebsiteBundle:Profiles:getIndividualizedId")) }})){
+                  $('#fos_user_profile_form_tags .row').show();
+                  $('#fos_user_registration_form_freeprofileTags').show();
+              }
+              else{
+                  $('#fos_user_profile_form_tags .row').hide();
+                  $('#fos_user_registration_form_freeprofileTags').hide();
+              }
+              $(profile_selector_icon_prefix).attr('src', '/uploads/icons/profiles/'+$('#profile_icon_'+parseInt($(this).val())).val());
+            });
+
+        // On The registration page only! //
+        if($('#fos_user_registration_form_profile option').length > 0){
+        $('#profile_icon').each(function(){
+            if($(this).attr('src') == ''){
+                $(this).attr('src', '/uploads/icons/profiles/'+$('#profile_icon_'+parseInt($('#fos_user_registration_form_profile option').first().val())).val());
+            }
+        });
+        }
+        });
+    </script>
+</head>
+<body class="user-{{ app.request.get('_route') | replace({'_' : '-'}) }}">
+<div id="header" class="row">
+    {% block header %}
+        {% include "@Website/header.html.twig" %}
+    {% endblock header %}
+</div>
+<div id="maincontent" class="row">
+    <div id="main_fullwidth">
+        {% block content_fullwidth %}
+        {% endblock %}
+    </div>
+    <div id="main_left" class="large-8 columns">
+        <h1>{{ "Gladtur - Din profil"| trans }}</h1>
+        {% include "@Website/flash_message.html.twig" %}
+        {% block content_left %}
+        {% endblock %}
+    </div>
+
+    <div id="main_right" class="large-4 columns">
+        {% block content_right %}
+        {% endblock %}
+        {% for i in 1..10 %}
+            {% include "@Website/Blocks/" ~ i ~ ".html" ignore missing %}
+        {% endfor %}
+    </div>
+</div>
+<div id="footer">
+    {% include "@Website/footer.html.twig" %}
+</div>
+</div>
+<script type="text/javascript" src="{{ asset('bundles/bmatznerfoundation/js/foundation/foundation.forms.js') }}"></script>
+<script>
+    $(document).foundation();
+</script>
+</body>
+</html>

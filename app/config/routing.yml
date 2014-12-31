@@ -1,3 +1,12 @@
+_imagine:
+    resource: .
+    type:     imagine
+
+website:
+    resource: "@WebsiteBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 #hwi_oauth_redirect:
 #    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
 #    prefix:   /connect
@@ -5,7 +14,7 @@
 gladtur_mobile:
     resource: "@GladturMobileBundle/Controller/"
     type:     annotation
-    prefix:   /
+    prefix:   /mobile
 
 GladturTestoneBundle:
     resource: "@GladturTestoneBundle/Controller/"
@@ -18,10 +27,10 @@ GladturTagBundle:
     type: annotation
     prefix: /admin
 
-GladturAdminBundle:
-    resource: "@GladturAdminBundle/Resources/config/routing.yml"
-    type: yaml
-    prefix: /
+#GladturAdminBundle:
+#    resource: "@GladturAdminBundle/Resources/config/routing.yml"
+#    type: yaml
+#    prefix: /
 
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
@@ -33,6 +42,7 @@ fos_user_profile:
 fos_user_register:
     resource: "@FOSUserBundle/Resources/config/routing/registration.xml"
     prefix: /register
+    type: xml
 
 fos_user_resetting:
     resource: "@FOSUserBundle/Resources/config/routing/resetting.xml"
@@ -42,8 +52,14 @@ fos_user_change_password:
     resource: "@FOSUserBundle/Resources/config/routing/change_password.xml"
     prefix: /profile
 
+
 #fos_oauth_server_token:
 #    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
 
 #fos_oauth_server_authorize:
 #    resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
+
+#JMSTranslationBundle_ui:
+#  resource: @JMSTranslationBundle/Controller/
+#  type:     annotation
+#  prefix:   /_trans

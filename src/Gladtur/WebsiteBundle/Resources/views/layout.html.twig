@@ -1,0 +1,238 @@
+<!html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>
+        {% if (pagetitle is defined) and (pagetitle is not empty) %}
+        Glad Tur - {{ pagetitle | title }}
+        {% else %}
+        Glad Tur
+        {% endif %}
+    </title>
+    <link rel="shortcut icon" href="{{ asset('bundles/website/images/gladtur.ico') }}"/>
+    <link rel="apple-touch-icon" href="{{ asset('bundles/website/images/apple-touch-icon.png?v=1') }}" />
+    <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
+    <script>
+        var lat;
+        var long;
+        {% if app.session.get('ulat') is not empty and app.session.get('ulng') is not empty %}
+        lat = {{ app.session.get('ulat') }};
+        long = {{ app.session.get('ulng') }};
+        {% elseif not app.session.get('userGeolocAnswer', null) %}
+        if (false && navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(successFunction, geolocDeniedFunction());
+            //placeMarker(mainmap, new google.maps.LatLng(lat, long, true));
+        }
+        else{
+            //placeMarker(mainmap, new google.maps.LatLng(55.675283, 12.570163, true));
+            lat = 55.675283;
+            long = 12.570163;
+        }
+        {% endif %}
+
+    </script>
+    {% stylesheets filter="uglifycss" output="css/main.css"
+      'bundles/bmatznerfoundation/css/foundation.min.css'
+      'bundles/bmatznerfoundation/css/normalize.css'
+      'bundles/website/css/layout.css'
+      'bundles/website/css/simplePagination.css'
+      'bundles/website/css/ckeditor.css'
+      'bundles/gladturadmin/css/*.css'
+      'bundles/bmatznerjqueryui/css/smoothness/*.css'
+    %}
+    {% if (app.user and app.user.hasRole('ROLE_ADMIN')) %}
+        <script src="//cdn.ckeditor.com/4.4.3/standard-all/ckeditor.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/ckeditor/4.4.2/adapters/jquery.min.js"></script>
+        <script src="/bundles/website/js/ckeditor/plugins/ckfinder/ckfinder.js"></script>
+        <script>
+            $(document).ready(function(){
+                CKEDITOR.plugins.addExternal('clipboard', '/bundles/website/js/ckeditor/plugins/clipboard/', 'plugin.js');
+                CKEDITOR.plugins.addExternal('savebtn', '/bundles/website/js/ckeditor/plugins/savebtn/', 'plugin.js');
+                CKEDITOR.plugins.addExternal('dialog', '/bundles/website/js/ckeditor/plugins/dialog/', 'plugin.js');
+                CKEDITOR.plugins.addExternal('dialogui', '/bundles/website/js/ckeditor/plugins/dialogui/', 'plugin.js');
+                CKEDITOR.plugins.addExternal('lineutils', '/bundles/website/js/ckeditor/plugins/lineutils/', 'plugin.js');
+                CKEDITOR.plugins.addExternal('widget', '/bundles/website/js/ckeditor/plugins/widget/', 'plugin.js');
+                CKEDITOR.plugins.addExternal('oembed', '/bundles/website/js/ckeditor/plugins/oembed/', 'plugin.js');
+                CKEDITOR.disableAutoInline = true;
+                CKEDITOR.stylesSet.add( 'my_styles', [
+                    { name: 'Blok titel', element: 'span', attributes: { 'class' : 'h3' } },
+                    { name: 'Fremhaevet', element: 'span', attributes: { 'class': 'fremhaevet' } },
+                    { name: 'Understreget', element: 'span', attributes: { 'class': 'understreget' } },
+                    { name: 'SlideShow', element: 'ul', attributes: {'class': 'carousel'}}
+                ] );
+
+                $('.ck_editable').each(function(){
+                    CKEDITOR.inline($(this).attr('id'),{
+                        language: 'da',
+                        extraPlugins : 'savebtn,oembed',
+                        saveSubmitURL: '{{ path('websitestatic_page_saveslot') }}',
+                        stylesSet : 'my_styles',
+                        toolbar: [{ name: 'clipboard', groups: [ 'clipboard', 'undo' ], items: [ 'Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo' ]},'|', { name: 'media', items: ['Image','oembed'] },'/', { name: 'links', items: [ 'Link', 'Unlink', 'Anchor' ] }, { name: 'styles', items: [ 'Styles', 'RemoveFormat']}, '/', { name: 'lists', items: ['NumberedList', 'BulletedList', 'Blockquote'] }, { name: 'savebtn', items: ['savebtn']}],
+                        filebrowserUploadUrl : '/bundles/website/js/ckeditor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&currentFolder=/',
+                        filebrowserImageUploadUrl : '/bundles/website/js/ckeditor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Images&currentFolder=/',
+                        filebrowserFlashUploadUrl : '/bundles/website/js/ckeditor/plugins/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Flash',
+                    } );});
+            });
+        </script>
+    {% endif %}
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+    {% endstylesheets %}
+    <link rel="stylesheet" type="text/css" href="/bundles/website/css/fonts.css"/>
+    {% block pagecss %}{% endblock %}
+    {% include "GoogleBundle:Analytics:async.html.twig" %}
+</head>
+<body class="user-{{ app.request.get('_route') | replace({'_' : '-'}) }}">
+    <div id="header" class="row">
+        {% block header %}
+            <div class="headercontent left">
+                {{ render(controller('WebsiteBundle:Search:searchForm')) }}
+            </div>
+            {% include "@Website/header.html.twig" %}
+        {% endblock header %}
+    </div>
+    <div id="maincontent" class="row">
+        <div id="main_fullwidth">
+            {% include "@Website/flash_message.html.twig" %}
+            {% block content_fullwidth %}
+            {% endblock %}
+        </div>
+        <div id="main_left" class="large-8 columns">
+            {% if pagetitle is defined and htmltitle is defined and htmltitle %}
+            <h1>{{ pagetitle | title}}</h1>
+            {% endif %}
+            {% block content_left %}
+            {% endblock %}
+        </div>
+
+        <div id="main_right" class="large-4 columns">
+            {% block content_right_prefix %}
+            {% endblock %}
+            {% block content_right %}
+            {% endblock %}
+            {% include "@Website/Login/_login_logout.html.twig" %}
+            {% block content_right_after %}
+            {% endblock %}
+        </div>
+    </div>
+    <footer class="row footer">
+    <div id="footer">
+        {% block footer %}
+            {{ render(controller('WebsiteBundle:Default:globalSlotsForPosition', {'position':'footer', 'slotclasses': ['large-4', 'columns', 'onethird'], 'containerclasses': ['large-12', 'columns','horizontal']})) }}
+        {% endblock %}
+    </div>
+    </footer>
+    {% block footer_partner %}
+    {% endblock %}
+    <div class="row footer copyright_contact">
+        <div class="copyright right" style="padding:0 15px">
+            {% block footer_contact %}
+                {{ render(controller('WebsiteBundle:Default:globalSlotsForPosition', {'position':'footer_contact', 'slotclasses': ['one'], 'containerclasses': ['horizontal']})) }}
+            {% endblock %}
+        </div>
+        <div class="copyright left" style="padding:0 0 0 15px"><p>&copy; Glad Fonden 2014</p></div>
+    </div>
+</div>
+    {% javascripts filter='uglifyjs2' output="js/main.js"
+    'bundles/bmatznerfoundation/js/foundation.min.js'
+    'bundles/bmatznerjqueryui/js/minified/jquery-ui.min.js'
+    'bundles/bmatznerjqueryui/js/minified/jquery.ui.core.min.js'
+    'bundles/bmatznerjqueryui/js/minified/jquery.ui.autocomplete.min.js'
+    'bundles/website/js/location/toggle_properties.jq.js'
+    'bundles/website/js/searchlogic.jq.js'
+    'js/eu_cookie_compliance.js'
+    'bundles/bmatznerfoundation/js/foundation/foundation.orbit.min.js'
+    'bundles/bmatznerfoundation/js/foundation/foundation.clearing.min.js'
+    'bundles/bmatznerfoundation/js/foundation/foundation.forms.js'
+    'bundles/website/js/anoslide/js/jquery.anoslide.js'
+    'bundles/website/js/slideshow_init.jq.js'
+    'bundles/website/js/fosuser_jsfuncs.jq.js'
+    'bundles/website/js/gmaps.jq.js'
+    %}
+
+    <script src="/js/main.js"></script>
+    {% endjavascripts %}
+<script>
+
+    $(document).ready(function(){
+        $(document).foundation();
+        var std_profile_selector = $('#fos_user_profile_form_profile, #fos_user_registration_form_profile');
+        var profile_selector_icon_prefix = $('#profile_icon');
+
+        if(parseInt($(std_profile_selector).val()) == parseInt({{ render(controller("WebsiteBundle:Profiles:getIndividualizedId")) }})){
+            $('#fos_user_profile_form_tags .row').show();
+            $('#fos_user_registration_form_freeprofileTags').show();
+        }
+        else{
+            $('#fos_user_profile_form_tags .row').hide();
+            $('#fos_user_registration_form_freeprofileTags').hide();
+        }
+
+// An individualized profile field indication
+        $(std_profile_selector).change( function() {
+            // id=12 is currently the individualized profile-ID
+            if(parseInt($(this).val()) == parseInt({{ render(controller("WebsiteBundle:Profiles:getIndividualizedId")) }})){
+                $('#fos_user_profile_form_tags .row').show();
+                $('#fos_user_registration_form_freeprofileTags').show();
+            }
+            else{
+                $('#fos_user_profile_form_tags .row').hide();
+                $('#fos_user_registration_form_freeprofileTags').hide();
+            }
+            $(profile_selector_icon_prefix).attr('src', '/uploads/icons/profiles/'+$('#profile_icon_'+parseInt($(this).val())).val());
+        });
+
+// On The registration page only! //
+        if($('#fos_user_registration_form_profile option').length > 0){
+            $('#profile_icon').each(function(){
+                if($(this).attr('src') == ''){
+                    $(this).attr('src', '/uploads/icons/profiles/'+$('#profile_icon_'+parseInt($('#fos_user_registration_form_profile option').first().val())).val());
+                }
+            });
+        }
+
+        $('#profileLocationForm #form_profile').change(function(){$.ajax({
+            type: "GET",
+            url: "{{ path('_profile_icon')}}",
+            data: {profileid: $(this).val()}
+        }).done(function( data ) {
+            $('.active_profile').replaceWith('<img class="icon active_profile" src="/uploads/icons/profiles/'+data['icon']+'"/>');
+        });});
+
+
+    $('.js_distance').each(function(){
+        // Check below also relies on the fact that the longitude is the last parameter in the GET request string
+        var locationLat = parseFloat($(this).parents('.location_title').find('.latitude').html());
+        var locationLon = parseFloat($(this).parents('.location_title').find('.longitude').html());
+        if(locationLat && locationLon){
+            var distance = haversineGreatcirle(lat,long,locationLat,locationLon);
+            var distanceUnit = 'Km';
+            if(distance<1){
+                distance = distance * 1000;
+                distanceUnit = 'm';
+            }
+            //else{
+            distance = Math.round(distance * 10) / 10;
+            //}
+            $(this).html(distance.toString().replace('.', ',') + ' ' + distanceUnit);
+        }
+    });
+    });
+
+    var mainmap;
+    lat;
+    long;
+    $(window).on('load', function(){
+        if($("#map_canvas").length > 0){
+        mainmap = new google.maps.Map(document.getElementById("map_canvas"), {"mapTypeId":google.maps.MapTypeId.ROADMAP,"zoom":zoom});
+        google.maps.event.addListener(mainmap, 'click', function(event) {
+            $('form.searchform').attr('action', $('form.searchform').attr('action') + '?lat=' + event.latLng.lat() + '&lon=' + event.latLng.lng() + '&zoom=' + mainmap.getZoom());
+            $('form.searchform #form_query').val('');
+            $('form.searchform').submit();
+        });
+        placeMarker(mainmap, new google.maps.LatLng(lat, long, true));
+        }
+   });
+</script>
+    {% block pagejs %}
+    {% endblock pagejs %}
+</body>
+</html>

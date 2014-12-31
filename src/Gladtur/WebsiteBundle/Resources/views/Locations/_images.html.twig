@@ -1,0 +1,23 @@
+{% set imagecount = location.media|length %}
+{% if location.mainImageThumbnail or (imagecount > 0) %}
+<div class="detail-images">
+    <div class="jcarousel-slideshow-wrapper">
+        <ul id="detail-slideshowimages" {##% if ( location.mainImageThumbnail and location.media|length > 0) or location.media|length > 1 %} data-orbit data-clearing{% endif %##}>
+            {% if location.mainImageThumbnail %}
+            {% set imagecount = imagecount+1 %}
+                <li><img src="{{ ('locations/'~location.id~'/'~location.mainImageThumbnail) | imagine_filter('website_detail_full') }}" class="mainimage" style="width:256px !important"/></li>
+            {% endif %}
+        </ul>
+        <div class="image-thumbnails">
+            <ul class="plainlist" data-clearing >
+                {% if location.mainImageThumbnail %}
+                    <li><a href="/uploads/locations/{{ location.id }}/{{ location.mainImageThumbnail }}"><img src="{{ ('locations/'~location.id~'/'~location.mainImageThumbnail) | imagine_filter('website_detail_thumbnail') }}" class="mainimage"/></a></li>
+                {% endif %}
+            {% for onemedia in location.media %}
+                <li class="randomized"><a href="/uploads/locations/{{ location.id }}/{{ onemedia.mediaPath}}"><img src="{{ ('locations/'~location.id~'/'~onemedia.mediaPath) | imagine_filter('website_detail_thumbnail') }}" /></a></li>
+            {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endif %}

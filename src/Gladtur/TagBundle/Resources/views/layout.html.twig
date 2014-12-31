@@ -2,9 +2,13 @@
 <head>
     <script type="text/javascript" src="{{ asset('bundles/bmatznerjquery/js/jquery.min.js') }}"></script>
     <script type="text/javascript" src="{{ asset('bundles/bmatznerfoundation/js/foundation.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/ChartJs/Chart.min.js') }}"></script>
     <link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerfoundation/css/foundation.min.css') }}"/>
     <link rel="stylesheet" href="{{ asset('bundles/gladturadmin/css/admin.css') }}"/>
     <link rel="stylesheet" href="{{ asset('bundles/gladturadmin/css/zforms.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('bundles/gladturtag/css/themes/blue/style.css') }}"/>
+    {% block pagejs %}
+    {% endblock %}
 </head>
 <body class="admin-{{ app.request.get('_route') | replace({'_' : '-'}) }}">
 <div id="main">
@@ -25,7 +29,7 @@
         </dl>
     </div>
     <div id="user_actions">
-        <a href="/logout">Log af!</a>
+        <a href="/logout" class="edit">Log af!</a>
     </div>
     <div id="content">
         <div id="main_left">

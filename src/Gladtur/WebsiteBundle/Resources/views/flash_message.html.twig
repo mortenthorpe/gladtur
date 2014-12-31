@@ -1,0 +1,10 @@
+{% set flash_msgs = app.session.flashbag.get('notice') %}
+{% if flash_msgs is not empty %}
+<div id="global_messages">
+{% for flashMessage in flash_msgs %}
+<div class="flash-notice">
+  {{ flashMessage | raw }}
+</div>
+{% endfor %}
+</div>
+{% endif %}

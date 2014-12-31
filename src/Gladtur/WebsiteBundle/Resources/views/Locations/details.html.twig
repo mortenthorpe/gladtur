@@ -1,0 +1,196 @@
+{% extends "@Website/layout.html.twig" %}
+{% block pagejs %}
+    <script type="text/javascript" src="{{ asset('bundles/website/js/location/toggle_properties.jq.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/website/js/jquery.form.min.js') }}"></script>
+    <script type="text/javascript">
+$(document).ready(function () {
+    function ajaxreplace(selectedValue){
+        $.get("{{ path('accessibilities_ajaxrender') }}?locationslug={{ location.getSlug() }}&pid="+selectedValue, function( data ) {
+            $( "#accessibilities_listitems" ).html( data );
+        });
+    }
+
+    function ajaxreplace_edit(selectedValue){
+        $.get("{{ path('accessibilities_ajaxrender') }}?locationslug={{ location.getSlug() }}&pid="+selectedValue+"&editacc=t", function( data ) {
+            $( "#accessibilities_listitems" ).html( data );
+        });
+    }
+
+    $('#editAccessibilities').on('click',function(e){
+        e.preventDefault();
+        var profileIdSrc = $('#pid').val();
+        ajaxreplace_edit(profileIdSrc);
+        replaceicon(profileIdSrc);
+    });
+
+    $('#pid').on('change',function(){
+        $('#data_saved').html('');
+        ajaxreplace($(this).val());
+        replaceicon($(this).val());
+        {% if app.user %}
+            $('#locationtagsforprofile input[type="radio"], #locationtagsforprofile input[type="submit"]').attr('disabled', false);
+        {% endif %}
+        $.get("{{ path('location_ajax_score') }}?locationslug={{ location.getSlug() }}&pid="+$(this).val(), function( data ) {
+          $('#location_score img').attr('src','/assets/thumbs_' + data['scorename']+ '.png');
+          $('#location_score img').attr('alt','vurdering: ' + data['scorename']);
+          $('#location_score img').attr('title','vurdering: ' + data['scorename']);
+        });
+
+    });
+
+    $('.locationtag').on('change', function(){
+        $('#data_saved').html('');
+    });
+
+    function replaceicon(profileId){
+        $('.icon.active_profile').each(function(){
+                $(this).hide();
+                });
+        $('#icon_'+profileId).show();
+    }
+    {% if app.user %}
+    $('#locationtagsforprofile').submit(function (ev) {
+        var frm = $(this);
+        $.ajax({
+            type: frm.attr('method'),
+            url: frm.attr('action'),
+            data: frm.serialize(),
+            success: function (data) {
+                $('#data_saved').html(data['msg']);
+                $('#accessibilities_listitems').html(data['accessibilities_list_html']);
+                $('#location_score img').attr('src','/assets/thumbs_' + data['scorename']+ '.png');
+                $('#location_score img').attr('alt','vurdering: ' + data['scorename']);
+                $('#location_score img').attr('title','vurdering: ' + data['scorename']);
+                $('#locationtagsforprofile input[type="radio"], #locationtagsforprofile input[type="submit"]').attr('disabled', 'disabled');
+            }
+        });
+
+        ev.preventDefault();
+    });
+
+    $('#reportLocation').submit(function (ev) {
+        var frm = $(this);
+        $.ajax({
+            type: frm.attr('method'),
+            url: frm.attr('action'),
+            data: frm.serialize(),
+            success: function (data) {
+                $('#reportLocationFields').html(data);
+            }
+        });
+
+        ev.preventDefault();
+    });
+    {% endif %}
+
+	$('#toggle-info li').click(function () {
+
+		var text = $(this).children('div.panel');
+
+		if (text.is(':hidden')) {
+			text.slideDown('200');
+			$(this).children('span').html('-');		
+		} else {
+			text.slideUp('200');
+			$(this).children('span').html('+');		
+		}
+		
+	});
+
+    $('#form_profile').change(function(){$.ajax({
+        type: "GET",
+        url: "/_profiles_accessibilities",
+        data: {'location':{{ location.id }}, profile: $('#form_profile').val()}
+    }).done(function( data ) {
+                $('.accessibilities_list').html(data['listing']);
+                $('.active_profile').replaceWith('<img class="icon active_profile" src="/uploads/icons/profiles/'+data['icon']+'"/>');
+    });});
+
+    var options = {
+      target: "#commentForm_container",
+      url: $('#location_commentform').attr('action'),
+      success: function (data) {
+            $( "#commentForm_container" ).html( data );
+        },
+      clearForm: true
+    };
+    $('#location_commentform').ajaxForm(options);
+});
+
+// Usage: var result = qs('someKey'); -- Gets someKey form location.search;
+function qs(key) {
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars[key];
+}
+
+$(document).ready(function(){
+var location_action = qs('action');
+    if(location_action == 'editReportLocation'){
+        $('#editReportLocation').trigger('click');
+    }
+
+    if(location_action == 'editLocation'){
+        $('#editLocation').trigger('click');
+    }
+
+if(location_action == 'editAccLocation'){
+  $('#editAccessibilities').trigger('click');
+}
+
+if(location_action == 'commentLocation'){
+    $('#commentLocation').trigger('click');
+}
+});
+    </script>
+{% endblock pagejs %}
+{% block content_left %}
+<div id="client_lat" style="display:none"></div>
+<div id="client_long" style="display:none"></div>
+    {% include "@Website/Locations/_detail_item.html.twig" with {'location': location, 'mainimage':'', 'score': score} %}
+    <div class="row">
+    <div class="large-7 right columns accessibilities">
+        {% if not app.user %}
+            <a href="#" id="editAccessibilities" data-reveal-id="editAccModal" class="edit">Anmeld stedet</a>
+            <div class="reveal-modal" data-reveal id="editAccModal">
+                {% include "WebsiteBundle:Form:_ajax_login.html.twig"  with {'referrer_target_path': path('location_editacc_redirectregister', {'locationslug': location.slug}), '_target_path': path('location_details', { 'locationslug': location.slug ,'action': 'editAccLocation'}) } %}
+            </div>
+        {% else %}
+            <a href="#" id="editAccessibilities" class="edit">Anmeld stedet</a>
+        {% endif %}
+            <div class="inner">
+
+                <h3>Stedets anmeldelser</h3>
+                {# % include "@Website/Locations/accessibility_block.html.twig" with {'user_location_datas': user_loc_tags, 'location': location } %#}
+                {{ render(controller('WebsiteBundle:Location:locationAddTagData', { 'locationslug': location.getSlug() })) }}
+            </div>
+        </div>
+        
+        <div class="images_location">
+               {% include "@Website/Locations/_images.html.twig" with {'location': location} %}
+           </div>
+       
+    <div class="large-5 left commentsbox">
+            {% include "@Website/Locations/comment_block.html.twig" with {'comments': comments_sorted, 'location': location, 'block_view': false} %}
+        </div>
+       
+    </div>
+    <div class="bottomspacer">&nbsp;</div>
+{% endblock content_left %}
+{% block content_right_prefix %}
+    {{ render(controller('WebsiteBundle:Default:globalSlotsForPosition', {'position':'content_right_prefix', 'slotclasses': [''], 'containerclasses': ['vertical']})) }}
+{% endblock %}
+{% block content_right %}
+    {% if map is defined %}
+        <div style="margin-top:52px">
+    {{ google_map_container(map) }}
+    {{ google_map_js(map) }}
+        </div>
+    {% endif %}
+{% endblock content_right %}

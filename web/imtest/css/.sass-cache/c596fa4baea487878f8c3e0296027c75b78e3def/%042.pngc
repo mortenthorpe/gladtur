@@ -1,0 +1,369 @@
+3.2.6 (Media Mark)
+8dcc45c55d9a91b046fdebcefc0ce5546478b138
+o:Sass::Tree::RootNode
+:@template"ê9@import "compass/utilities/sprites/base";
+
+// General Sprite Defaults
+// You can override them before you import this file.
+$properties-sprite-base-class: ".properties-sprite" !default;
+$properties-sprite-dimensions: false !default;
+$properties-position: 0% !default;
+$properties-spacing: 0 !default;
+$properties-repeat: no-repeat !default;
+$properties-prefix: '' !default;
+$properties-clean-up: true !default;
+$properties-layout:vertical !default;
+$properties-inline: false !default;
+
+  
+ // These variables control the generated sprite output
+ // You can override them selectively before you import this file.
+ 
+   $properties-prop_14-position: $properties-position !default;
+   $properties-prop_14-spacing:  $properties-spacing !default;
+   $properties-prop_14-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_16-position: $properties-position !default;
+   $properties-prop_16-spacing:  $properties-spacing !default;
+   $properties-prop_16-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_17-position: $properties-position !default;
+   $properties-prop_17-spacing:  $properties-spacing !default;
+   $properties-prop_17-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_18-position: $properties-position !default;
+   $properties-prop_18-spacing:  $properties-spacing !default;
+   $properties-prop_18-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_19-position: $properties-position !default;
+   $properties-prop_19-spacing:  $properties-spacing !default;
+   $properties-prop_19-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_20-position: $properties-position !default;
+   $properties-prop_20-spacing:  $properties-spacing !default;
+   $properties-prop_20-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_21-position: $properties-position !default;
+   $properties-prop_21-spacing:  $properties-spacing !default;
+   $properties-prop_21-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_37-position: $properties-position !default;
+   $properties-prop_37-spacing:  $properties-spacing !default;
+   $properties-prop_37-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_38-position: $properties-position !default;
+   $properties-prop_38-spacing:  $properties-spacing !default;
+   $properties-prop_38-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_39-position: $properties-position !default;
+   $properties-prop_39-spacing:  $properties-spacing !default;
+   $properties-prop_39-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_42-position: $properties-position !default;
+   $properties-prop_42-spacing:  $properties-spacing !default;
+   $properties-prop_42-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_43-position: $properties-position !default;
+   $properties-prop_43-spacing:  $properties-spacing !default;
+   $properties-prop_43-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_48-position: $properties-position !default;
+   $properties-prop_48-spacing:  $properties-spacing !default;
+   $properties-prop_48-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_51-position: $properties-position !default;
+   $properties-prop_51-spacing:  $properties-spacing !default;
+   $properties-prop_51-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_52-position: $properties-position !default;
+   $properties-prop_52-spacing:  $properties-spacing !default;
+   $properties-prop_52-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_53-position: $properties-position !default;
+   $properties-prop_53-spacing:  $properties-spacing !default;
+   $properties-prop_53-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_54-position: $properties-position !default;
+   $properties-prop_54-spacing:  $properties-spacing !default;
+   $properties-prop_54-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_55-position: $properties-position !default;
+   $properties-prop_55-spacing:  $properties-spacing !default;
+   $properties-prop_55-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_56-position: $properties-position !default;
+   $properties-prop_56-spacing:  $properties-spacing !default;
+   $properties-prop_56-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_57-position: $properties-position !default;
+   $properties-prop_57-spacing:  $properties-spacing !default;
+   $properties-prop_57-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_58-position: $properties-position !default;
+   $properties-prop_58-spacing:  $properties-spacing !default;
+   $properties-prop_58-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_59-position: $properties-position !default;
+   $properties-prop_59-spacing:  $properties-spacing !default;
+   $properties-prop_59-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_60-position: $properties-position !default;
+   $properties-prop_60-spacing:  $properties-spacing !default;
+   $properties-prop_60-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_61-position: $properties-position !default;
+   $properties-prop_61-spacing:  $properties-spacing !default;
+   $properties-prop_61-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_62-position: $properties-position !default;
+   $properties-prop_62-spacing:  $properties-spacing !default;
+   $properties-prop_62-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_63-position: $properties-position !default;
+   $properties-prop_63-spacing:  $properties-spacing !default;
+   $properties-prop_63-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_64-position: $properties-position !default;
+   $properties-prop_64-spacing:  $properties-spacing !default;
+   $properties-prop_64-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_65-position: $properties-position !default;
+   $properties-prop_65-spacing:  $properties-spacing !default;
+   $properties-prop_65-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_66-position: $properties-position !default;
+   $properties-prop_66-spacing:  $properties-spacing !default;
+   $properties-prop_66-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_67-position: $properties-position !default;
+   $properties-prop_67-spacing:  $properties-spacing !default;
+   $properties-prop_67-repeat:   $properties-repeat !default;
+ 
+   $properties-prop_68-position: $properties-position !default;
+   $properties-prop_68-spacing:  $properties-spacing !default;
+   $properties-prop_68-repeat:   $properties-repeat !default;
+ 
+
+ $properties-sprites: sprite-map("properties/*.png",
+ 
+   $properties-prop_14-position: $properties-prop_14-position, 
+   $properties-prop_14-spacing:  $properties-prop_14-spacing, 
+   $properties-prop_14-repeat:   $properties-prop_14-repeat,
+ 
+   $properties-prop_16-position: $properties-prop_16-position, 
+   $properties-prop_16-spacing:  $properties-prop_16-spacing, 
+   $properties-prop_16-repeat:   $properties-prop_16-repeat,
+ 
+   $properties-prop_17-position: $properties-prop_17-position, 
+   $properties-prop_17-spacing:  $properties-prop_17-spacing, 
+   $properties-prop_17-repeat:   $properties-prop_17-repeat,
+ 
+   $properties-prop_18-position: $properties-prop_18-position, 
+   $properties-prop_18-spacing:  $properties-prop_18-spacing, 
+   $properties-prop_18-repeat:   $properties-prop_18-repeat,
+ 
+   $properties-prop_19-position: $properties-prop_19-position, 
+   $properties-prop_19-spacing:  $properties-prop_19-spacing, 
+   $properties-prop_19-repeat:   $properties-prop_19-repeat,
+ 
+   $properties-prop_20-position: $properties-prop_20-position, 
+   $properties-prop_20-spacing:  $properties-prop_20-spacing, 
+   $properties-prop_20-repeat:   $properties-prop_20-repeat,
+ 
+   $properties-prop_21-position: $properties-prop_21-position, 
+   $properties-prop_21-spacing:  $properties-prop_21-spacing, 
+   $properties-prop_21-repeat:   $properties-prop_21-repeat,
+ 
+   $properties-prop_37-position: $properties-prop_37-position, 
+   $properties-prop_37-spacing:  $properties-prop_37-spacing, 
+   $properties-prop_37-repeat:   $properties-prop_37-repeat,
+ 
+   $properties-prop_38-position: $properties-prop_38-position, 
+   $properties-prop_38-spacing:  $properties-prop_38-spacing, 
+   $properties-prop_38-repeat:   $properties-prop_38-repeat,
+ 
+   $properties-prop_39-position: $properties-prop_39-position, 
+   $properties-prop_39-spacing:  $properties-prop_39-spacing, 
+   $properties-prop_39-repeat:   $properties-prop_39-repeat,
+ 
+   $properties-prop_42-position: $properties-prop_42-position, 
+   $properties-prop_42-spacing:  $properties-prop_42-spacing, 
+   $properties-prop_42-repeat:   $properties-prop_42-repeat,
+ 
+   $properties-prop_43-position: $properties-prop_43-position, 
+   $properties-prop_43-spacing:  $properties-prop_43-spacing, 
+   $properties-prop_43-repeat:   $properties-prop_43-repeat,
+ 
+   $properties-prop_48-position: $properties-prop_48-position, 
+   $properties-prop_48-spacing:  $properties-prop_48-spacing, 
+   $properties-prop_48-repeat:   $properties-prop_48-repeat,
+ 
+   $properties-prop_51-position: $properties-prop_51-position, 
+   $properties-prop_51-spacing:  $properties-prop_51-spacing, 
+   $properties-prop_51-repeat:   $properties-prop_51-repeat,
+ 
+   $properties-prop_52-position: $properties-prop_52-position, 
+   $properties-prop_52-spacing:  $properties-prop_52-spacing, 
+   $properties-prop_52-repeat:   $properties-prop_52-repeat,
+ 
+   $properties-prop_53-position: $properties-prop_53-position, 
+   $properties-prop_53-spacing:  $properties-prop_53-spacing, 
+   $properties-prop_53-repeat:   $properties-prop_53-repeat,
+ 
+   $properties-prop_54-position: $properties-prop_54-position, 
+   $properties-prop_54-spacing:  $properties-prop_54-spacing, 
+   $properties-prop_54-repeat:   $properties-prop_54-repeat,
+ 
+   $properties-prop_55-position: $properties-prop_55-position, 
+   $properties-prop_55-spacing:  $properties-prop_55-spacing, 
+   $properties-prop_55-repeat:   $properties-prop_55-repeat,
+ 
+   $properties-prop_56-position: $properties-prop_56-position, 
+   $properties-prop_56-spacing:  $properties-prop_56-spacing, 
+   $properties-prop_56-repeat:   $properties-prop_56-repeat,
+ 
+   $properties-prop_57-position: $properties-prop_57-position, 
+   $properties-prop_57-spacing:  $properties-prop_57-spacing, 
+   $properties-prop_57-repeat:   $properties-prop_57-repeat,
+ 
+   $properties-prop_58-position: $properties-prop_58-position, 
+   $properties-prop_58-spacing:  $properties-prop_58-spacing, 
+   $properties-prop_58-repeat:   $properties-prop_58-repeat,
+ 
+   $properties-prop_59-position: $properties-prop_59-position, 
+   $properties-prop_59-spacing:  $properties-prop_59-spacing, 
+   $properties-prop_59-repeat:   $properties-prop_59-repeat,
+ 
+   $properties-prop_60-position: $properties-prop_60-position, 
+   $properties-prop_60-spacing:  $properties-prop_60-spacing, 
+   $properties-prop_60-repeat:   $properties-prop_60-repeat,
+ 
+   $properties-prop_61-position: $properties-prop_61-position, 
+   $properties-prop_61-spacing:  $properties-prop_61-spacing, 
+   $properties-prop_61-repeat:   $properties-prop_61-repeat,
+ 
+   $properties-prop_62-position: $properties-prop_62-position, 
+   $properties-prop_62-spacing:  $properties-prop_62-spacing, 
+   $properties-prop_62-repeat:   $properties-prop_62-repeat,
+ 
+   $properties-prop_63-position: $properties-prop_63-position, 
+   $properties-prop_63-spacing:  $properties-prop_63-spacing, 
+   $properties-prop_63-repeat:   $properties-prop_63-repeat,
+ 
+   $properties-prop_64-position: $properties-prop_64-position, 
+   $properties-prop_64-spacing:  $properties-prop_64-spacing, 
+   $properties-prop_64-repeat:   $properties-prop_64-repeat,
+ 
+   $properties-prop_65-position: $properties-prop_65-position, 
+   $properties-prop_65-spacing:  $properties-prop_65-spacing, 
+   $properties-prop_65-repeat:   $properties-prop_65-repeat,
+ 
+   $properties-prop_66-position: $properties-prop_66-position, 
+   $properties-prop_66-spacing:  $properties-prop_66-spacing, 
+   $properties-prop_66-repeat:   $properties-prop_66-repeat,
+ 
+   $properties-prop_67-position: $properties-prop_67-position, 
+   $properties-prop_67-spacing:  $properties-prop_67-spacing, 
+   $properties-prop_67-repeat:   $properties-prop_67-repeat,
+ 
+   $properties-prop_68-position: $properties-prop_68-position, 
+   $properties-prop_68-spacing:  $properties-prop_68-spacing, 
+   $properties-prop_68-repeat:   $properties-prop_68-repeat,
+ 
+ $layout: $properties-layout,
+ $cleanup: $properties-clean-up
+ );
+
+
+// All sprites should extend this class
+// The properties-sprite mixin will do so for you.
+@if $properties-inline {
+  #{$properties-sprite-base-class} {
+    background-image: inline-sprite($properties-sprites);
+  } 
+} @else {
+  #{$properties-sprite-base-class} {
+    background: $properties-sprites no-repeat;
+  }
+}
+//sass functions to return the dimensions of a sprite image as units
+
+  @function properties-sprite-width($name) {
+    $file: sprite_file($properties-sprites, $name);
+    @return image-width($file);
+  }
+
+  @function properties-sprite-height($name) {
+    $file: sprite_file($properties-sprites, $name);
+    @return image-height($file);
+  }
+
+
+// Use this to set the dimensions of an element
+// based on the size of the original image.
+@mixin properties-sprite-dimensions($name) {
+  @include sprite-dimensions($properties-sprites, $name)
+}
+
+// Move the background position to display the sprite.
+@mixin properties-sprite-position($name, $offset-x: 0, $offset-y: 0) {
+  @include sprite-background-position($properties-sprites, $name, $offset-x, $offset-y)
+}
+
+// Extends the sprite base class and set the background position for the desired sprite.
+// It will also apply the image dimensions if $dimensions is true.
+@mixin properties-sprite($name, $dimensions: $properties-sprite-dimensions, $offset-x: 0, $offset-y: 0) {
+  @extend #{$properties-sprite-base-class};
+  @include sprite($properties-sprites, $name, $dimensions, $offset-x, $offset-y)
+}
+
+@mixin properties-sprites($sprite-names, $dimensions: $properties-sprite-dimensions, $prefix: sprite-map-name($properties-sprites), $offset-x: 0, $offset-y: 0) {
+  @include sprites($properties-sprites, $sprite-names, $properties-sprite-base-class, $dimensions, $prefix, $offset-x, $offset-y)
+}
+
+// Generates a class for each sprited image.
+@mixin all-properties-sprites($dimensions: $properties-sprite-dimensions, $prefix: sprite-map-name($properties-sprites), $offset-x: 0, $offset-y: 0) {
+  @include properties-sprites(prop_14 prop_16 prop_17 prop_18 prop_19 prop_20 prop_21 prop_37 prop_38 prop_39 prop_42 prop_43 prop_48 prop_51 prop_52 prop_53 prop_54 prop_55 prop_56 prop_57 prop_58 prop_59 prop_60 prop_61 prop_62 prop_63 prop_64 prop_65 prop_66 prop_67 prop_68, $dimensions, $prefix, $offset-x, $offset-y);
+}:@has_childrenT:@options{ :@children[}o:Sass::Tree::ImportNode:@imported_file0:@imported_filename"#compass/utilities/sprites/base;0;@;	[ :
+@lineio:Sass::Tree::CommentNode
+:
+@type:silent:@value["X/* General Sprite Defaults
+ * You can override them before you import this file. */;@;	[ ;io:Sass::Tree::VariableNode:@guarded"!default:
+@name"!properties-sprite-base-class:
+@expro:Sass::Script::String	;:string;".properties-sprite;@;i
+;@;	[ ;i
+o;;"!default;"!properties-sprite-dimensions;o:Sass::Script::Bool;F;@;i;@;	[ ;io;;"!default;"properties-position;o:Sass::Script::Number:@numerator_units["%:@original"0%;i ;@:@denominator_units[ ;i;@;	[ ;io;;"!default;"properties-spacing;o;;[ ;"0;i ;@;[ ;i;@;	[ ;io;;"!default;"properties-repeat;o;	;:identifier;"no-repeat;@;i;@;	[ ;io;;"!default;"properties-prefix;o;	;;;" ;@;i;@;	[ ;io;;"!default;"properties-clean-up;o;;T;@;i;@;	[ ;io;;"!default;"properties-layout;o;	;;;"vertical;@;i;@;	[ ;io;;"!default;"properties-inline;o;;F;@;i;@;	[ ;io;
+;;;["{/* These variables control the generated sprite output
+ * You can override them selectively before you import this file. */;@;	[ ;io;;"!default;" properties-prop_14-position;o:Sass::Script::Variable	;"properties-position:@underscored_name"properties_position;@;i;@;	[ ;io;;"!default;"properties-prop_14-spacing;o;	;"properties-spacing;"properties_spacing;@;i;@;	[ ;io;;"!default;"properties-prop_14-repeat;o;	;"properties-repeat;"properties_repeat;@;i;@;	[ ;io;;"!default;" properties-prop_16-position;o;	;"properties-position;"properties_position;@;i;@;	[ ;io;;"!default;"properties-prop_16-spacing;o;	;"properties-spacing;"properties_spacing;@;i;@;	[ ;io;;"!default;"properties-prop_16-repeat;o;	;"properties-repeat;"properties_repeat;@;i;@;	[ ;io;;"!default;" properties-prop_17-position;o;	;"properties-position;"properties_position;@;i ;@;	[ ;i o;;"!default;"properties-prop_17-spacing;o;	;"properties-spacing;"properties_spacing;@;i!;@;	[ ;i!o;;"!default;"properties-prop_17-repeat;o;	;"properties-repeat;"properties_repeat;@;i";@;	[ ;i"o;;"!default;" properties-prop_18-position;o;	;"properties-position;"properties_position;@;i$;@;	[ ;i$o;;"!default;"properties-prop_18-spacing;o;	;"properties-spacing;"properties_spacing;@;i%;@;	[ ;i%o;;"!default;"properties-prop_18-repeat;o;	;"properties-repeat;"properties_repeat;@;i&;@;	[ ;i&o;;"!default;" properties-prop_19-position;o;	;"properties-position;"properties_position;@;i(;@;	[ ;i(o;;"!default;"properties-prop_19-spacing;o;	;"properties-spacing;"properties_spacing;@;i);@;	[ ;i)o;;"!default;"properties-prop_19-repeat;o;	;"properties-repeat;"properties_repeat;@;i*;@;	[ ;i*o;;"!default;" properties-prop_20-position;o;	;"properties-position;"properties_position;@;i,;@;	[ ;i,o;;"!default;"properties-prop_20-spacing;o;	;"properties-spacing;"properties_spacing;@;i-;@;	[ ;i-o;;"!default;"properties-prop_20-repeat;o;	;"properties-repeat;"properties_repeat;@;i.;@;	[ ;i.o;;"!default;" properties-prop_21-position;o;	;"properties-position;"properties_position;@;i0;@;	[ ;i0o;;"!default;"properties-prop_21-spacing;o;	;"properties-spacing;"properties_spacing;@;i1;@;	[ ;i1o;;"!default;"properties-prop_21-repeat;o;	;"properties-repeat;"properties_repeat;@;i2;@;	[ ;i2o;;"!default;" properties-prop_37-position;o;	;"properties-position;"properties_position;@;i4;@;	[ ;i4o;;"!default;"properties-prop_37-spacing;o;	;"properties-spacing;"properties_spacing;@;i5;@;	[ ;i5o;;"!default;"properties-prop_37-repeat;o;	;"properties-repeat;"properties_repeat;@;i6;@;	[ ;i6o;;"!default;" properties-prop_38-position;o;	;"properties-position;"properties_position;@;i8;@;	[ ;i8o;;"!default;"properties-prop_38-spacing;o;	;"properties-spacing;"properties_spacing;@;i9;@;	[ ;i9o;;"!default;"properties-prop_38-repeat;o;	;"properties-repeat;"properties_repeat;@;i:;@;	[ ;i:o;;"!default;" properties-prop_39-position;o;	;"properties-position;"properties_position;@;i<;@;	[ ;i<o;;"!default;"properties-prop_39-spacing;o;	;"properties-spacing;"properties_spacing;@;i=;@;	[ ;i=o;;"!default;"properties-prop_39-repeat;o;	;"properties-repeat;"properties_repeat;@;i>;@;	[ ;i>o;;"!default;" properties-prop_42-position;o;	;"properties-position;"properties_position;@;i@;@;	[ ;i@o;;"!default;"properties-prop_42-spacing;o;	;"properties-spacing;"properties_spacing;@;iA;@;	[ ;iAo;;"!default;"properties-prop_42-repeat;o;	;"properties-repeat;"properties_repeat;@;iB;@;	[ ;iBo;;"!default;" properties-prop_43-position;o;	;"properties-position;"properties_position;@;iD;@;	[ ;iDo;;"!default;"properties-prop_43-spacing;o;	;"properties-spacing;"properties_spacing;@;iE;@;	[ ;iEo;;"!default;"properties-prop_43-repeat;o;	;"properties-repeat;"properties_repeat;@;iF;@;	[ ;iFo;;"!default;" properties-prop_48-position;o;	;"properties-position;"properties_position;@;iH;@;	[ ;iHo;;"!default;"properties-prop_48-spacing;o;	;"properties-spacing;"properties_spacing;@;iI;@;	[ ;iIo;;"!default;"properties-prop_48-repeat;o;	;"properties-repeat;"properties_repeat;@;iJ;@;	[ ;iJo;;"!default;" properties-prop_51-position;o;	;"properties-position;"properties_position;@;iL;@;	[ ;iLo;;"!default;"properties-prop_51-spacing;o;	;"properties-spacing;"properties_spacing;@;iM;@;	[ ;iMo;;"!default;"properties-prop_51-repeat;o;	;"properties-repeat;"properties_repeat;@;iN;@;	[ ;iNo;;"!default;" properties-prop_52-position;o;	;"properties-position;"properties_position;@;iP;@;	[ ;iPo;;"!default;"properties-prop_52-spacing;o;	;"properties-spacing;"properties_spacing;@;iQ;@;	[ ;iQo;;"!default;"properties-prop_52-repeat;o;	;"properties-repeat;"properties_repeat;@;iR;@;	[ ;iRo;;"!default;" properties-prop_53-position;o;	;"properties-position;"properties_position;@;iT;@;	[ ;iTo;;"!default;"properties-prop_53-spacing;o;	;"properties-spacing;"properties_spacing;@;iU;@;	[ ;iUo;;"!default;"properties-prop_53-repeat;o;	;"properties-repeat;"properties_repeat;@;iV;@;	[ ;iVo;;"!default;" properties-prop_54-position;o;	;"properties-position;"properties_position;@;iX;@;	[ ;iXo;;"!default;"properties-prop_54-spacing;o;	;"properties-spacing;"properties_spacing;@;iY;@;	[ ;iYo;;"!default;"properties-prop_54-repeat;o;	;"properties-repeat;"properties_repeat;@;iZ;@;	[ ;iZo;;"!default;" properties-prop_55-position;o;	;"properties-position;"properties_position;@;i\;@;	[ ;i\o;;"!default;"properties-prop_55-spacing;o;	;"properties-spacing;"properties_spacing;@;i];@;	[ ;i]o;;"!default;"properties-prop_55-repeat;o;	;"properties-repeat;"properties_repeat;@;i^;@;	[ ;i^o;;"!default;" properties-prop_56-position;o;	;"properties-position;"properties_position;@;i`;@;	[ ;i`o;;"!default;"properties-prop_56-spacing;o;	;"properties-spacing;"properties_spacing;@;ia;@;	[ ;iao;;"!default;"properties-prop_56-repeat;o;	;"properties-repeat;"properties_repeat;@;ib;@;	[ ;ibo;;"!default;" properties-prop_57-position;o;	;"properties-position;"properties_position;@;id;@;	[ ;ido;;"!default;"properties-prop_57-spacing;o;	;"properties-spacing;"properties_spacing;@;ie;@;	[ ;ieo;;"!default;"properties-prop_57-repeat;o;	;"properties-repeat;"properties_repeat;@;if;@;	[ ;ifo;;"!default;" properties-prop_58-position;o;	;"properties-position;"properties_position;@;ih;@;	[ ;iho;;"!default;"properties-prop_58-spacing;o;	;"properties-spacing;"properties_spacing;@;ii;@;	[ ;iio;;"!default;"properties-prop_58-repeat;o;	;"properties-repeat;"properties_repeat;@;ij;@;	[ ;ijo;;"!default;" properties-prop_59-position;o;	;"properties-position;"properties_position;@;il;@;	[ ;ilo;;"!default;"properties-prop_59-spacing;o;	;"properties-spacing;"properties_spacing;@;im;@;	[ ;imo;;"!default;"properties-prop_59-repeat;o;	;"properties-repeat;"properties_repeat;@;in;@;	[ ;ino;;"!default;" properties-prop_60-position;o;	;"properties-position;"properties_position;@;ip;@;	[ ;ipo;;"!default;"properties-prop_60-spacing;o;	;"properties-spacing;"properties_spacing;@;iq;@;	[ ;iqo;;"!default;"properties-prop_60-repeat;o;	;"properties-repeat;"properties_repeat;@;ir;@;	[ ;iro;;"!default;" properties-prop_61-position;o;	;"properties-position;"properties_position;@;it;@;	[ ;ito;;"!default;"properties-prop_61-spacing;o;	;"properties-spacing;"properties_spacing;@;iu;@;	[ ;iuo;;"!default;"properties-prop_61-repeat;o;	;"properties-repeat;"properties_repeat;@;iv;@;	[ ;ivo;;"!default;" properties-prop_62-position;o;	;"properties-position;"properties_position;@;ix;@;	[ ;ixo;;"!default;"properties-prop_62-spacing;o;	;"properties-spacing;"properties_spacing;@;iy;@;	[ ;iyo;;"!default;"properties-prop_62-repeat;o;	;"properties-repeat;"properties_repeat;@;iz;@;	[ ;izo;;"!default;" properties-prop_63-position;o;	;"properties-position;"properties_position;@;i|;@;	[ ;i|o;;"!default;"properties-prop_63-spacing;o;	;"properties-spacing;"properties_spacing;@;i};@;	[ ;i}o;;"!default;"properties-prop_63-repeat;o;	;"properties-repeat;"properties_repeat;@;i~;@;	[ ;i~o;;"!default;" properties-prop_64-position;o;	;"properties-position;"properties_position;@;i{;@;	[ ;i{o;;"!default;"properties-prop_64-spacing;o;	;"properties-spacing;"properties_spacing;@;i|;@;	[ ;i|o;;"!default;"properties-prop_64-repeat;o;	;"properties-repeat;"properties_repeat;@;i};@;	[ ;i}o;;"!default;" properties-prop_65-position;o;	;"properties-position;"properties_position;@;i;@;	[ ;io;;"!default;"properties-prop_65-spacing;o;	;"properties-spacing;"properties_spacing;@;i€;@;	[ ;i€o;;"!default;"properties-prop_65-repeat;o;	;"properties-repeat;"properties_repeat;@;i;@;	[ ;io;;"!default;" properties-prop_66-position;o;	;"properties-position;"properties_position;@;iƒ;@;	[ ;iƒo;;"!default;"properties-prop_66-spacing;o;	;"properties-spacing;"properties_spacing;@;i„;@;	[ ;i„o;;"!default;"properties-prop_66-repeat;o;	;"properties-repeat;"properties_repeat;@;i…;@;	[ ;i…o;;"!default;" properties-prop_67-position;o;	;"properties-position;"properties_position;@;i‡;@;	[ ;i‡o;;"!default;"properties-prop_67-spacing;o;	;"properties-spacing;"properties_spacing;@;iˆ;@;	[ ;iˆo;;"!default;"properties-prop_67-repeat;o;	;"properties-repeat;"properties_repeat;@;i‰;@;	[ ;i‰o;;"!default;" properties-prop_68-position;o;	;"properties-position;"properties_position;@;i‹;@;	[ ;i‹o;;"!default;"properties-prop_68-spacing;o;	;"properties-spacing;"properties_spacing;@;iŒ;@;	[ ;iŒo;;"!default;"properties-prop_68-repeat;o;	;"properties-repeat;"properties_repeat;@;i;@;	[ ;io;;0;"properties-sprites;o:Sass::Script::Funcall;"sprite-map:@keywords{d"properties_prop_19_spacingo;	;"properties-prop_19-spacing;"properties_prop_19_spacing;@;i£" properties_prop_65_positiono;	;" properties-prop_65-position;" properties_prop_65_position;@;iþ"properties_prop_58_spacingo;	;"properties-prop_58-spacing;"properties_prop_58_spacing;@;iã"properties_prop_60_repeato;	;"properties-prop_60-repeat;"properties_prop_60_repeat;@;iì" properties_prop_64_positiono;	;" properties-prop_64-position;" properties_prop_64_position;@;iú"properties_prop_38_spacingo;	;"properties-prop_38-spacing;"properties_prop_38_spacing;@;i³" properties_prop_62_positiono;	;" properties-prop_62-position;" properties_prop_62_position;@;iò" properties_prop_60_positiono;	;" properties-prop_60-position;" properties_prop_60_position;@;iê"properties_prop_20_spacingo;	;"properties-prop_20-spacing;"properties_prop_20_spacing;@;i§" properties_prop_57_positiono;	;" properties-prop_57-position;" properties_prop_57_position;@;iÞ"properties_prop_61_spacingo;	;"properties-prop_61-spacing;"properties_prop_61_spacing;@;iï"properties_prop_38_repeato;	;"properties-prop_38-repeat;"properties_prop_38_repeat;@;i´"properties_prop_64_spacingo;	;"properties-prop_64-spacing;"properties_prop_64_spacing;@;iû"properties_prop_58_repeato;	;"properties-prop_58-repeat;"properties_prop_58_repeat;@;iä"properties_prop_52_spacingo;	;"properties-prop_52-spacing;"properties_prop_52_spacing;@;iË"properties_prop_53_repeato;	;"properties-prop_53-repeat;"properties_prop_53_repeat;@;iÐ" properties_prop_55_positiono;	;" properties-prop_55-position;" properties_prop_55_position;@;iÖ"properties_prop_56_spacingo;	;"properties-prop_56-spacing;"properties_prop_56_spacing;@;iÛ"properties_prop_21_spacingo;	;"properties-prop_21-spacing;"properties_prop_21_spacing;@;i«" properties_prop_17_positiono;	;" properties-prop_17-position;" properties_prop_17_position;@;iš" properties_prop_42_positiono;	;" properties-prop_42-position;" properties_prop_42_position;@;iº" properties_prop_52_positiono;	;" properties-prop_52-position;" properties_prop_52_position;@;iÊ"properties_prop_17_spacingo;	;"properties-prop_17-spacing;"properties_prop_17_spacing;@;i›"properties_prop_64_repeato;	;"properties-prop_64-repeat;"properties_prop_64_repeat;@;iü" properties_prop_14_positiono;	;" properties-prop_14-position;" properties_prop_14_position;@;i’" properties_prop_63_positiono;	;" properties-prop_63-position;" properties_prop_63_position;@;iö"properties_prop_37_repeato;	;"properties-prop_37-repeat;"properties_prop_37_repeat;@;i°"properties_prop_18_spacingo;	;"properties-prop_18-spacing;"properties_prop_18_spacing;@;iŸ"properties_prop_39_spacingo;	;"properties-prop_39-spacing;"properties_prop_39_spacing;@;i·"properties_prop_68_spacingo;	;"properties-prop_68-spacing;"properties_prop_68_spacing;@;i"properties_prop_65_spacingo;	;"properties-prop_65-spacing;"properties_prop_65_spacing;@;iÿ" properties_prop_16_positiono;	;" properties-prop_16-position;" properties_prop_16_position;@;i–"properties_prop_39_repeato;	;"properties-prop_39-repeat;"properties_prop_39_repeat;@;i¸" properties_prop_54_positiono;	;" properties-prop_54-position;" properties_prop_54_position;@;iÒ"properties_prop_54_spacingo;	;"properties-prop_54-spacing;"properties_prop_54_spacing;@;iÓ"properties_prop_16_spacingo;	;"properties-prop_16-spacing;"properties_prop_16_spacing;@;i—"properties_prop_63_repeato;	;"properties-prop_63-repeat;"properties_prop_63_repeat;@;iø" properties_prop_18_positiono;	;" properties-prop_18-position;" properties_prop_18_position;@;iž"properties_prop_63_spacingo;	;"properties-prop_63-spacing;"properties_prop_63_spacing;@;i÷" properties_prop_58_positiono;	;" properties-prop_58-position;" properties_prop_58_position;@;iâ" properties_prop_43_positiono;	;" properties-prop_43-position;" properties_prop_43_position;@;i¾"properties_prop_51_spacingo;	;"properties-prop_51-spacing;"properties_prop_51_spacing;@;iÇ"properties_prop_51_repeato;	;"properties-prop_51-repeat;"properties_prop_51_repeat;@;iÈ"properties_prop_42_repeato;	;"properties-prop_42-repeat;"properties_prop_42_repeat;@;i¼"properties_prop_62_repeato;	;"properties-prop_62-repeat;"properties_prop_62_repeat;@;iô"properties_prop_67_spacingo;	;"properties-prop_67-spacing;"properties_prop_67_spacing;@;i"properties_prop_54_repeato;	;"properties-prop_54-repeat;"properties_prop_54_repeat;@;iÔ"properties_prop_16_repeato;	;"properties-prop_16-repeat;"properties_prop_16_repeat;@;i˜" properties_prop_20_positiono;	;" properties-prop_20-position;" properties_prop_20_position;@;i¦"properties_prop_59_repeato;	;"properties-prop_59-repeat;"properties_prop_59_repeat;@;iè" properties_prop_48_positiono;	;" properties-prop_48-position;" properties_prop_48_position;@;iÂ" properties_prop_51_positiono;	;" properties-prop_51-position;" properties_prop_51_position;@;iÆ" properties_prop_39_positiono;	;" properties-prop_39-position;" properties_prop_39_position;@;i¶"properties_prop_67_repeato;	;"properties-prop_67-repeat;"properties_prop_67_repeat;@;i"cleanupo;	;"properties-clean-up;"properties_clean_up;@;i" properties_prop_38_positiono;	;" properties-prop_38-position;" properties_prop_38_position;@;i²"properties_prop_18_repeato;	;"properties-prop_18-repeat;"properties_prop_18_repeat;@;i "properties_prop_57_spacingo;	;"properties-prop_57-spacing;"properties_prop_57_spacing;@;iß"properties_prop_20_repeato;	;"properties-prop_20-repeat;"properties_prop_20_repeat;@;i¨" properties_prop_21_positiono;	;" properties-prop_21-position;" properties_prop_21_position;@;iª"properties_prop_55_spacingo;	;"properties-prop_55-spacing;"properties_prop_55_spacing;@;i×"properties_prop_17_repeato;	;"properties-prop_17-repeat;"properties_prop_17_repeat;@;iœ"properties_prop_61_repeato;	;"properties-prop_61-repeat;"properties_prop_61_repeat;@;ið" properties_prop_19_positiono;	;" properties-prop_19-position;" properties_prop_19_position;@;i¢"properties_prop_42_spacingo;	;"properties-prop_42-spacing;"properties_prop_42_spacing;@;i»"properties_prop_56_repeato;	;"properties-prop_56-repeat;"properties_prop_56_repeat;@;iÜ"properties_prop_48_repeato;	;"properties-prop_48-repeat;"properties_prop_48_repeat;@;iÄ" properties_prop_61_positiono;	;" properties-prop_61-position;" properties_prop_61_position;@;iî" properties_prop_53_positiono;	;" properties-prop_53-position;" properties_prop_53_position;@;iÎ"layouto;	;"properties-layout;"properties_layout;@;i" properties_prop_68_positiono;	;" properties-prop_68-position;" properties_prop_68_position;@;i
+"properties_prop_57_repeato;	;"properties-prop_57-repeat;"properties_prop_57_repeat;@;ià"properties_prop_14_spacingo;	;"properties-prop_14-spacing;"properties_prop_14_spacing;@;i“"properties_prop_43_repeato;	;"properties-prop_43-repeat;"properties_prop_43_repeat;@;iÀ"properties_prop_37_spacingo;	;"properties-prop_37-spacing;"properties_prop_37_spacing;@;i¯"properties_prop_43_spacingo;	;"properties-prop_43-spacing;"properties_prop_43_spacing;@;i¿"properties_prop_60_spacingo;	;"properties-prop_60-spacing;"properties_prop_60_spacing;@;ië"properties_prop_19_repeato;	;"properties-prop_19-repeat;"properties_prop_19_repeat;@;i¤"properties_prop_66_repeato;	;"properties-prop_66-repeat;"properties_prop_66_repeat;@;i"properties_prop_48_spacingo;	;"properties-prop_48-spacing;"properties_prop_48_spacing;@;iÃ"properties_prop_14_repeato;	;"properties-prop_14-repeat;"properties_prop_14_repeat;@;i”"properties_prop_55_repeato;	;"properties-prop_55-repeat;"properties_prop_55_repeat;@;iØ"properties_prop_52_repeato;	;"properties-prop_52-repeat;"properties_prop_52_repeat;@;iÌ" properties_prop_66_positiono;	;" properties-prop_66-position;" properties_prop_66_position;@;i" properties_prop_59_positiono;	;" properties-prop_59-position;" properties_prop_59_position;@;iæ" properties_prop_37_positiono;	;" properties-prop_37-position;" properties_prop_37_position;@;i®"properties_prop_66_spacingo;	;"properties-prop_66-spacing;"properties_prop_66_spacing;@;i"properties_prop_62_spacingo;	;"properties-prop_62-spacing;"properties_prop_62_spacing;@;ió"properties_prop_65_repeato;	;"properties-prop_65-repeat;"properties_prop_65_repeat;@;i "properties_prop_68_repeato;	;"properties-prop_68-repeat;"properties_prop_68_repeat;@;i"properties_prop_59_spacingo;	;"properties-prop_59-spacing;"properties_prop_59_spacing;@;iç"properties_prop_53_spacingo;	;"properties-prop_53-spacing;"properties_prop_53_spacing;@;iÏ" properties_prop_67_positiono;	;" properties-prop_67-position;" properties_prop_67_position;@;i" properties_prop_56_positiono;	;" properties-prop_56-position;" properties_prop_56_position;@;iÚ"properties_prop_21_repeato;	;"properties-prop_21-repeat;"properties_prop_21_repeat;@;i¬;@:@splat0;i:
+@args[o;	;;;"properties/*.png;@;i;@;	[ ;io;
+;;;["b/* All sprites should extend this class
+ * The properties-sprite mixin will do so for you. */;@;	[ ;iu:Sass::Tree::IfNodeþ[o:Sass::Script::Variable	:
+@name"properties-inline:@underscored_name"properties_inline:@options{ :
+@lineiu:Sass::Tree::IfNodeè[00[o:Sass::Tree::RuleNode:
+@rule[o:Sass::Script::Variable	:
+@name"!properties-sprite-base-class:@underscored_name"!properties_sprite_base_class:@options{ :
+@linei:@has_childrenT;
+@:
+@tabsi :@children[o:Sass::Tree::PropNode;["background:@valueo:Sass::Script::List	:@separator:
+space;[o;	;"properties-sprites;	"properties_sprites;
+@;io:Sass::Script::String	:
+@type:identifier;"no-repeat;
+@;i;
+@;i:@prop_syntax:new;
+@;i ;[ ;i;i[o:Sass::Tree::RuleNode:
+@rule[o; 	;"!properties-sprite-base-class;"!properties_sprite_base_class;@	;	i:@has_childrenT;@	:
+@tabsi :@children[o:Sass::Tree::PropNode;["background-image:@valueo:Sass::Script::Funcall;"inline-sprite:@keywords{ ;@	:@splat0;	i:
+@args[o; 	;"properties-sprites;"properties_sprites;@	;	i:@prop_syntax:new;@	;i ;[ ;	i;	io;
+;;;["L/*sass functions to return the dimensions of a sprite image as units */;@;	[ ;io:Sass::Tree::FunctionNode;"properties-sprite-width;T;@;	[o;;0;"	file;o; ;"sprite_file;!{ ;@;"0;i!;#[o;	;"properties-sprites;"properties_sprites;@;i!o;	;"	name;"	name;@;i!;@;	[ ;i!o:Sass::Tree::ReturnNode	;o; ;"image-width;!{ ;@;"0;i";#[o;	;"	file;"	file;@;i";@;	[ ;i";"0;i ;#[[o;;"	name;"	name;@0o;%;"properties-sprite-height;T;@;	[o;;0;"	file;o; ;"sprite_file;!{ ;@;"0;i&;#[o;	;"properties-sprites;"properties_sprites;@;i&o;	;"	name;"	name;@;i&;@;	[ ;i&o;&	;o; ;"image-height;!{ ;@;"0;i';#[o;	;"	file;"	file;@;i';@;	[ ;i';"0;i%;#[[o;;"	name;"	name;@0o;
+;;;["c/* Use this to set the dimensions of an element
+ * based on the size of the original image. */;@;	[ ;i+o:Sass::Tree::MixinDefNode;"!properties-sprite-dimensions;T;@;	[o:Sass::Tree::MixinNode;"sprite-dimensions;!{ ;@;	[ ;"0;i/;#[o;	;"properties-sprites;"properties_sprites;@;i.o;	;"	name;"	name;@;i.;"0;i-;#[[o;;"	name;"	name;@0o;
+;;;[">/* Move the background position to display the sprite. */;@;	[ ;i1o;';"properties-sprite-position;T;@;	[o;(;"sprite-background-position;!{ ;@;	[ ;"0;i4;#[	o;	;"properties-sprites;"properties_sprites;@;i3o;	;"	name;"	name;@;i3o;	;"offset-x;"offset_x;@;i3o;	;"offset-y;"offset_y;@;i3;"0;i2;#[[o;;"	name;"	name;@0[o;;"offset-x;"offset_x;@o;;[ ;"0;i ;@;@*;i2[o;;"offset-y;"offset_y;@o;;[ ;"0;i ;@;@*;i2o;
+;;;["ž/* Extends the sprite base class and set the background position for the desired sprite.
+ * It will also apply the image dimensions if $dimensions is true. */;@;	[ ;i6o;';"properties-sprite;T;@;	[o:Sass::Tree::ExtendNode
+:@selector[o;	;"!properties-sprite-base-class;"!properties_sprite_base_class;@;i9:@optionalF;@;	[ ;i9o;(;"sprite;!{ ;@;	[ ;"0;i;;#[
+o;	;"properties-sprites;"properties_sprites;@;i:o;	;"	name;"	name;@;i:o;	;"dimensions;"dimensions;@;i:o;	;"offset-x;"offset_x;@;i:o;	;"offset-y;"offset_y;@;i:;"0;i8;#[	[o;;"	name;"	name;@0[o;;"dimensions;"dimensions;@o;	;"!properties-sprite-dimensions;"!properties_sprite_dimensions;@;i8[o;;"offset-x;"offset_x;@o;;[ ;"0;i ;@;@*;i8[o;;"offset-y;"offset_y;@o;;[ ;"0;i ;@;@*;i8o;';"properties-sprites;T;@;	[o;(;"sprites;!{ ;@;	[ ;"0;i?;#[o;	;"properties-sprites;"properties_sprites;@;i>o;	;"sprite-names;"sprite_names;@;i>o;	;"!properties-sprite-base-class;"!properties_sprite_base_class;@;i>o;	;"dimensions;"dimensions;@;i>o;	;"prefix;"prefix;@;i>o;	;"offset-x;"offset_x;@;i>o;	;"offset-y;"offset_y;@;i>;"0;i=;#[
+[o;;"sprite-names;"sprite_names;@0[o;;"dimensions;"dimensions;@o;	;"!properties-sprite-dimensions;"!properties_sprite_dimensions;@;i=[o;;"prefix;"prefix;@o; ;"sprite-map-name;!{ ;@;"0;i=;#[o;	;"properties-sprites;"properties_sprites;@;i=[o;;"offset-x;"offset_x;@o;;[ ;"0;i ;@;@*;i=[o;;"offset-y;"offset_y;@o;;[ ;"0;i ;@;@*;i=o;
+;;;["4/* Generates a class for each sprited image. */;@;	[ ;iAo;';"all-properties-sprites;T;@;	[o;(;"properties-sprites;!{ ;@;	[ ;"0;iC;#[
+o:Sass::Script::List	:@separator:
+space;[$o;	;;;"prop_14;@;iCo;	;;;"prop_16;@;iCo;	;;;"prop_17;@;iCo;	;;;"prop_18;@;iCo;	;;;"prop_19;@;iCo;	;;;"prop_20;@;iCo;	;;;"prop_21;@;iCo;	;;;"prop_37;@;iCo;	;;;"prop_38;@;iCo;	;;;"prop_39;@;iCo;	;;;"prop_42;@;iCo;	;;;"prop_43;@;iCo;	;;;"prop_48;@;iCo;	;;;"prop_51;@;iCo;	;;;"prop_52;@;iCo;	;;;"prop_53;@;iCo;	;;;"prop_54;@;iCo;	;;;"prop_55;@;iCo;	;;;"prop_56;@;iCo;	;;;"prop_57;@;iCo;	;;;"prop_58;@;iCo;	;;;"prop_59;@;iCo;	;;;"prop_60;@;iCo;	;;;"prop_61;@;iCo;	;;;"prop_62;@;iCo;	;;;"prop_63;@;iCo;	;;;"prop_64;@;iCo;	;;;"prop_65;@;iCo;	;;;"prop_66;@;iCo;	;;;"prop_67;@;iCo;	;;;"prop_68;@;iC;@;iCo;	;"dimensions;"dimensions;@;iCo;	;"prefix;"prefix;@;iCo;	;"offset-x;"offset_x;@;iCo;	;"offset-y;"offset_y;@;iC;"0;iB;#[	[o;;"dimensions;"dimensions;@o;	;"!properties-sprite-dimensions;"!properties_sprite_dimensions;@;iB[o;;"prefix;"prefix;@o; ;"sprite-map-name;!{ ;@;"0;iB;#[o;	;"properties-sprites;"properties_sprites;@;iB[o;;"offset-x;"offset_x;@o;;[ ;"0;i ;@;@*;iB[o;;"offset-y;"offset_y;@o;;[ ;"0;i ;@;@*;iB;i

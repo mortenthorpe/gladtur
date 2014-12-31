@@ -154,6 +154,7 @@ class TvguserProfileController extends Controller
 
         if ($editForm->isValid()) {
             $entity->upload($editForm, 'avatar');
+            $entity->upload($editForm, 'webavatar');
             $em->persist($entity);
             $em->flush();
 

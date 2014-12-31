@@ -1,14 +1,31 @@
-<div>
+<div id="user_data_sidebar">
     {% if locationData %}
     <h3>Beskrevet af brugerne</h3>
     {% else %}
     <h3 class="notice">&quot;{{ location.readableName }}&quot; er endnu ikke beskrevet af nogle brugere!</h3>
     {% endif %}
-<ul>
+{% if locationData | length > 0 %}
+<ul id="user_data_list">
         {% for user_data in locationData %}
-            {%  if (user_data.user and user_data.locationCategory) %}
-            <li>&quot;{{ user_data.locationCategory}}&quot; af {{ user_data.user }}, bruger-id: {{ user_data.id }}</li>
+            {%  if (user_data.user and not user_data.isEmptyRecord()) %}
+            <li>{{ user_data.user }} ({{ user_data.profile }})
+                <ul class="user_data" style="display:none">
+                    {% if user_data.phone %}
+                    <li>Telefon: {{ user_data.phone }}</li>
+                    {% endif %}
+                    {% if user_data.mail %}
+                    <li>E-mail: {{ user_data.mail }}</li>
+                    {% endif %}
+                    {% if user_data.contactPerson %}
+                    <li>Kontakt-person: {{ user_data.contactPerson }}
+                    {% endif %}
+                    {% if user_data.txtDescription %}
+                    <li>Beskrivelse:<br/>{{ user_data.txtDescription }}</li>
+                    {% endif %}
+                </ul>
+            </li>
             {%  endif %}
         {% endfor %}
 </ul>
+{% endif %}
 </div>

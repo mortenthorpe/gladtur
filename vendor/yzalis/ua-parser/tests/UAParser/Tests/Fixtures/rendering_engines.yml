@@ -1,0 +1,11 @@
+- ['Mozilla/5.0 (X11; U; FreeBSD i386; en-US; rv:1.7) Gecko/20040628 Epiphany/1.2.6', Gecko, 1.7]
+- ['Mozilla/5.0 (Windows NT 6.1; rv:15.0) Gecko/20120716 Firefox/15.0a2', Gecko, 15]
+
+- ['Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 5.1; Trident/4.0; GTB5; Avant Browser; .NET CLR 1.1.4322; .NET CLR 2.0.50727)', Trident, 4.0]
+
+- ['Mozilla/5.0 (SymbianOS/9.4; U; Series60/5.0 Nokia5800d-1b/20.2.014; Profile/MIDP-2.1 Configuration/CLDC-1.1 ) AppleWebKit/413 (KHTML, like Gecko) Safari/413', WebKit, 413]
+
+- ['Mozilla/5.0 (compatible; Konqueror/3.5; Linux; X11; x86_64) KHTML/3.5.6 (like Gecko) (Kubuntu)', KHTML, 3.5.6]
+- ['Mozilla/5.0 (compatible; Konqueror/3.5; Linux; X11; x86_64) KHTML (like Gecko) (Kubuntu)', KHTML, null]
+
+- ['Opera/12.80 (Windows NT 5.1; U; en) Presto/2.10.289 Version/12.02', Presto, 2.10.289]

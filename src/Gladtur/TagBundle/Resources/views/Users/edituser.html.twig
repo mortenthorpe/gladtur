@@ -1,0 +1,17 @@
+{% extends "GladturTagBundle::layout.html.twig" %}
+{% trans_default_domain 'FOSUserBundle' %}
+{% block content %}
+    <form action="{{ path('admin_user_savechanges') }}" {{ form_enctype(form) }} method="POST" class="admin_user_savechanges" autocomplete="off">
+        {{ form_row(form.username) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.profile) }}
+        {{ form_row(form.newsletter) }}
+        {{ form_row(form.contact) }}
+        {{ form_row(form.deleted) }}
+        {{ form_widget(form._token) }}
+        <input type="hidden" name="userid" id="userid" value="{{ userid }}"/>
+        <div>
+            <input type="submit" value="{{ 'profile.edit.submit'|trans }}" />
+        </div>
+    </form>
+{% endblock %}

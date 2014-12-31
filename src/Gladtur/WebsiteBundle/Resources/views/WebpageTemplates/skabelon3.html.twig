@@ -1,0 +1,21 @@
+{% extends "@Website/layout.html.twig" %}
+{% block pagejs %}
+{% endblock pagejs %}
+{% block content_left %}
+    <!-- Skabelon 3 //-->
+{% endblock content_left %}
+
+{% block content_right_prefix %}
+    {{ render(controller('WebsiteBundle:Default:globalSlotsForPosition', {'position':'content_right_prefix', 'slotclasses': [''], 'containerclasses': ['vertical']})) }}
+{% endblock %}
+
+{% block content_right_after %}
+    {{ render(controller('WebsiteBundle:Default:globalSlotsForPosition', {'position':'content_right_after', 'slotclasses': [''], 'containerclasses': ['vertical']})) }}
+{% endblock %}
+
+
+{% block footer_partner %}
+    {% if page_id is defined %}
+    {{ render(controller('WebsiteBundle:Default:slotsForPageAndPosition', {'pageid':page_id,'position':'footer_partner', 'slotclasses': ['large-4', 'columns', 'one'], 'containerclasses': ['footer_partner', 'large-12', 'vertical', 'row', 'dashedtop']})) }}
+    {% endif %}
+{% endblock %}

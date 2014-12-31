@@ -1,0 +1,32 @@
+{% if false %}
+{% if not app.session.get('positionKnown')%}
+<div class="reveal-modal" data-reveal-id="anonProfileLocationSelect" id="anonProfileLocationSelect" style="width:430px">
+    <form method="POST" action="{{ path('_set_profile_lat_lng') }}" id="profileLocationForm">
+    {% if not app.user %}
+        {{ form_label(form.profile) }}
+<img src="/uploads/icons/profiles/{{ selected_profile_img }}" id="profileImg" class="icon active_profile"/>
+{{ form_widget(form.profile) }}
+    {% endif %}
+<div>
+{{ form_row(form.lat) }}
+{{ form_row(form.lng) }}
+</div>
+<div style="clear:both;padding-top:30px">
+<label>Klik på kortet for at angive hvor du er.</label>
+{% if map is defined %}
+    {{ google_map_container(map) }}
+    {{ google_map_js(map) }}
+{% endif %}
+<div class="description">En angivelse af hvor du befinder dig, vil give os mulighed for netop at fremvise de steder der er nærmest dig.</div>
+<div style="clear:both;padding-top:30px">
+<input type="button" value="Gem og fortsæt til Glad Tur" onClick="javascript:$('#profileLocationForm').submit();"/>
+</div>
+    {{ form_rest(form) }}
+</form>
+</div>
+</div>
+<script>
+    window.onload($('#anonProfileLocationSelect').foundation('reveal', 'open'));
+</script>
+{% endif %}
+{% endif %}

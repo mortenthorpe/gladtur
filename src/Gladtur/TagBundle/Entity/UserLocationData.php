@@ -2,15 +2,14 @@
 
 namespace Gladtur\TagBundle\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-
-//use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\SecurityContextInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
+//use Doctrine\ORM\EntityManager;
 
 //use FOS\UserBundle\Doctrine\UserManager as UserManager;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Security\Core\SecurityContextInterface;
 
 /**
  * Gladtur\TagBundle\Entity\UserLocationData
@@ -18,14 +17,21 @@ use Symfony\Component\Security\Core\SecurityContextInterface;
  * @ORM\Table(name="user_location_data")
  * @ORM\Entity
  */
-
 class UserLocationData extends EntityRepository
 {
+    private $emptyString;
 
     public function __construct()
     {
         //$this->location_data_users = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->media = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->created_at = time();
+        $this->emptyString = '- Ikke angivet -';
+        $this->daysHoursOpenClosed = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return implode(' - ', array($this->getPhone(), $this->getMail(), $this->getContactPerson()));
     }
 
     /**
@@ -68,9 +74,36 @@ class UserLocationData extends EntityRepository
      */
     protected $location;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="TvguserProfile", inversedBy="user_location_data")
+     */
+    private $profile;
+
+    /**
+     * @param mixed $profile
+     */
+    public function setProfile($profile)
+    {
+        $this->profile = $profile;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getProfile()
+    {
+        return $this->profile;
+    }
+
+
     public function getLocation()
     {
         return $this->location;
+    }
+
+    public function setLocation(Location $location)
+    {
+        $this->location = $location;
     }
 
     public function getPublished()
@@ -79,83 +112,7 @@ class UserLocationData extends EntityRepository
     }
 
     /**
-     * @var string $latitude
-     *
-     * @ORM\Column(name="latitude", type="string", length=64, nullable=true)
-     */
-    private $latitude;
-
-    public function getLatitude()
-    {
-        return $this->latitude;
-    }
-
-    public function setLatitude($latitude = '')
-    {
-        $this->latitude = $latitude;
-
-        return $this;
-    }
-
-    /**
-     * @var string $longitude
-     *
-     * @ORM\Column(name="longitude", type="string", length=64, nullable=true)
-     */
-    private $longitude;
-
-    public function getLongitude()
-    {
-        return $this->longitude;
-    }
-
-    public function setLongitude($longitude = '')
-    {
-        $this->longitude = $longitude;
-
-        return $this;
-    }
-
-
-    /**
-     * @var string $addressZip
-     *
-     * @ORM\Column(name="address_zip", type="string", length=20, nullable=true)
-     */
-    private $addressZip;
-
-    /**
-     * @var string $addressCountry
-     *
-     * @ORM\Column(name="address_country", type="string", length=255, nullable=true)
-     */
-    private $addressCountry;
-
-    /**
-     * @var string $addressCity
-     *
-     * @ORM\Column(name="address_city", type="string", length=255, nullable=true)
-     */
-    private $addressCity;
-
-    /**
-     * @var string $addressStreet
-     *
-     * @ORM\Column(name="address_street", type="string", length=255, nullable=true)
-     */
-    private $addressStreet;
-
-    /**
-     * @var string $addressExtd
-     *
-     * @ORM\Column(name="address_extd", type="string", length=255, nullable=true)
-     */
-    private $addressExtd;
-
-    /**
-     * @var string $phone
-     *
-     * @ORM\Column(name="phone", type="string", length=20, nullable=true)
+     * @ORM\Column(name="phone", type="string", nullable=true)
      */
     private $phone;
 
@@ -163,6 +120,7 @@ class UserLocationData extends EntityRepository
      * @var string $mail
      *
      * @ORM\Column(name="mail", type="string", length=255, nullable=true)
+     * @Assert\Email(message = "Email skal være gyldig")
      */
     private $mail;
 
@@ -172,58 +130,6 @@ class UserLocationData extends EntityRepository
      * @ORM\Column(name="contact_person", type="string", length=255, nullable=true)
      */
     private $contactPerson;
-
-    /**
-     * @var integer $hoursOpeningtime
-     *
-     * @ORM\Column(name="hours_openingtime", type="time", nullable=true)
-     */
-    private $hoursOpeningtime;
-
-    /**
-     * @var integer $hoursClosingtime
-     *
-     * @ORM\Column(name="hours_closingtime", type="time", nullable=true)
-     */
-    private $hoursClosingtime;
-
-    /**
-     * @var string $media
-     * @ORM\OneToMany(targetEntity="UserLocationMedia", mappedBy="userLocationData")
-     */
-    private $media;
-
-
-    public function getMedia($latestOnly = true)
-    {
-        if ($latestOnly) {
-            $mediaCollection = new ArrayCollection();
-            $mediaCollection->add($this->media->first());
-
-            return $mediaCollection;
-        }
-
-        return $this->media;
-    }
-
-    public function setMedia(UserLocationMedia $data)
-    {
-        $this->media = $data;
-
-        return $this;
-    }
-
-    public function addMedia(UserLocationMedia $media)
-    {
-        $this->media->add($media);
-
-        return $this;
-    }
-
-    public function removeMedia(UserLocationMedia $media)
-    {
-        $this->media->removeElement($media);
-    }
 
     /**
      * @var string $txtDescription
@@ -239,6 +145,11 @@ class UserLocationData extends EntityRepository
      */
     private $txtComment;
 
+    /**
+     * @ORM\OneToMany(targetEntity="UserLocationHours", mappedBy="user_location_data", cascade={"persist"})
+     * @ORM\OrderBy({"dayNumber" = "ASC"})
+     */
+    private $daysHoursOpenClosed;
 
     /**
      * Get id
@@ -248,75 +159,6 @@ class UserLocationData extends EntityRepository
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set locationId
-     *
-     * @param integer $locationId
-     * @return UserLocationData
-     */
-    public function setLocationId($locationId)
-    {
-        $this->locationId = $locationId;
-
-        return $this;
-    }
-
-    /**
-     * Get locationId
-     *
-     * @return integer
-     */
-    public function getLocationId()
-    {
-        return $this->location->getId();
-    }
-
-    /**
-     * Set hoursOpeningtime
-     *
-     * @param integer $hoursOpeningtime
-     * @return UserLocationData
-     */
-    public function setHoursOpeningtime($hoursOpeningtime)
-    {
-        $this->hoursOpeningtime = $hoursOpeningtime;
-
-        return $this;
-    }
-
-    /**
-     * Get hoursOpeningtime
-     *
-     * @return integer
-     */
-    public function getHoursOpeningtime()
-    {
-        return $this->hoursOpeningtime;
-    }
-
-    /**
-     * Set hoursClosingtime
-     *
-     * @param integer $hoursClosingtime
-     * @return UserLocationData
-     */
-    public function setHoursClosingtime($hoursClosingtime)
-    {
-        $this->hoursClosingtime = $hoursClosingtime;
-
-        return $this;
-    }
-
-    /**
-     * Get hoursClosingtime
-     *
-     * @return integer
-     */
-    public function getHoursClosingtime()
-    {
-        return $this->hoursClosingtime;
     }
 
     /**
@@ -380,66 +222,6 @@ class UserLocationData extends EntityRepository
 
     }
 
-    public function getAddressCity()
-    {
-        return $this->addressCity;
-    }
-
-    public function setAddressCity($city = '')
-    {
-        $this->addressCity = $city;
-
-        return $this;
-    }
-
-    public function getAddressStreet()
-    {
-        return $this->addressStreet;
-    }
-
-    public function setAddressStreet($street = '')
-    {
-        $this->addressStreet = $street;
-
-        return $this;
-    }
-
-    public function getAddressZip()
-    {
-        return $this->addressZip;
-    }
-
-    public function setAddressZip($zip = '')
-    {
-        $this->addressZip = $zip;
-
-        return $this;
-    }
-
-    public function getAddressCountry()
-    {
-        return $this->addressCountry;
-    }
-
-    public function setAddressCountry($countryCode = 'DK')
-    {
-        $this->addressCountry = $countryCode;
-
-        return $this;
-    }
-
-    public function getAddressExtd()
-    {
-        return $this->addressExtd;
-    }
-
-    public function setAddressExtd($addExtd = '')
-    {
-        $this->addressExtd = $addExtd;
-
-        return $this;
-    }
-
     public function getPhone()
     {
         return $this->phone;
@@ -457,21 +239,14 @@ class UserLocationData extends EntityRepository
         return $this->mail;
     }
 
+    public function getMailValid()
+    {
+        return ($this->mail) ? true : false;
+    }
+
     public function setMail($email = null)
     {
         $this->mail = $email;
-
-        return $this;
-    }
-
-    public function getHomepage()
-    {
-        return $this->getLocation()->getHomepage();
-    }
-
-    public function setHomepage($homepage = 'http://www.tvglad.dk')
-    {
-        $this->getLocation()->setHomepage($homepage);
 
         return $this;
     }
@@ -486,6 +261,63 @@ class UserLocationData extends EntityRepository
         $this->contactPerson = $personName;
 
         return $this;
+    }
+
+    public function addDaysHoursOpenClosed(UserLocationHours $dayHours)
+    {
+        $this->daysHoursOpenClosed->add($dayHours);
+    }
+
+    public function removeDaysHoursOpenClosed(UserLocationHours $dayHours)
+    {
+        $this->daysHoursOpenClosed->removeElement($dayHours);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDaysHoursOpenClosed()
+    {
+        if ($this->daysHoursOpenClosed->count() == 7) {
+            return $this->daysHoursOpenClosed;
+        }
+        $rs = range(0, 6);
+        foreach ($rs as $dayNumber) {
+            $tmpDayHour = new UserLocationHours();
+            $tmpDayHour->setDayNumber($dayNumber);
+            $rs[$dayNumber] = $tmpDayHour;
+        }
+        foreach ($this->daysHoursOpenClosed as $dayHour) {
+            $rs[$dayHour->getDayNumber()] = $dayHour;
+        };
+
+        return $rs;
+    }
+
+    public function getDaysHoursOpenClosedPadded()
+    {
+        //return $this->daysHoursOpenClosed;
+        if ($this->daysHoursOpenClosed->count() == 7) {
+            return $this->daysHoursOpenClosed;
+        }
+        $rs = range(0, 6);
+        foreach ($rs as $dayNumber) {
+            $tmpDayHour = new UserLocationHours();
+            $tmpDayHour->setDayNumber($dayNumber);
+            $rs[$dayNumber] = $tmpDayHour;
+        }
+        foreach ($this->daysHoursOpenClosed as $dayHour) {
+            $rs[$dayHour->getDayNumber()] = $dayHour;
+        };
+
+        return $rs;
+    }
+
+    public function isEmptyRecord()
+    {
+        return !$this->getPhone() && !$this->getMail() && !$this->getContactPerson() && !$this->getTxtDescription(
+        ) && ($this->getPhone() == '') && ($this->getMail() == '') && ($this->getContactPerson(
+            ) == '') && ($this->getTxtDescription() == '');
     }
 
     private $locationData;

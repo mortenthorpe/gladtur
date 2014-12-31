@@ -1,0 +1,44 @@
+{% set nxtpageno = pageno+1 %}
+<div id="locations_top">
+    {% if locations_count == 0 %}
+        <h2>Der findes ingen steder i nærheden af dig ( indenfor {{ search_radius }} Km ), som matcher din søgning.</h2>
+    {% endif %}
+    {% if locations_count == 1 %}
+        <h2>Der findes 1 sted i nærheden af dig ( indenfor {{ search_radius }} Km )</h2>
+    {% endif %}
+    {% if locations_count > 1 %}
+        <h2>Der findes {{ locations_count }} steder i nærheden af dig ( indenfor {{ search_radius }} Km )</h2>
+    {% endif %}
+    <!--<p>Vælg afstand:
+        <ul class="plainlist horizontal">
+        <li>1 Km</li>
+        <li>5 Km</li>
+        <li>10 Km</li>
+        <li>20 Km</li>
+        <li>50 Km</li>
+        <li>100 Km</li>
+        </ul>
+    </p>//-->
+    {% set query = app.session.FlashBag.get('query')|first %}
+    {% if (not query) or (query is empty) %}
+    {% if search_term is defined %}
+        {% set search_path = path('findplaces_in_category_named', {'side':nxtpageno, 'searchterm': search_term, 'categoryslug': search_categoryslug, 'radius': search_radius}) %}
+    {% else %}
+        {% set search_path = path('findplaces_in_category', {'side':nxtpageno, 'categoryslug': search_categoryslug, 'radius': search_radius}) %}
+    {% endif %}
+    {% if locations_count > 1 %}
+        {% if count_shown >= locations_count %}
+            <h3>Alle {{ locations_count }} steder fremvises nu</h3>
+        {% else %}
+            <h3>De første {{ count_shown }} steder fremvises her</h3>
+        {% endif %}
+        {% if locations_count > count_shown %}
+            <h4><a href="{{ search_path }}#{{nxtpageno}}" class="ajaxAppend" data-src="paged_locations">Klik her, og vis {{ perpage }} steder til</a></h4>
+        {% endif %}
+    {% endif %}
+    {% endif %}
+</div>
+<h2>Du søgte på: '{{ query }}', resultaterne ses her: </h2>
+<div id="paged_locations">
+  {% include "WebsiteBundle:Locations:_list.html.twig" with {'locations': locations} %}
+</div>

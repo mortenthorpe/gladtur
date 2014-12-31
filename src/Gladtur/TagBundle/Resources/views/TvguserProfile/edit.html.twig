@@ -6,6 +6,7 @@
     <form action="{{ path('tvguserprofile_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
         {{ form_row(edit_form.readableName) }}
         {{ form_row(edit_form.avatar) }}
+        {{ form_row(edit_form.webavatar) }}
 	{% if entity.tags %}
         <ul>
             <li>

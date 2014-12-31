@@ -1,0 +1,22 @@
+<p>Du er i øjeblikket gæstebruger. Opret dig gratis som bruger, og få adgang til alle funktioner.</p>
+<div>
+    <input type="button" value="Opret bruger" onClick="javascript:window.location.href='{{ referrer_target_path }}'; return false;"/>
+    <input type="button" value="Fortsæt" onClick="javascript:$('.reveal-modal.open').foundation('reveal', 'close');"/>
+</div>
+<p>
+<h2>Log ind</h2>
+{% include 'DiviAjaxLoginBundle:Javascript:init.html.twig' with {'form_selector': '#form-login', 'target_path': _target_path} %}
+<form action="{{ path("fos_user_security_check") }}" method="post" id="form-login" novalidate>
+    <input type="hidden" name="_target_path" value="{{ _target_path }}"/>
+    <label for="username">{{ 'security.login.username'|trans({}, 'FOSUserBundle') }}</label>
+    <input type="text" id="username" name="_username" value="" required="required" />
+
+    <label for="password">{{ 'security.login.password'|trans({}, 'FOSUserBundle') }}</label>
+    <input type="password" id="password" name="_password" required="required" />
+<!--
+    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+    <label for="remember_me">{{ 'security.login.remember_me'|trans({}, 'FOSUserBundle') }}</label>//-->
+    <input type="submit" id="_submit" name="_submit" value="Log ind" />
+</form>
+<div id="login-msg"></div>
+</p>

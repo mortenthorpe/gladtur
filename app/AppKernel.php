@@ -27,20 +27,32 @@ class AppKernel extends Kernel
 	//		new Gladtur\UserBundle\Entity\User(),
             //new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
 	    //new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
-            //new Google\GeolocationBundle\GoogleGeolocationBundle(),
+            new Google\GeolocationBundle\GoogleGeolocationBundle(),
 	    new JMS\SerializerBundle\JMSSerializerBundle(),
 	new Bmatzner\FoundationBundle\BmatznerFoundationBundle(),
 	new Bmatzner\JQueryBundle\BmatznerJQueryBundle(),
+            new Bmatzner\JQueryUIBundle\BmatznerJQueryUIBundle(),
             new Ivory\GoogleMapBundle\IvoryGoogleMapBundle(),
- new Neutron\FormBundle\NeutronFormBundle(),
+ //new Neutron\FormBundle\NeutronFormBundle(),
         // if you use form types which require neutron/datagrid-bundle
-        new Neutron\DataGridBundle\NeutronDataGridBundle(),
+ //       new Neutron\DataGridBundle\NeutronDataGridBundle(),
         // if you use plupload
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
-        new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(),
+        //new Avalanche\Bundle\ImagineBundle\AvalancheImagineBundle(), // Super-seeded by LIIPBundle
             new Gladtur\MobileBundle\GladturMobileBundle(),
-            new FOS\RestBundle\FOSRestBundle(),
+          //  new FOS\RestBundle\FOSRestBundle(),
             new AntiMattr\GoogleBundle\GoogleBundle(),
+            new Nelmio\SolariumBundle\NelmioSolariumBundle(),
+            new JMS\TranslationBundle\JMSTranslationBundle(),
+            //new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Gladtur\WebsiteBundle\WebsiteBundle(),
+            new Liip\ImagineBundle\LiipImagineBundle(),
+         //   new CCDNUser\SecurityBundle\CCDNUserSecurityBundle(),
+            new Oneup\UploaderBundle\OneupUploaderBundle(),
+            new Divi\AjaxLoginBundle\DiviAjaxLoginBundle(),
+            //new Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle(),
+            //new Blackshawk\SymfonyReactorBundle\BlackshawkSymfonyReactorBundle(),
+            //new UAParser\UAParserSf2(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

@@ -1,0 +1,33 @@
+{% if location.slug is not empty %}
+<div class="location_listitem">
+<div class="item_container">
+{% if thumbnail %}
+    <div class="right thumbnail">
+        <img src="/uploads/avalanche/thumbnail/locations/{{location.id}}/{{ thumbnail }}"/>
+    </div>
+    {% endif %}
+    <div class="location_title left">
+        <h5><a href="{{ path('location_details', { 'locationslug': location.slug }) }}">#{{ index }}.&nbsp;{{ location.readableName|capitalize }}</a></h5>
+        <div>
+        <div style="display:none !important" class="latitude">{{ location.latitude }}</div>
+        <div style="display:none !important" class="longitude">{{ location.longitude }}</div><div class="minor radius secondary label">Afstand: <span class="js_distance"><span class="clickable distance-help">?</span></span></div>
+        </div>
+         <div>
+    <div class="location_categories">
+        {% if location.topCategory %}
+        <a href="{{ path('findplaces_in_category', {'categoryslug': location.topCategory.getSlug()}) }}" class="tiny button secondary left topcategory">{{ location.topCategory.readableName|capitalize }}</a>
+        {% for category in location.locationCategories %}
+        {% if not category.isTopcategory %}
+        <a href="{{ path('findplaces_in_category', {'categoryslug': category.getSlug()}) }}" class="tiny button secondary left subcategory">{{ category.readableName|capitalize }}</a>
+        {% endif %}
+        {% endfor %}
+        {% endif %}
+    </div>
+    <div class="location_info">{{ location.getAddressStreetAndExtd()|capitalize }}, {{ location.addressZip }} {{ location.addressCity|title }}</div>
+     </div>
+
+    </div>
+     <div class="location_navi_detail navi"><a href="{{ path('location_details', { 'locationslug': location.slug }) }}">{{ "Se detaljer"|trans }}  →</a></div>
+</div>
+</div>
+{% endif %}

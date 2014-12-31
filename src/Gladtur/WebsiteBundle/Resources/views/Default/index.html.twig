@@ -1,0 +1,48 @@
+{% extends "@Website/layout.html.twig" %}
+{% block pagejs %}
+    <script>
+    {% if zoom is defined %}
+        var zoom = {{ zoom }};
+    {% else %}
+        var zoom = 6;
+    {% endif %}
+    $('.ajaxAppend').on('click',function(e){
+        e.preventDefault();
+        var targetElem = $('#' + $(this).attr('data-src'));
+        $.get($(this).attr('href'), function( data ) {
+            targetElem.append('<div>appended!</div>');
+        });
+    });
+    </script>
+{% endblock pagejs %}
+{% block content_left %}
+    {% if app.session.FlashBag.get('searchQuery') is empty and (slug is defined) %}
+    {{ render(controller('WebsiteBundle:Default:slotsForSlugAndPosition', {'slug':slug, 'position':'page_prefix', 'slotclasses': [''], 'containerclasses': ['vertical']})) }}
+    {% endif %}
+    {% if map is defined %}
+    {{ google_map_container(map) }}
+    {{ google_map_js(map) }}
+    {% endif %}
+    {% if app.user and app.user.hasRole('ROLE_ADMIN') %}<div style="padding:10px;border:1px solid red">Feltets indhold her vises kun idet den besøgendes position ikke kendes!<p>Det vil sige at teksten der indtastes heri feltet, vises <b>istedet for listen over steder i nærheden.</b></p>{% endif %}
+    {% if slug is defined %}
+    {{ render(controller('WebsiteBundle:Default:slotsForSlugAndPosition', {'slug':slug, 'position':'map_postfix', 'slotclasses': [''], 'containerclasses': ['vertical']})) }}
+    {% endif %}
+    {% if app.user and app.user.hasRole('ROLE_ADMIN') %}</div>{% endif %}
+    {% if app.session.FlashBag.get('searchRsEmpty') is defined and app.session.FlashBag.get('searchRsEmpty') %}
+        <h3>Din søgning gav ikke resultat</h3>
+        <p>Husk at du kan søge på Delvise sted-navne, f.eks.: 'Zoo', og at du kan vælge en kategori idet du søger.
+        </p>
+    {% elseif locations is defined %}
+        {% include "WebsiteBundle:Locations:_location_results.html.twig" with {'locations': locations} %}
+    {% endif %}
+{% endblock content_left %}
+
+{% block content_right_prefix %}
+    {{ render(controller('WebsiteBundle:Default:globalSlotsForPosition', {'position':'content_right_prefix', 'slotclasses': [''], 'containerclasses': ['vertical']})) }}
+{% endblock %}
+
+{% block content_right_after %}
+    {{ render(controller('WebsiteBundle:Default:globalSlotsForPosition', {'position':'content_right_after', 'slotclasses': [''], 'containerclasses': ['vertical']})) }}
+    {#{ render(controller('WebsiteBundle:Default:latestComments')) }#}
+
+{% endblock %}

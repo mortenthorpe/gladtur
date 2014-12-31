@@ -1,0 +1,21 @@
+<div class="block comments">
+    {% if not block_view %}
+        <div class="comment add"><a href="#" data-reveal-id="newCommentModal" id="commentLocation" class="edit">Tilføj kommentar til stedet</a></div>
+        <div class="reveal-modal" data-reveal id="newCommentModal">
+            {% if app.user %}
+            {{ render(controller('WebsiteBundle:Location:locationAddComment', { 'locationslug': location.getSlug() })) }}
+            {% else %}
+                {% include "WebsiteBundle:Form:_ajax_login.html.twig"  with {'referrer_target_path': path('location_commentlocation_redirectregister', {'locationslug': location.slug}), '_target_path': path('location_details', { 'locationslug': location.getSlug() ,'action': 'commentLocation'}) } %}
+            {% endif %}
+        </div>
+    {% endif %}
+    <ul class="comments_list">
+        <li style="border-bottom:none;"><h3 style="margin:6px">Stedets kommentarer</h3></li>
+        {% for comment in comments %}
+        {% if (loop.index0 > 1) and loop.index0 is divisibleby(3) %}
+            <a class="pageable" name="comment_{{ loop.index }}"></a>
+        {% endif %}
+       {% include "@Website/Locations/_comment_listitem.html.twig" with {'comment': comment, 'block_view': block_view }%}
+        {% endfor %}
+    </ul>
+</div>

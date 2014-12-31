@@ -1,0 +1,49 @@
+{% extends "@Website/layout.html.twig" %}
+
+{% block pagejs %}
+{% for slot in slots %}
+        {% for js_includepath in slot.javascriptIncludePaths %}
+        <script type="text/javascript" href="{{ js_includepath }}"></script>
+        {% endfor %}
+{% endfor %}
+{% endblock %}
+
+{% block pagecss %}
+    {% for slot in slots %}
+        {% for stylesheet_includepath in slot.stylesheetIncludePaths %}
+            <script type="text/javascript" href="{{ stylesheet_includepath }}"></script>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
+
+{% block content_left %}
+{% for slot in slots %}
+    {% if slot.blockPosition == 'content_left' %}
+    <div id="{{ slot.name }}">
+    {{ slot.Html | raw }}
+    </div>
+    {% endif %}
+{% endfor %}
+{% endblock %}
+
+{% block content_right %}
+    {% for slot in slots %}
+        {% if slot.blockPosition == 'content_right' %}
+            <div id="{{ slot.name }}">
+                {{ slot.Html | raw }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+
+
+{% block content_fullwidth %}
+    {% for slot in slots %}
+        {% if slot.blockPosition == 'content_fullwidth' %}
+            <div id="{{ slot.name }}">
+                {{ slot.Html | raw }}
+            </div>
+        {% endif %}
+    {% endfor %}
+{% endblock %}
+

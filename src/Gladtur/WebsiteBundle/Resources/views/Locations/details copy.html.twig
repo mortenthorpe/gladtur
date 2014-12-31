@@ -1,0 +1,46 @@
+{% extends "@Website/layout.html.twig" %}
+{% block pagejs %}
+    <script type="text/javascript">
+$(document).ready(function () {
+	
+	$('#toggle-info li').click(function () {
+
+		var text = $(this).children('div.panel');
+
+		if (text.is(':hidden')) {
+			text.slideDown('200');
+			$(this).children('span').html('-');		
+		} else {
+			text.slideUp('200');
+			$(this).children('span').html('+');		
+		}
+		
+	});
+
+    $('#form_profile').change(function(){$.ajax({
+        type: "GET",
+        url: "/_profiles_accessibilities",
+        data: {'location':{{ location.id }}, profile: $('#form_profile').val()}
+    }).done(function( data ) {
+                $('.accessibilities_list').html(data['listing']);
+                $('.active_profile').replaceWith('<img class="icon active_profile" src="/uploads/icons/profiles/'+data['icon']+'"/>');
+    });});
+});
+    </script>
+{% endblock pagejs %}
+{% block content_left %}
+    {% include "@Website/Locations/_detail_item.html.twig" with {'location': location, mainimage:''} %}
+    <div class="row">
+    <div class="large-5 right">
+            {% include "@Website/Locations/comment_block.html.twig" with {'comments': comments_sorted, 'block_view': false} %}
+        </div>
+        <div class="large-7 left columns">
+            {% include "@Website/Locations/accessibility_block.html.twig" with {'user_location_datas': user_loc_tags } %}
+        </div>
+       
+    </div>
+{% endblock content_left %}
+{% block content_right %}
+    {{ google_map_container(map) }}
+    {{ google_map_js(map) }}
+{% endblock content_right %}

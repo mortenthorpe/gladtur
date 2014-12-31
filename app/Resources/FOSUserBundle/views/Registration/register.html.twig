@@ -1,0 +1,6 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+{% block fos_user_content %}
+    {{ render(controller('WebsiteBundle:Default:slotsForSlugAndPosition', {'slug':'fosuser-register', 'position':'form_prefix', 'slotclasses': [''], 'containerclasses': ['vertical']})) }}
+{% include "FOSUserBundle:Registration:register_content.html.twig" %}
+    {{ render(controller('WebsiteBundle:Default:slotsForSlugAndPosition', {'slug':'fosuser-register', 'position':'form_postfix', 'slotclasses': [''], 'containerclasses': ['vertical']})) }}
+{% endblock fos_user_content %}

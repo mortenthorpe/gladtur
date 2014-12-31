@@ -1,0 +1,31 @@
+{% block header %}
+<div class="logo right">
+<a href="{{ path('homepage') }}"><img src="/assets/logo.png" alt="Glad Tur"/></a>
+</div>
+<div class="menu left">
+<ul class="inline-list left">
+<li>
+<a href="{{ path('homepage') }}">Glad Tur</a>
+</li>
+<li>
+<a href="{{ path('findplace') }}">Find/anmeld sted</a>
+</li>
+<li>
+    {% if app.user and app.user.hasRole('ROLE_TVGUSER') %}
+    <a href="{{ path('user_location_create') }}">Opret sted</a>
+    {% else %}
+    <a href="#" data-reveal-id="createLocationModal" id="createLocation" alt="Log ind - Opret nyt sted" title="Log ind - Opret nyt sted">Opret sted</a>
+    <div class="reveal-modal" data-reveal id="createLocationModal">
+        {% include "WebsiteBundle:Form:_ajax_login.html.twig"  with {'referrer_target_path': path('user_location_create_redirect_register'), '_target_path': path('user_location_create') } %}
+    </div>
+    {% endif %}
+</li>
+<li>
+<a href="{{ path('websitestatic_page', {'pagename':'ambassadoer'}) }}">Bliv ambassadør</a>
+</li>
+<li>
+<a href="{{ path('websitestatic_page', {'pagename':'kontakt'}) }}">Partnere</a>
+</li>
+</ul>
+</div>
+{% endblock header %}

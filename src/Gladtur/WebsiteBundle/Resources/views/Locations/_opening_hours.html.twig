@@ -1,0 +1,11 @@
+<h2>&raquo;&Aring;bningstider</h2>
+<div class="panel toggle-panel">
+    <ul class="plainlist location hours">
+        {% if location.getUserLocationData(true) is not empty %}
+            {% for dayHours in location.getUserLocationData(true).getDaysHoursOpenClosedPadded() %}
+                <li><label for="{{ dayHours.dayName}}">{{ dayHours.dayName}}:</label> {% if dayHours.timesTxt %}{{ dayHours.timesTxt}}{% else %}<span class="nullvalue">- Ikke angivet -</span>{% endif %}</li>
+            {% endfor %}
+        {% endif %}
+    </ul>
+
+</div>

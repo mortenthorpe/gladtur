@@ -2,10 +2,10 @@ parameters:
     database_driver:   pdo_mysql
     database_host:     localhost
     database_port:     ~
-    database_name:     gladtur3
+    database_name:     gladturlive
     database_user:     root
     database_password: master
-    locale:            en
+    locale:            da
     secret:            t0kenized
     livestate: false
     dev_url: 'http://edge.gladtur.morning.dk'

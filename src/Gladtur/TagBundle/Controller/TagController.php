@@ -91,6 +91,7 @@ class TagController extends Controller
         $form->bind($request);
 
         if ($form->isValid()) {
+            $entity->upload($editForm, 'iconVirtual');
             $em = $this->getDoctrine()->getManager();
             $em->persist($entity);
             $em->flush();
@@ -155,6 +156,7 @@ class TagController extends Controller
         $editForm->bind($request);
 
         if ($editForm->isValid()) {
+            $entity->upload($editForm, 'iconVirtual');
             $em->persist($entity);
             $em->flush();
 

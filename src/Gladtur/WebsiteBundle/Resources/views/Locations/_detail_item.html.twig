@@ -1,0 +1,72 @@
+{% set includeOpeningHours = false %}
+<div class="row">
+
+<div class="large-5 right">
+    <div style="float:right;width:110px">
+    <div class="inline" id="location_score"><img src="/assets/thumbs_{{ scorename }}.png" alt="vurdering: {{ score }}" title="vurdering: {{ scorename }}" style="display: block; width: 33px;height: 33px;"/></div>
+    <div class="inline report add"><a href="#" style="display: block; width: 32px;height: 32px;" data-reveal-id="newReportModal" id="editReportLocation" alt="Rapporter stedet" title="Rapporter stedet">&nbsp;</a></div>
+    <div class="reveal-modal" data-reveal id="newReportModal">
+        {%  if app.user %}
+            {{ render(controller('WebsiteBundle:ReportItem:reportItemForm', { 'slug': location.getSlug() })) }}
+        {% else %}
+            {% include "WebsiteBundle:Form:_ajax_login.html.twig"  with {'referrer_target_path': path('location_reportlocation_redirectregister', {'locationslug': location.slug}), '_target_path': path('location_details', { 'locationslug': location.slug ,'action': 'editReportLocation'}) } %}
+        {% endif %}
+    </div>
+    </div>
+{%  if app.user %}
+<div id="location_edit"><a href="{{ path('location_form_edit', {'locationslug':location.getSlug()}) }}" id="editLocation" class="tiny button secondary capitalize">Redig&eacute;r</a></div>
+{% else %}
+    <div id="location_edit"><a href="#" class="tiny button secondary capitalize" data-reveal-id="editLocationModal" id="editLocation" alt="Rediger stedet" title="Rediger stedet">Redig&eacute;r</a></div>
+    <div class="reveal-modal" data-reveal id="editLocationModal">
+            {# % include "WebsiteBundle:Form:_ajax_login.html.twig"  with {'referrer_target_path': path('location_editlocation_redirectregister', {'locationslug':location.getSlug()}), '_target_path': path('location_details', { 'locationslug': location.getSlug() ,'action': 'editLocation'}) } % #}
+        {% include "WebsiteBundle:Form:_ajax_login.html.twig"  with {'referrer_target_path': path('location_editlocation_redirectregister', {'locationslug': location.slug}), '_target_path': path('location_form_edit', { 'locationslug': location.slug}) } %}
+    </div>
+{% endif %}
+<div class="location_title">
+<div style="display:none !important" class="latitude">{{ location.latitude }}</div>
+<div style="display:none !important" class="longitude">{{ location.longitude }}</div><div>Afstand: <span class="js_distance"><span class="clickable distance-help">?</span></span></div>
+</div>
+<ul id="toggle-info">
+	{% if includeOpeningHours %}
+	  <li>
+        {% include "@Website/Locations/_opening_hours.html.twig" with {'location': location} %}
+	</li>
+    {% endif %}
+	<li>
+        <h2 class="expander">&raquo;&nbsp;Kontakt</h2>
+        <div class="panel toggle-panel" style="display:none">
+            {% if location.getUserLocationData(true) is empty and location.homepage is empty %}
+                {{ "Der er endnu ikke angivet kontaktinfo for stedet"| trans }}
+            {% endif %}
+            {% if location.getUserLocationData(true) is not empty or location.homepage is not empty %}
+            <ul class="plainlist location contactinfo">
+			<li><div class="label">Telefon:</div>{% if location.getUserLocationData(true) is not empty and location.getUserLocationData(true).phone %}{{ location.getUserLocationData(true).phone }}{% else %}<span class="nullvalue">- Ikke angivet -</span>{% endif %}</li>
+            <li><div class="label">E-mail:</div>{% if location.getUserLocationData(true) is not empty and location.getUserLocationData(true).getMailValid() %} <a href="mailto:{{ location.getUserLocationData(true).mail }}">{{ location.getUserLocationData(true).mail }}</a>{% else %}<span class="nullvalue">- Ikke angivet -</span>{% endif %}</li>
+            <li class="nooverflow"><div class="label">www:</div>{% if location.homepage and location.getHomepageValid() %}<a href="{{ location.homepage }}" target="_blank">{{ location.getHomepageReadable() }}</a>{% else %}<span class="nullvalue">- Ikke angivet -</span>{% endif %}</li>
+            <li><div class="label">Kontakt:</div>{% if location.getUserLocationData(true) is not empty and location.getUserLocationData(true).contactPerson %}{{ location.getUserLocationData(true).contactPerson }}{% else %}<span class="nullvalue">- Ikke angivet -</span>{% endif %}</li>
+            <li><div class="label">Beskrivelse:</div>{% if location.getUserLocationData(true) is not empty and location.getUserLocationData(true).txtDescription %}<div style="display:block;clear:both;margin-top:4px">{{ location.getUserLocationData(true).txtDescription }}</div>{% else %}<span class="nullvalue">- Ikke angivet -</span>{% endif %}</li>
+            </ul>
+            {% endif %}
+		</div>
+	</li>
+</ul>
+</div>
+
+    <div class="large-7 left columns">
+        <h1 class="inline location_title">{{ location.readableName|capitalize }}</h1>
+         <div>
+    <div class="location_info space">{{ location.getAddressStreetAndExtd()|capitalize }}, {{ location.addressZip }} {{ location.addressCity|title }}</div>
+    <div class="location_categories">
+        <a href="{{ path('findplaces_in_category', {'categoryslug': location.topCategory.getSlug()}) }}" class="tiny button secondary left topcategory">{{ location.topCategory.readableName|capitalize }}</a>
+        {% for category in location.locationCategories %}
+        {% if not category.isTopcategory %}
+        <a href="{{ path('findplaces_in_category', {'categoryslug': category.getSlug()}) }}" class="tiny button secondary left subcategory">{{ category.readableName|capitalize }}</a>
+        {% endif %}
+        {% endfor %}
+    </div>
+    
+     </div>
+
+    </div>
+</div>
+<div class="item_container nopadding">&nbsp;</div>

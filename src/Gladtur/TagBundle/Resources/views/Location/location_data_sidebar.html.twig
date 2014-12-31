@@ -5,7 +5,7 @@
         {% if locationCategory.parentCategory == false %}
     <li>{{ locationCategory.readableName }}
         {%  endif %}
-   {% if locationCategory.getChildCategories %}
+     % if locationCategory.getChildCategories %}
         <ul>
             {% for cCategory in locationCategory.getChildCategories %}
                 <li>{{ cCategory.readableName }}</li>

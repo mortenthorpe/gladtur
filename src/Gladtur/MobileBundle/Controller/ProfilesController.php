@@ -16,6 +16,7 @@ use Gladtur\TagBundle\Form\TvguserProfileType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Gladtur\TagBundle\Controller\JsonController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
 class ProfilesController extends JsonController
 {
@@ -23,6 +24,7 @@ class ProfilesController extends JsonController
      * Lists all Profiles entities.
      *
      * @Route("uprofiles", name="list_profiles")
+     * @Method("GET")
      */
     public function indexAction(Request $request)
     {
@@ -30,7 +32,7 @@ class ProfilesController extends JsonController
         $em = $this->getDoctrine()->getManager();
         //$entities = $em->getRepository('GladturTagBundle:TvguserProfile')->createQueryBuilder('TvguserProfile')->getQuery()->getResult();
         /** @var EntityRepository $entities */
-        $entities = $em->getRepository('GladturTagBundle:TvguserProfile')->findAll();
+        $entities = $em->getRepository('GladturTagBundle:TvguserProfile')->findBy(array(), array('rank'=>'ASC'));
         $data = array(); /* entities gready-loads all related objects, so we need to filter out the unneeded  */
         /**
          * @var TvguserProfile $entity
@@ -39,35 +41,31 @@ class ProfilesController extends JsonController
             $entData = array();
             $entData['id'] = $entity->getId();
             $entData['name'] = $entity->getReadableName();
-            $entData['desc'] = 'A description for ID: ' . $entity->getId(
-                ) . '... needs to be added in backend data-model!';
+            $entData['info'] = $entity->getTxtDescription();
+            $entData['icon'] = 'http://gladtur.dk'.'/uploads/avalanche/thumbnail/icons/profiles/'.$entity->getPath();
+            $entData['individualized'] = ($entity->getIndividualized())?1:0;
             $data[] = $entData;
         }
-        if (true || parent::getIsJSON()) {
-            return parent::getJsonForData($data);
-        } else {
-            return array(
-                'userprofiles' => $entities,
-            );
-        }
+        return parent::getJsonForData($data);
     }
 
     /**
      * @Route("uprofile/{id}")
+     * @Method("GET")
      */
     public function profiledetailAction($id)
     {
         $em = $this->getDoctrine()->getManager();
         /** @var EntityRepository $profile */
-        $profile = $em->getRepository('GladturTagBundle:TvguserProfile')->find($id); // data-greedy! //
+        $profile = $em->getRepository('GladturTagBundle:TvguserProfile')->find($id);
         $profileData = array();
         if ($profile) {
             $profileData = array(
                 'items' => array(
                     array(
-                        'id' => $profile->getId() + mt_rand(1, 1000),
-                        'name' => 'Niveaufri adgang',
-                        'info' => 'Some info for item 1!',
+                        'id' => $profile->getId(),
+                        'name' => $profile->getReadableName(),
+                        'info' => $profile->getTxtDescription(),
                         'value' => 2
                     ),
                     array(

@@ -1,0 +1,21 @@
+{% set slotslength = ((slots|length)-1) %}
+{% set slotorigclasses = slotclasses %}
+{% set slotdivclasses = {1:'one', 2:'onehalf', 3:'onethird', 4:'onequarter', 5:'onefifth', 6:'onesixth', 7:'oneseventh', 8:'oneeigth'} %}
+{% if slots|length > 0 %}
+<div class="slot_container {{ containerclasses }}">
+    {% for slot in slots %}
+        {% if (('horizontal' in containerclasses) and (slotdivclasses[loop.length] in slotorigclasses )) %}
+          {% set slotdivclass = ' '~slotdivclasses[loop.length] %}
+        {% else %}
+            {% set slotdivclass = "" %}
+        {% endif %}
+        {% if loop.first %}
+            {% set slotclasses = " first"~slotdivclass %}
+        {% endif %}
+        {% if loop.last %}
+            {% set slotclasses = " last"~slotdivclass %}
+        {% endif %}
+        {% include "WebsiteBundle:Default:slot.html.twig"  with {'slot': slot} %}
+    {% endfor %}
+</div>
+{% endif %}

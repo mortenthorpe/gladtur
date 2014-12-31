@@ -4,6 +4,7 @@ namespace Gladtur\TagBundle\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Gladtur\TagBundle\Entity\Tag
@@ -55,20 +56,63 @@ class Tag
      */
     private $profiles;
 
-    public function addProfiles(\Gladtur\TagBundle\Entity\TvguserProfile $profile){
+
+    /**
+     * @ORM\ManyToMany(targetEntity="LocationCategory", inversedBy="tags")
+     */
+    private $location_categories;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="UserProfileByTags", mappedBy="profileTags")
+     */
+    private $freeProfiles;
+
+    /**
+     * @ORM\Column(name="icon_path", type="string", nullable=true)
+     */
+    private $iconPath;
+
+    private $iconUlDir; // Relative path (to "web/uploads" of the dir of the icon for each tag
+
+    /**
+     * @Assert\File(maxSize = "5M")
+     */
+    private $iconVirtual;
+
+    /**
+     * @param mixed $iconVirtual
+     */
+    public function setIconVirtual($iconVirtual)
+    {
+        $this->iconVirtual = $iconVirtual;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIconVirtual()
+    {
+        return $this->iconVirtual;
+    }
+
+
+    public function addProfiles(\Gladtur\TagBundle\Entity\TvguserProfile $profile)
+    {
         $this->profiles[] = $profile;
         $profile->addTags($this);
+
         return $this;
     }
 
-    public function removeProfiles(\Gladtur\TagBundle\Entity\TvguserProfile $profile){
+    public function removeProfiles(\Gladtur\TagBundle\Entity\TvguserProfile $profile)
+    {
         $this->profiles->removeElement($profile);
         $profile->removeTags($this);
     }
 
     /**
      * @var integer $user
-     * @ORM\OneToOne(targetEntity="UserLocationTagData", mappedBy="tag")
+     * @ORM\OneToMany(targetEntity="UserLocationTagData", mappedBy="tag")
      */
     protected $userLocationTagData;
 
@@ -213,6 +257,8 @@ class Tag
     public function __construct()
     {
         $this->profiles = new ArrayCollection();
+        $this->location_categories = new ArrayCollection();
+        $this->iconUlDir = 'icons/tags';
     }
 
     /**
@@ -224,4 +270,116 @@ class Tag
     {
         return $this->profiles;
     }
+
+    /**
+     * @param mixed $iconPath
+     */
+    public function setIconPath($iconPath)
+    {
+        $this->iconPath = $iconPath;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getIconPath()
+    {
+        if (!$this->iconPath) {
+            return null;
+        }
+
+        return 'icons/tags/' . $this->iconPath;
+    }
+
+    public function getIconPathRaw()
+    {
+        return $this->iconPath;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIconUlDir()
+    {
+        return 'uploads/icons/tags';
+    }
+
+
+    public function getAbsolutePath()
+    {
+        return null === $this->iconPath
+            ? null
+            : $this->getUploadRootDir() . '/' . $this->iconPath;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->iconPath
+            ? null
+            : $this->getIconUlDir() . '/' . $this->iconPath;
+    }
+
+    protected function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__ . '/../../../../web/' . $this->getIconUlDir();
+    }
+
+
+    public function upload($profileForm, $fieldname = null)
+    {
+        if (!$fieldname) {
+            return;
+        } // Nofilefield used asa source
+        /*
+     *
+            // the file property can be empty if the field is not required
+            if (null === $this->getAvatar()) {
+                return;
+            }
+    */
+        // use the original file name here but you should
+        // sanitize it at least to avoid any security issues
+
+        // move takes the target directory and then the
+        // target filename to move to
+        if ($profileForm[$fieldname]->getData()) {
+            $profileForm[$fieldname]->getData()->move(
+            // $this->getAvatar()->move(
+                $this->getUploadRootDir(),
+                $profileForm[$fieldname]->getData()->getClientOriginalName()
+            );
+
+            // set the path property to the filename where you've saved the file
+            $this->iconPath = $profileForm[$fieldname]->getData()->getClientOriginalName();
+
+            // clean up the file property as you won't need it anymore
+            // $this->avatar = null;
+        }
+    }
+
+    public function getPath()
+    {
+        return ($this->iconPath) ? $this->getWebPath() : basename($this->getWebPath()) . 'icons/tags/empty.png';
+    }
+
+    public function addLocationCategories(ArrayCollection $location_categories)
+    {
+        $this->location_categories->add($location_categories);
+    }
+
+    public function removeLocationCategories(\Gladtur\TagBundle\Entity\LocationCategory $location_category)
+    {
+        $this->location_categories->removeElement($location_category);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLocationCategories()
+    {
+        return $this->location_categories;
+    }
+
 }
